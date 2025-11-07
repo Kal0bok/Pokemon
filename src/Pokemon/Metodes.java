@@ -1,6 +1,6 @@
 package Pokemon;
 
-public class Pokemon {
+public class Metodes {
 	
 	//start
 
