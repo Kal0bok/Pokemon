@@ -1,6 +1,7 @@
 package Pokemon;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
@@ -52,7 +53,33 @@ public class MainMenu {
     bottomPanel.add(helpBtn);
     frame.add(bottomPanel, BorderLayout.SOUTH);
 
-    frame.setVisible(true);
+    frame.setVisible(true); 
+    
+}
+	private JButton createButton(String text, Color bg) {
+		JButton btn = new JButton(text);
+		btn.setFont(new Font("Arial", Font.BOLD, 22));
+		btn.setForeground(Color.WHITE);
+		btn.setBackground(bg);
+		btn.setFocusPainted(false);
+		btn.setBorder(BorderFactory.createEmptyBorder(12, 30, 12, 30));
+		btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    return btn;
 }
 	
+	private void showHelp(JFrame frame) {
+		String helpText = """
+				<html>
+				    <h2>Help:</h2>
+				    <ul>
+				    <li>Press START to begin the game.</li>
+				    <li>Press EXIT to close the application.</li>
+				    </ul>
+				    </html>
+				    """;
+		JOptionPane.showMessageDialog(frame, helpText, "Help", JOptionPane.INFORMATION_MESSAGE);
+		
+		public static void main(String[] args) {
+	        SwingUtilities.invokeLater(SimpleMenu::new);
+	}
 }
