@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class MainMenu {
     public MainMenu() {
-        JFrame frame = new JFrame("Simple Game Menu");
+        JFrame frame = new JFrame("Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 300);
         frame.setResizable(false);
@@ -13,7 +13,7 @@ public class MainMenu {
         frame.getContentPane().setBackground(new Color(20, 30, 60));
 
         // Заголовок
-        JLabel title = new JLabel("GAME MENU", SwingConstants.CENTER);
+        JLabel title = new JLabel("POKEMON GAME", SwingConstants.CENTER);
         title.setFont(new Font("Arial", Font.BOLD, 36));
         title.setForeground(Color.YELLOW);
         title.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
@@ -28,6 +28,8 @@ public class MainMenu {
 
         startBtn.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Game starts!"));
         exitBtn.addActionListener(e -> System.exit(0));
+        exitBtn.addActionListener(e -> JOptionPane.showMessageDialog(null, "Programma ir aptureta!"));
+        
 
         buttonPanel.add(startBtn);
         buttonPanel.add(exitBtn);
