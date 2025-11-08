@@ -38,5 +38,21 @@ public class MainMenu {
     buttonPanel.add(exitBtn);
 
     frame.add(buttonPanel, BorderLayout.CENTER);
+    
+    JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+    bottomPanel.setBackground(new Color(20, 30, 60));
+
+    JButton helpBtn = new JButton("?");
+    helpBtn.setFont(new Font("Arial", Font.BOLD, 18));
+    helpBtn.setForeground(Color.CYAN);
+    helpBtn.setBackground(new Color(40, 40, 80));
+    helpBtn.setPreferredSize(new Dimension(40, 40));
+    helpBtn.addActionListener(e -> showHelp(frame));
+
+    bottomPanel.add(helpBtn);
+    frame.add(bottomPanel, BorderLayout.SOUTH);
+
+    frame.setVisible(true);
+}
 	
 }
