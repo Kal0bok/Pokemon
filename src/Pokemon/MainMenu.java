@@ -28,7 +28,7 @@ public class MainMenu {
         JButton startBtn = createButton("START", Color.GREEN);
         JButton exitBtn = createButton("EXIT", Color.RED);
 
-        startBtn.addActionListener(e -> openTwoImagesWindow());
+        startBtn.addActionListener(e -> openTwoCardsWindow());
 
         exitBtn.addActionListener(e -> System.exit(0));
 
@@ -69,50 +69,83 @@ public class MainMenu {
             <html>
             <h2>Help:</h2>
             <ul>
-            <li>Press START to begin.</li>
-            <li>Press EXIT to close app.</li>
+            <li>Press START to begin the game.</li>
+            <li>Press EXIT to close the application.</li>
             </ul>
             </html>
             """;
         JOptionPane.showMessageDialog(frame, helpText, "Help", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    private void openTwoImagesWindow() {
-        JFrame frame = new JFrame("Pick an Image");
+    private void openTwoCardsWindow() {
+        JFrame frame = new JFrame("Trainer");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(900, 500);
         frame.setResizable(false);
 
-        JPanel mainPanel = new JPanel(new GridLayout(1, 2));
+        JPanel mainPanel = new JPanel(new GridLayout(1, 2, 20, 0));
+        mainPanel.setBackground(new Color(20, 30, 60));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        JLabel img1 = new JLabel();
-        img1.setHorizontalAlignment(SwingConstants.CENTER);
-        img1.setIcon(new ImageIcon("image_left.png")); 
-        img1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        JPanel card1 = createGameCard(
+                "Ash",
+                getClass().getResource("/GIF/ashg.gif"),
+                "Viņam ir pikachu. Galvenais varonis!"
+        );
 
-        JLabel img2 = new JLabel();
-        img2.setHorizontalAlignment(SwingConstants.CENTER);
-        img2.setIcon(new ImageIcon("image_right.png")); 
-        img2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        JPanel card2 = createGameCard(
+                "Leon",
+                getClass().getResource("/GIF/leong.gif"),
+                "Viens no stiprakiem čempioniem arenā. Stipri pokemoni!"
+        );
 
-        img1.addMouseListener(new MouseAdapter() {
+        card1.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(frame, "Tu izvēlas ASH!");
+                JOptionPane.showMessageDialog(frame, "Tu izvēlējies Ash!");
             }
         });
 
-        img2.addMouseListener(new MouseAdapter() {
+        card2.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(frame, "Tu izvēlas LEON!");
+                JOptionPane.showMessageDialog(frame, "Tu izvēlējies Leon!");
             }
         });
 
-        mainPanel.add(img1);
-        mainPanel.add(img2);
+        mainPanel.add(card1);
+        mainPanel.add(card2);
 
         frame.add(mainPanel);
         frame.setVisible(true);
     }
+
+    private JPanel createGameCard(String name, java.net.URL imageUrl, String description) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.setBackground(new Color(40, 40, 80));
+        panel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        panel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        JLabel title = new JLabel(name, SwingConstants.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, 24));
+        title.setForeground(Color.WHITE);
+        title.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+
+        JLabel image = new JLabel();
+        image.setHorizontalAlignment(SwingConstants.CENTER);
+        image.setIcon(new ImageIcon(imageUrl));
+
+        JLabel desc = new JLabel(description, SwingConstants.CENTER);
+        desc.setFont(new Font("Arial", Font.PLAIN, 14));
+        desc.setForeground(Color.LIGHT_GRAY);
+        desc.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+
+        panel.add(title, BorderLayout.NORTH);
+        panel.add(image, BorderLayout.CENTER);
+        panel.add(desc, BorderLayout.SOUTH);
+
+        return panel;
+    }
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(MainMenu::new);
