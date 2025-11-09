@@ -28,9 +28,10 @@ public class MainMenu {
         JButton startBtn = createButton("START", Color.GREEN);
         JButton exitBtn = createButton("EXIT", Color.RED);
 
-        startBtn.addActionListener(e -> openTwoCardsWindow());
+        startBtn.addActionListener(e -> trainer());
 
         exitBtn.addActionListener(e -> System.exit(0));
+        exitBtn.addActionListener(e -> JOptionPane.showInternalMessageDialog(null, "Programma apturēta!"));
 
         buttonPanel.add(startBtn);
         buttonPanel.add(exitBtn);
@@ -77,7 +78,7 @@ public class MainMenu {
         JOptionPane.showMessageDialog(frame, helpText, "Help", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    private void openTwoCardsWindow() {
+    private void trainer() {
         JFrame frame = new JFrame("Trainer");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(900, 500);
