@@ -11,6 +11,10 @@ import javax.swing.ScrollPaneConstants;
 
 
 public class Pokedatnis {
+	
+	private static final String[] tipi = {"Electric", "Fire", "Water", "Grass", "Psychic"};
+    private static final String[] atbilde = {"Jā", "Nē"};
+	
     public static void main(String[] args) {
     	String izvele;
         int izvelesID;
