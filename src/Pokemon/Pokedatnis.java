@@ -130,11 +130,15 @@ public class Pokedatnis {
                 break;
             	
             case 5:
-            	JOptionPane.showMessageDialog(null, "Programma apturēta", "Apturēta",
-                        JOptionPane.PLAIN_MESSAGE);
-            	break;
+                JOptionPane.showMessageDialog(null, "Arena cīņa vēl nav izveidota.");
+                break;
             
             }
+            
+        case 6:
+            JOptionPane.showMessageDialog(null, "Arena cīņa vēl nav izveidota.");
+            break;
+        }
   
         }while (izvelesID != 5);
     }
