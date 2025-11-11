@@ -16,6 +16,43 @@ public class Pokemons implements Comparable<Pokemons> {
         this.attack = attack;
         this.defense = defense;
     }
+    
+    public String getName() {
+        return name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public double getHp() {
+        return hp;
+    }
+
+    public double getAttack() {
+        return attack;
+    }
+
+    public double getDefense() {
+        return defense;
+    }
+
+    public String display() {
+        return "Name: " + name +
+               "\nType: " + type +
+               "\nLevel: " + level +
+               "\nHP: " + hp +
+               "\nAttack: " + attack +
+               "\nDefense: " + defense;
+    }
+
+    public String izvadit() {
+        return name + " (" + type + ") - Level: " + level;
+    }
         
         @Override
         public int compareTo(Pokemons other) {
