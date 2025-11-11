@@ -6,10 +6,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class MainMenu {
-
+	
+	private JFrame frame;
+	
     public MainMenu() {
     	
-        JFrame frame = new JFrame("Game");
+    	frame = new JFrame("Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 300);
         frame.setResizable(false);
@@ -80,10 +82,14 @@ public class MainMenu {
     }
 
     private void trainer() {
+        JFrame mainFrame = getMainFrame(); 
+        if (mainFrame != null) {
+            mainFrame.setVisible(false); 
+        }
+        
         JFrame frame = new JFrame("Trainer");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(900, 500);
-        frame.setResizable(false);
+        	
 
         JPanel mainPanel = new JPanel(new GridLayout(1, 2, 20, 0));
         mainPanel.setBackground(new Color(20, 30, 60));
@@ -104,12 +110,16 @@ public class MainMenu {
         card1.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 JOptionPane.showMessageDialog(frame, "Tu izvēlējies Ash!");
+                frame.dispose();
+                SwingUtilities.invokeLater(()-> Pokedatnis.main(new String[]{}));
             }
         });
 
         card2.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 JOptionPane.showMessageDialog(frame, "Tu izvēlējies izveidot paši!");
+                frame.dispose();
+                SwingUtilities.invokeLater(()-> Pokedatnis.main(new String[]{}));
             }
         });
 
@@ -147,7 +157,9 @@ public class MainMenu {
 
         return panel;
     }
-
+    private JFrame getMainFrame() {
+        return frame;
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(MainMenu::new);

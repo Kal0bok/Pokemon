@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 public class Trainer {
     private String name;
-    private double age;
-    private double level;
+    private int age;
+    private int level;
     private ArrayList<Pokemons> pokemons;
 
-    public Trainer(String name, double vecums, double limenis) {
+    public Trainer(String name, int age, int level) {
         this.name = name;
-        this.age = vecums;
-        this.level = limenis;
+        this.age = age;
+        this.level = level;
         this.pokemons = new ArrayList<>();
     }
 
