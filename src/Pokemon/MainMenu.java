@@ -31,8 +31,8 @@ public class MainMenu {
 
         startBtn.addActionListener(e -> trainer());
 
-        exitBtn.addActionListener(e -> System.exit(0));
-        exitBtn.addActionListener(e -> JOptionPane.showInternalMessageDialog(null, "Programma apturēta!"));
+        exitBtn.addActionListener(e -> {JOptionPane.showMessageDialog(
+        		null, "Programma apturēta!"); System.exit(0); });
 
         buttonPanel.add(startBtn);
         buttonPanel.add(exitBtn);

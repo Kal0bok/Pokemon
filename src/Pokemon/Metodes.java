@@ -52,10 +52,10 @@ public class Metodes {
     }
 	
 	public static int pokemonIzvele(ArrayList<Pokemons> pokemoni) {
-        String[] kSaraksts = new String[pokemoni.size()];
-        for (int i = 0; i < kSaraksts.length; i++) {
-        	Pokedatnis k = (Pokedatnis) pokemoni.get(i);
-        }
+	    String[] kSaraksts = new String[pokemoni.size()];
+	    for (int i = 0; i < pokemoni.size(); i++) {
+	        kSaraksts[i] = pokemoni.get(i).getName(); 
+	    }
 
         String izveletais = (String) JOptionPane.showInputDialog(null,
                 "Izvēlies pokemonu: ", "Izvēle", JOptionPane.QUESTION_MESSAGE, null,

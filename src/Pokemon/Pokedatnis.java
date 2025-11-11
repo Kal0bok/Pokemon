@@ -20,17 +20,16 @@ public class Pokedatnis {
         String tVards = Metodes.virkneParbaud("Ievadi trenera vārdu:");
         if (tVards == null) return;
 
-        double vecums = (double) Metodes.skaitlaParbaude("Ievadi vecumu (5-99)", 5, 99);
+        int vecums = (int) Metodes.skaitlaParbaude("Ievadi vecumu (5-99)", 5, 99).doubleValue();
         if (vecums < 0) return;
 
-        double limenis = (double) Metodes.skaitlaParbaude("Ievadi līmeni (1-10)", 1, 10);
+        int limenis = (int) Metodes.skaitlaParbaude("Ievadi līmeni (1-10)", 1, 10).doubleValue();
         if (limenis < 0) return;
 
         Trainer treneris = new Trainer(tVards, vecums, limenis);
 
         JOptionPane.showMessageDialog(null, "Treneris sekmīgi izveidots!");
     }
-
 	
     public static void main(String[] args) {
     	String izvele;
@@ -122,7 +121,7 @@ public class Pokedatnis {
                         JOptionPane.showMessageDialog(null, pokemoni.get(id).display());
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Nav neviena Pokémona!");
+                    JOptionPane.showMessageDialog(null, "Nav neviena Pokemona!");
                 }
                 break;
             	
@@ -149,14 +148,13 @@ public class Pokedatnis {
             case 5:
                 JOptionPane.showMessageDialog(null, "Arena cīņa vēl nav izveidota.");
                 break;
-            
+                
+            case 6:
+                JOptionPane.showMessageDialog(null, "Arena cīņa vēl nav izveidota.");
+                break;
             }
             
-        case 6:
-            JOptionPane.showMessageDialog(null, "Arena cīņa vēl nav izveidota.");
-            break;
-        }
-  
+           
         }while (izvelesID != 5);
     }
 	
