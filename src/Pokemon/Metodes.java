@@ -1,5 +1,7 @@
 package Pokemon;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
@@ -47,6 +49,19 @@ public class Metodes {
                         JOptionPane.WARNING_MESSAGE);
             }
         }
+    }
+	
+	public static int pokemonIzvele(ArrayList<Pokemons> pokemoni) {
+        String[] kSaraksts = new String[pokemoni.size()];
+        for (int i = 0; i < kSaraksts.length; i++) {
+        	Pokedatnis k = (Pokedatnis) pokemoni.get(i);
+        }
+
+        String izveletais = (String) JOptionPane.showInputDialog(null,
+                "Izvēlies pokemonu: ", "Izvēle", JOptionPane.QUESTION_MESSAGE, null,
+                kSaraksts, kSaraksts[0]);
+
+        return Arrays.asList(kSaraksts).indexOf(izveletais);
     }
 	
 }

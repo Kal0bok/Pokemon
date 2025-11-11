@@ -26,7 +26,7 @@ public class Pokedatnis {
         double limenis = (double) Metodes.skaitlaParbaude("Ievadi līmeni (1-10)", 1, 10);
         if (limenis < 0) return;
 
-        treneris = new Trainer(tVards, vecums, limenis);
+        Trainer treneris = new Trainer(tVards, vecums, limenis);
 
         JOptionPane.showMessageDialog(null, "Treneris sekmīgi izveidots!");
     }

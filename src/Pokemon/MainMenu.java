@@ -7,10 +7,8 @@ import java.awt.event.MouseEvent;
 
 public class MainMenu {
 
-    private Pokedatnis treneris;  
-
     public MainMenu() {
-
+    	
         JFrame frame = new JFrame("Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 300);
@@ -31,9 +29,10 @@ public class MainMenu {
         JButton startBtn = createButton("START", Color.GREEN);
         JButton exitBtn = createButton("EXIT", Color.RED);
 
-        startBtn.addActionListener(e -> trainerMenu());
+        startBtn.addActionListener(e -> trainer());
 
         exitBtn.addActionListener(e -> System.exit(0));
+        exitBtn.addActionListener(e -> JOptionPane.showInternalMessageDialog(null, "Programma apturēta!"));
 
         buttonPanel.add(startBtn);
         buttonPanel.add(exitBtn);
@@ -80,7 +79,7 @@ public class MainMenu {
         JOptionPane.showMessageDialog(frame, helpText, "Help", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    private void trainerMenu() {
+    private void trainer() {
         JFrame frame = new JFrame("Trainer");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(900, 500);
@@ -97,21 +96,20 @@ public class MainMenu {
         );
 
         JPanel card2 = createGameCard(
-                "Izveidot treneri",
+                "?",
                 getClass().getResource("/GIF/question.gif"),
-                "Izveido savu treneri!"
+                "???"
         );
 
         card1.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                treneris = new Pokedatnis("Ash", 15, 10);
                 JOptionPane.showMessageDialog(frame, "Tu izvēlējies Ash!");
             }
         });
 
         card2.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                createTrainer();
+                JOptionPane.showMessageDialog(frame, "Tu izvēlējies izveidot paši!");
             }
         });
 
@@ -150,21 +148,6 @@ public class MainMenu {
         return panel;
     }
 
-    private void createTrainer() {
-
-        String tVards = Metodes.virkneParbaud("Ievadi trenera vārdu:");
-        if (tVards == null) return;
-
-        double vecums = (double) Metodes.skaitlaParbaude("Ievadi vecumu (5-99)", 5, 99);
-        if (vecums < 0) return;
-
-        double limenis = (double) Metodes.skaitlaParbaude("Ievadi līmeni (1-10)", 1, 10);
-        if (limenis < 0) return;
-
-        treneris = new Pokedatnis(tVards, vecums, limenis);
-
-        JOptionPane.showMessageDialog(null, "Treneris sekmīgi izveidots!");
-    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(MainMenu::new);
