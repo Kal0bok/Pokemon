@@ -91,10 +91,10 @@ public class MainMenu {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         	
 
-        JPanel mainPanel = new JPanel(new GridLayout(1, 2, 20, 0));
+        JPanel mainPanel = new JPanel(new GridLayout(1, 2, 20, 2));
         mainPanel.setBackground(new Color(20, 30, 60));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-
+        frame.setSize(900, 500);
         JPanel card1 = createGameCard(
                 "Ash",
                 getClass().getResource("/GIF/ashg.gif"),
