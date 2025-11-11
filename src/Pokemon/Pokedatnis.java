@@ -99,34 +99,35 @@ public class Pokedatnis {
                 break;
             	
             case 3:
-            	if(konti.size() > 0) {
-					String atb = (String) JOptionPane.showInputDialog(null,
-							"Kārtot kontus pēc atlikuma augoši?", "Izvēle",
-							JOptionPane.INFORMATION_MESSAGE, null, 
-							atbilde, atbilde[0]);
-					if(atb != null) {
-						if(atb.equals("Jā")) {
-							 Collections.sort(konti);
-							JOptionPane.showMessageDialog(null, 
-									"Konti sakārtoti augoši!", "Kārtošana",
-									JOptionPane.INFORMATION_MESSAGE);
-						}else {
-							Collections.sort(konti, Collections.reverseOrder());
-							JOptionPane.showMessageDialog(null, 
-									"Konti sakārtoti dilstoši!", "Kārtošana",
-									JOptionPane.INFORMATION_MESSAGE);
-						}
-					}
-				}else {
-					JOptionPane.showMessageDialog(null, "Nav ievadīts neviens konts",
-							"Kļūda", JOptionPane.ERROR_MESSAGE);
-					break;
-				}
-				break;
+                if (pokemoni.size() > 0) {
+                    int id = Metodes.pokemonIzvele(pokemoni);
+                    if (id >= 0) {
+                        JOptionPane.showMessageDialog(null, pokemoni.get(id).display());
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Nav neviena Pokémona!");
+                }
+                break;
             	
             case 4:
-            	bankomats.apkalpo(konti);
-            	break;
+                if (pokemoni.size() > 0) {
+                    String atb = (String) JOptionPane.showInputDialog(null,
+                            "Kārtot pēc spēka augoši?",
+                            "Izvēle",
+                            JOptionPane.QUESTION_MESSAGE,
+                            null, atbilde, atbilde[0]);
+
+                    if (atb != null) {
+                        if (atb.equals("Jā")) Collections.sort(pokemoni);
+                        else Collections.sort(pokemoni, Collections.reverseOrder());
+
+                        JOptionPane.showMessageDialog(null, "Pokemoni sakārtoti!");
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Nav ko kārtot!");
+                }
+                break;
             	
             case 5:
             	JOptionPane.showMessageDialog(null, "Programma apturēta", "Apturēta",
