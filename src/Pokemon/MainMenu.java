@@ -7,7 +7,10 @@ import java.awt.event.MouseEvent;
 
 public class MainMenu {
 
+    private Trainer treneris;  // ← здесь хранится выбранный или созданный тренер
+
     public MainMenu() {
+
         JFrame frame = new JFrame("Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 300);
@@ -28,10 +31,9 @@ public class MainMenu {
         JButton startBtn = createButton("START", Color.GREEN);
         JButton exitBtn = createButton("EXIT", Color.RED);
 
-        startBtn.addActionListener(e -> trainer());
+        startBtn.addActionListener(e -> trainerMenu());
 
         exitBtn.addActionListener(e -> System.exit(0));
-        exitBtn.addActionListener(e -> JOptionPane.showInternalMessageDialog(null, "Programma apturēta!"));
 
         buttonPanel.add(startBtn);
         buttonPanel.add(exitBtn);
@@ -78,7 +80,7 @@ public class MainMenu {
         JOptionPane.showMessageDialog(frame, helpText, "Help", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    private void trainer() {
+    private void trainerMenu() {
         JFrame frame = new JFrame("Trainer");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(900, 500);
@@ -95,20 +97,23 @@ public class MainMenu {
         );
 
         JPanel card2 = createGameCard(
-                "?",
+                "Izveidot treneri",
                 getClass().getResource("/GIF/question.gif"),
-                "???"
+                "Izveido savu treneri!"
         );
 
+        // Izvēle — Ash
         card1.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
+                treneris = new Trainer("Ash", 15, 10);
                 JOptionPane.showMessageDialog(frame, "Tu izvēlējies Ash!");
             }
         });
 
+        // Izvēle — izveidot treneri
         card2.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(frame, "Tu izvēlējies Leon!");
+                createTrainer();
             }
         });
 
@@ -147,6 +152,22 @@ public class MainMenu {
         return panel;
     }
 
+    // ✅ ТВОЙ ВСТАВЛЕННЫЙ КОД — СОЗДАНИЕ ТРЕНЕРА
+    private void createTrainer() {
+
+        String tVards = Metodes.virkneParbaud("Ievadi trenera vārdu:");
+        if (tVards == null) return;
+
+        double vecums = (double) Metodes.skaitlaParbaude("Ievadi vecumu (5-99)", 5, 99);
+        if (vecums < 0) return;
+
+        double limenis = (double) Metodes.skaitlaParbaude("Ievadi līmeni (1-10)", 1, 10);
+        if (limenis < 0) return;
+
+        treneris = new Trainer(tVards, vecums, limenis);
+
+        JOptionPane.showMessageDialog(null, "Treneris sekmīgi izveidots!");
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(MainMenu::new);
