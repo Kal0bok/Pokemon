@@ -124,7 +124,6 @@ public class MainMenu {
                 	SwingUtilities.invokeLater(() -> trainer()); 
                     return;
                 }
-                Pokedatnis.createTrainer();
                 SwingUtilities.invokeLater(()-> Pokedatnis.main(new String[]{}));
                 
             }

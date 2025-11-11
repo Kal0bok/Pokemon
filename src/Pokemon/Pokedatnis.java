@@ -21,7 +21,6 @@ public class Pokedatnis {
         if (tVards == null) {
         	return null;
         }
-
         int vecums = (int) Metodes.skaitlaParbaude("Ievadi vecumu (5-99)", 5, 99).doubleValue();
         if (vecums < 0) return null;
 
@@ -30,7 +29,7 @@ public class Pokedatnis {
 
         Trainer treneris = new Trainer(tVards, vecums, limenis);
 
-        JOptionPane.showMessageDialog(null, "Treneris sekmīgi izveidots!");
+        JOptionPane.showMessageDialog(null, "Treneris veiksmīgi izveidots!");
 		return treneris;
     }
 	
@@ -38,7 +37,7 @@ public class Pokedatnis {
     	String izvele;
         int izvelesID;
         String[] darbibas = {"Jauns pokemons", "Nodot pokemonu",
-                "Pokemonu saraksts", "Pokemona profils", "Trenera profils", "Kārtot pēc stipruma", "Arena cīņas",
+                "Pokemonu saraksts", "Pokemona profils", "Kārtot pēc stipruma", "Trenera profils", "Arena cīņas",
                 "Apturet programmu"};
         
         ArrayList<Pokemons> pokemoni = new ArrayList<>();
@@ -87,7 +86,7 @@ public class Pokedatnis {
                     int id = Metodes.pokemonIzvele(pokemoni);
                     if (id >= 0) {
                         pokemoni.remove(id);
-                        JOptionPane.showMessageDialog(null, "Pokemon nodots!");
+                        JOptionPane.showMessageDialog(null, "Pokemonы nodots!");
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Nav neviena Pokemona!");
@@ -147,18 +146,22 @@ public class Pokedatnis {
                     JOptionPane.showMessageDialog(null, "Nav ko kārtot!");
                 }
                 break;
-            	
+                
             case 5:
+                JOptionPane.showMessageDialog(null, "Tev vel nav trenera.");
+                break;
+            	
+            case 6:
                 JOptionPane.showMessageDialog(null, "Arena cīņa vēl nav izveidota.");
                 break;
                 
-            case 6:
-                JOptionPane.showMessageDialog(null, "Arena cīņa vēl nav izveidota.");
+            case 7:
+                JOptionPane.showMessageDialog(null, "Programma ir aptureta");
                 break;
             }
             
            
-        }while (izvelesID != 5);
+        }while (izvelesID != 7);
     }
 	
 }
