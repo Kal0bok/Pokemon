@@ -39,7 +39,7 @@ public class Pokedatnis {
 
 
             case 0:
-            	String vards = Metodes.virkneParbaud("Ievadi Pokémona vārdu:");
+            	String vards = Metodes.virkneParbaud("Ievadi Pokemona vārdu:");
                 if (vards == null) break;
 
                 String tips = (String) JOptionPane.showInputDialog(null,
@@ -47,20 +47,20 @@ public class Pokedatnis {
                         JOptionPane.QUESTION_MESSAGE, null, tipi, tipi[0]);
                 if (tips == null) break;
 
-                int lvl = (int) Metodes.skaitlaParbaude("Ievadi līmeni (1-50)", 1, 50);
+                double lvl = (double) Metodes.skaitlaParbaude("Ievadi līmeni (1-50)", 1, 50);
                 if (lvl < 0) break;
 
-                int hp = (int) Metodes.skaitlaParbaude("Ievadi HP (1-200)", 1, 200);
+                double hp = (double) Metodes.skaitlaParbaude("Ievadi HP (1-200)", 1, 200);
                 if (hp < 0) break;
 
-                int def = (int) Metodes.skaitlaParbaude("Ievadi aizsardzību (1-100)", 1, 100);
+                double def = (double) Metodes.skaitlaParbaude("Ievadi aizsardzību (1-100)", 1, 100);
                 if (def < 0) break;
 
-                int atk = (int) Metodes.skaitlaParbaude("Ievadi uzbrukumu (1-100)", 1, 100);
+                double atk = (double) Metodes.skaitlaParbaude("Ievadi uzbrukumu (1-100)", 1, 100);
                 if (atk < 0) break;
 
                 pokemoni.add(new Pokemons(vards, tips, lvl, hp, atk, def));
-                JOptionPane.showMessageDialog(null, "Pokemon sekmīgi pievienots!");
+                JOptionPane.showMessageDialog(null, "Pokemon pievienots!");
                 break;
             	
             case 1:
@@ -68,42 +68,35 @@ public class Pokedatnis {
                     int id = Metodes.pokemonIzvele(pokemoni);
                     if (id >= 0) {
                         pokemoni.remove(id);
-                        JOptionPane.showMessageDialog(null, "Pokémon izdzēsts!");
+                        JOptionPane.showMessageDialog(null, "Pokemon nodots!");
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Nav neviena Pokémona!");
+                    JOptionPane.showMessageDialog(null, "Nav neviena Pokemona!");
                 }
                 break;
             	
             case 2:
-            	if (konti.size() > 0) {
-                    String str = "Kontu skaits: " + konti.size() +
-                            "\n_________________________________\n";
-                    
-                    for (norkarte karte : konti) {
-                    	String veids;
-                    	if (karte instanceof kredkarte) {
-                    	    veids = "Kredītkarte";
-                    	} else {
-                    	    veids = "Norēķinu karte";
-                    	}
-                        str += "Kartes veids: " + veids + "\n";
-                        str += karte.izvadit() + "\n";
-                        str += "_________________________________\n";
-                    }
-
-                    JTextArea ta = new JTextArea(str, 10, 40);
-                    ta.setEditable(false);
-                    JScrollPane sp = new JScrollPane(ta);
-                    sp.setVerticalScrollBarPolicy(
-                            ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-                    JOptionPane.showMessageDialog(ta, sp, "Kontu saraksts",
-                            JOptionPane.PLAIN_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Nav ievadīts neviens konts",
-                            "Kļūda", JOptionPane.ERROR_MESSAGE);
-                }
-            	break;
+            	if(pokemoni.size() > 0) { 
+					String str = "Pokemonu skaits: "+pokemoni.size()+
+							"\n_________________________________\n";
+					for(int i=0; i<pokemoni.size(); i++) {
+						str += ((Pokemons)pokemoni.get(i)).izvadit()+
+							"\n_________________________________\n";
+					}
+					
+					JTextArea ta = new JTextArea (str, 10, 40);
+					ta.setEditable(false);
+					JScrollPane sp = new JScrollPane(ta);
+					sp.setVerticalScrollBarPolicy(
+							ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+					JOptionPane.showMessageDialog(ta, sp, "Saraksts",
+							JOptionPane.PLAIN_MESSAGE);
+				}else {
+					JOptionPane.showMessageDialog(null, "Nav neviena Pokemona!",
+							"Kļūda", JOptionPane.ERROR_MESSAGE);
+					break;
+				}
+                break;
             	
             case 3:
             	if(konti.size() > 0) {
