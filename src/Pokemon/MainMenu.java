@@ -117,9 +117,16 @@ public class MainMenu {
 
         card2.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(frame, "Tu izvēlējies izveidot paši!");
-                frame.dispose();
+            	frame.dispose();
+                JOptionPane.showMessageDialog(frame, "Tu izvēlējies izveidot paši!");   
+                Trainer treneris = Pokedatnis.createTrainer();
+                if(treneris == null) {
+                	SwingUtilities.invokeLater(() -> trainer()); 
+                    return;
+                }
+                Pokedatnis.createTrainer();
                 SwingUtilities.invokeLater(()-> Pokedatnis.main(new String[]{}));
+                
             }
         });
 
