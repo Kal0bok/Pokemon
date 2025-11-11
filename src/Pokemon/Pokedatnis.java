@@ -14,12 +14,29 @@ public class Pokedatnis {
 	
 	private static final String[] tipi = {"Electric", "Fire", "Water", "Grass", "Psychic"};
     private static final String[] atbilde = {"Jā", "Nē"};
+    
+    private void createTrainer() {
+
+        String tVards = Metodes.virkneParbaud("Ievadi trenera vārdu:");
+        if (tVards == null) return;
+
+        double vecums = (double) Metodes.skaitlaParbaude("Ievadi vecumu (5-99)", 5, 99);
+        if (vecums < 0) return;
+
+        double limenis = (double) Metodes.skaitlaParbaude("Ievadi līmeni (1-10)", 1, 10);
+        if (limenis < 0) return;
+
+        treneris = new Trainer(tVards, vecums, limenis);
+
+        JOptionPane.showMessageDialog(null, "Treneris sekmīgi izveidots!");
+    }
+
 	
     public static void main(String[] args) {
     	String izvele;
         int izvelesID;
         String[] darbibas = {"Jauns pokemons", "Nodot pokemonu",
-                "Pokemonu saraksts", "Pokemona profils", "Kārtot pēc stipruma", "Arena cīņas",
+                "Pokemonu saraksts", "Pokemona profils", "Trenera profils", "Kārtot pēc stipruma", "Arena cīņas",
                 "Apturet programmu"};
         
         ArrayList<Pokemons> pokemoni = new ArrayList<>();
