@@ -22,7 +22,7 @@ public class Pokedatnis {
                 "Pokemonu saraksts", "Pokemona profils", "Kārtot pēc stipruma", "Arena cīņas",
                 "Apturet programmu"};
         
-        ArrayList<Pokemon> pokemoni = new ArrayList<>();
+        ArrayList<Pokemons> pokemoni = new ArrayList<>();
         
         do {
             izvele = (String) JOptionPane.showInputDialog(
@@ -59,23 +59,21 @@ public class Pokedatnis {
                 int atk = (int) Metodes.skaitlaParbaude("Ievadi uzbrukumu (1-100)", 1, 100);
                 if (atk < 0) break;
 
-                pokemoni.add(new Pokemon(vards, tips, lvl, hp, atk, def));
+                pokemoni.add(new Pokemons(vards, tips, lvl, hp, atk, def));
                 JOptionPane.showMessageDialog(null, "Pokemon sekmīgi pievienots!");
                 break;
             	
             case 1:
-            	if (konti.size() > 0) {
-                    int kontID = Metodes.kontaIzvele(konti);
-                    if (kontID >= 0) {
-                    konti.remove(kontID);
-                    JOptionPane.showMessageDialog(null, "Veiksmīgi izdzēsts konts",
-                            "Paziņojums", JOptionPane.INFORMATION_MESSAGE);
+                if (pokemoni.size() > 0) {
+                    int id = Metodes.pokemonIzvele(pokemoni);
+                    if (id >= 0) {
+                        pokemoni.remove(id);
+                        JOptionPane.showMessageDialog(null, "Pokémon izdzēsts!");
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Nav ievadīts neviens konts",
-                            "Kļūda", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Nav neviena Pokémona!");
                 }
-            }
-            	break;
+                break;
             	
             case 2:
             	if (konti.size() > 0) {
