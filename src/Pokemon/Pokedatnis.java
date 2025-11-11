@@ -11,66 +11,52 @@ import javax.swing.ScrollPaneConstants;
 
 
 public class Pokedatnis {
-	
-	private static final String[] bankas = {"Swedbank", "SEB", "Citadele"};
-    private static final String[] veidi = {"Norēķinu karte", "Kredītkarte"};
-    private static final String[] atbilde = {"Jā", "Nē"};
-
     public static void main(String[] args) {
     	String izvele;
         int izvelesID;
-        String[] darbibas = {"Jauns konts", "Noņemt kontu",
-                "Kontu saraksts", "Kārtot pēc atlikuma", "Bankomāts",
-                "Aizvērt programmu"};
-        ArrayList<norkarte> konti = new ArrayList<>();
+        String[] darbibas = {"Jauns pokemons", "Nodot pokemonu",
+                "Pokemonu saraksts", "Pokemona profils", "Kārtot pēc stipruma", "Arena cīņas",
+                "Apturet programmu"};
+        
+        ArrayList<Pokemon> pokemoni = new ArrayList<>();
         
         do {
-        	izvele = (String) JOptionPane.showInputDialog(null, "Izvēlies darbību",
-                    "Izvēlne", JOptionPane.QUESTION_MESSAGE, null
-                    , darbibas, darbibas[0]);
+            izvele = (String) JOptionPane.showInputDialog(
+                    null, "Izvēlies darbību",
+                    "Izvēlne",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null, darbibas, darbibas[0]);
+
             if (izvele == null) break;
 
             izvelesID = Arrays.asList(darbibas).indexOf(izvele);
-            
-            switch(izvelesID) {
-            
+
+            switch (izvelesID) {
+
+
             case 0:
-            	izvele = (String) JOptionPane.showInputDialog(null, "Izvēlies kartes veidu",
-                        "Izvēlne", JOptionPane.QUESTION_MESSAGE, null
-                        , veidi, veidi[0]);
-                if (izvele == null) break;
-
-                String banka = (String) JOptionPane.showInputDialog(null, "Izvēlies banku",
-                        "Izvēlne", JOptionPane.QUESTION_MESSAGE, null
-                        , bankas, bankas[0]);
-                if (banka == null) break;
-
-                String vards = Metodes.virkneParbaud("Ievadi vardu");
+            	String vards = Metodes.virkneParbaud("Ievadi Pokémona vārdu:");
                 if (vards == null) break;
-                String uzvards = Metodes.virkneParbaud("Ievadi uzvārdu");
-                if (uzvards == null) break;
-                String persKods = Metodes.ciparuParbaudee(("Ievadi personas kodu (123456-12345)"), 11);
-                if (persKods == null) break;
-                String smartId = Metodes.ciparuParbaude("Ievadi Smart ID kodu (5 cipari)", 5);
-                if (smartId == null) break;
-                double derG = Metodes.skaitlaParbaude("Ievadi derīguma termiņu gados (min 1)", 1, 10);
-                if (derG < 0) break;
-                int derigGadi = (int) derG; 
-                String paraksts = Metodes.virkneParbaud("Ievadi parakstu");
-                if (paraksts == null) break;
 
-                if (izvele.equals("Norēķinu karte")) {
-                    konti.add(new norkarte(banka, vards, uzvards, persKods, smartId,
-                    		derigGadi, paraksts));
-                    JOptionPane.showMessageDialog(null, "Veiksmīgi izveidota norēķinu karte",
-                            "Paziņojums", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                	double lim = Metodes.skaitlaParbaude("Ievadi kredīta limitu", 100, 10000);
-                    if (lim < 0) break;
-                    konti.add(new kredkarte(banka, vards, uzvards, persKods, smartId, derigGadi, paraksts, lim));
-                    JOptionPane.showMessageDialog(null, "Veiksmīgi izveidota kredītkarte",
-                            "Paziņojums", JOptionPane.INFORMATION_MESSAGE);
-                }
+                String tips = (String) JOptionPane.showInputDialog(null,
+                        "Izvēlies tipu:", "Tips",
+                        JOptionPane.QUESTION_MESSAGE, null, tipi, tipi[0]);
+                if (tips == null) break;
+
+                int lvl = (int) Metodes.skaitlaParbaude("Ievadi līmeni (1-50)", 1, 50);
+                if (lvl < 0) break;
+
+                int hp = (int) Metodes.skaitlaParbaude("Ievadi HP (1-200)", 1, 200);
+                if (hp < 0) break;
+
+                int def = (int) Metodes.skaitlaParbaude("Ievadi aizsardzību (1-100)", 1, 100);
+                if (def < 0) break;
+
+                int atk = (int) Metodes.skaitlaParbaude("Ievadi uzbrukumu (1-100)", 1, 100);
+                if (atk < 0) break;
+
+                pokemoni.add(new Pokemon(vards, tips, lvl, hp, atk, def));
+                JOptionPane.showMessageDialog(null, "Pokemon sekmīgi pievienots!");
                 break;
             	
             case 1:

@@ -91,13 +91,13 @@ public class MainMenu {
         JPanel card1 = createGameCard(
                 "Ash",
                 getClass().getResource("/GIF/ashg.gif"),
-                "Viņam ir pikachu. Galvenais varonis!"
+                "Pikachu treneris. Galvenais varonis!"
         );
 
         JPanel card2 = createGameCard(
-                "Leon",
-                getClass().getResource("/GIF/leong.gif"),
-                "Viens no stiprakiem čempioniem arenā. Stipri pokemoni!"
+                "?",
+                getClass().getResource("/GIF/question.gif"),
+                "???"
         );
 
         card1.addMouseListener(new MouseAdapter() {
