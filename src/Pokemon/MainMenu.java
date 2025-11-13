@@ -119,7 +119,7 @@ public class MainMenu {
             public void mouseClicked(MouseEvent e) {
             	frame.dispose();
                 JOptionPane.showMessageDialog(frame, "Tu izvēlējies izveidot paši!");   
-                Trainer treneris = Pokedatnis.createTrainer();
+                Trainer treneris = Pokedatnis.createTrainer(null);
                 if(treneris == null) {
                 	SwingUtilities.invokeLater(() -> trainer()); 
                     return;
@@ -136,7 +136,8 @@ public class MainMenu {
         frame.setVisible(true);
     }
     
-    private void trainImage() {
+    public String trainImage() {
+    	
         JFrame mainFrame = getMainFrame();
         if (mainFrame != null) {
             mainFrame.setVisible(false);
@@ -176,7 +177,7 @@ public class MainMenu {
             public void mouseClicked(MouseEvent e) {
                 frame.dispose();
                 JOptionPane.showMessageDialog(frame, "67!");
-                Trainer treneris = Pokedatnis.createTrainer();
+                Trainer treneris = Pokedatnis.createTrainer(null);
                 if (treneris == null) {
                     SwingUtilities.invokeLater(() -> trainer());
                     return;
@@ -190,6 +191,7 @@ public class MainMenu {
 
         frame.add(mainPanel);
         frame.setVisible(true);
+		return null;
     }
 
     private JPanel createGameCard(String name, java.net.URL imageUrl, String description) {

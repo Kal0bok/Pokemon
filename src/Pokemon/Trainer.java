@@ -7,8 +7,13 @@ public class Trainer {
     private int age;
     private int level;
     private ArrayList<Pokemons> pokemons;
-
+    private String imageName;
+    
     public Trainer(String name, int age, int level) {
+        this(name, age, level, null);
+    }
+
+    public Trainer(String name, int age, int level, String imageName) {
         this.name = name;
         this.age = age;
         this.level = level;
