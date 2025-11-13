@@ -135,6 +135,62 @@ public class MainMenu {
         frame.add(mainPanel);
         frame.setVisible(true);
     }
+    
+    private void trainImage() {
+        JFrame mainFrame = getMainFrame();
+        if (mainFrame != null) {
+            mainFrame.setVisible(false);
+        }
+
+        JFrame frame = new JFrame("Trainer");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(900, 500);
+
+        JPanel mainPanel = new JPanel(new GridLayout(1, 2, 20, 2));
+        mainPanel.setBackground(new Color(20, 30, 60));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        JPanel card1 = createGameCard(
+                "Leon",
+                getClass().getResource("/GIF/leong.gif"),
+                "Stiprs arenas čempions!"
+        );
+
+        JPanel card2 = createGameCard(
+                "Six-Seven",
+                getClass().getResource("/GIF/leon.gif"),
+                "67 STIPRI POKEMONI!"
+        );
+
+        card1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JOptionPane.showMessageDialog(frame, "Leon!");
+                frame.dispose();
+                SwingUtilities.invokeLater(() -> Pokedatnis.main(new String[]{}));
+            }
+        });
+
+        card2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                frame.dispose();
+                JOptionPane.showMessageDialog(frame, "67!");
+                Trainer treneris = Pokedatnis.createTrainer();
+                if (treneris == null) {
+                    SwingUtilities.invokeLater(() -> trainer());
+                    return;
+                }
+                SwingUtilities.invokeLater(() -> Pokedatnis.main(new String[]{}));
+            }
+        });
+
+        mainPanel.add(card1);
+        mainPanel.add(card2);
+
+        frame.add(mainPanel);
+        frame.setVisible(true);
+    }
 
     private JPanel createGameCard(String name, java.net.URL imageUrl, String description) {
         JPanel panel = new JPanel();
