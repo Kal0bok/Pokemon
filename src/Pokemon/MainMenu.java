@@ -112,9 +112,9 @@ public class MainMenu {
 
         card1.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(frame, "Tu izvēlējies Ash!");
-                frame.dispose();
-                SwingUtilities.invokeLater(()-> Pokedatnis.main(new String[]{}));
+                frame.dispose(); 
+
+                showAshInfo(); 
             }
         });
 
