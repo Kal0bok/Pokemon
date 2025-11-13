@@ -3,32 +3,28 @@ package Pokemon;
 import java.util.ArrayList;
 
 public class Trainer {
-    private String name;
-    private int age;
-    private int level;
+    private String vards;
+    private int vecums;
+    private int limenis;
     private ArrayList<Pokemons> pokemons;
-    
-    public Trainer(String name, int age, int level) {
-        this(name, age, level, null);
-    }
 
-    public Trainer(String name, int age, int level, String imageName) {
-        this.name = name;
-        this.age = age;
-        this.level = level;
+    public Trainer(String vards, int vecums, int limenis) {
+        this.vards = vards;
+        this.vecums = vecums;
+        this.limenis = limenis;
         this.pokemons = new ArrayList<>();
     }
 
-    public String getName() {
-        return name;
+	public String getVards() {
+        return vards;
     }
 
-    public int getAge() {
-        return age;
+    public int getVecums() {
+        return vecums;
     }
 
-    public int getLevel() {
-        return level;
+    public int getLimenis() {
+        return limenis;
     }
 
     public ArrayList<Pokemons> getPokemons() {
@@ -40,7 +36,7 @@ public class Trainer {
     }
 
     public String treneraInfo() {
-        String info = "Treneris: " + name + "\nVecums: " + age + "\nLīmenis: " + level;
+        String info = "Treneris: " + vards + "\nVecums: " + vecums + "\nLīmenis: " + limenis;
         info += "\nPokemoni: ";
         if (pokemons.isEmpty()) {
             info += "Nav pievienots neviens pokemons";

@@ -17,8 +17,8 @@ public class Pokedatnis {
     
     public static Trainer createTrainer(String trenerisImage) {
 
-        String tVards = Metodes.virkneParbaud("Ievadi trenera vārdu:");
-        if (tVards == null) {
+        String vards = Metodes.virkneParbaud("Ievadi trenera vārdu:");
+        if (vards == null) {
         	return null;
         }
         int vecums = (int) Metodes.skaitlaParbaude("Ievadi vecumu (5-99)", 5, 99).doubleValue();
@@ -27,10 +27,7 @@ public class Pokedatnis {
         int limenis = (int) Metodes.skaitlaParbaude("Ievadi līmeni (1-10)", 1, 10).doubleValue();
         if (limenis < 0) return null;
 
-        Trainer treneris = new Trainer(tVards, vecums, limenis);
-
-        JOptionPane.showMessageDialog(null,
-                "Trainer '" + tVards + "' created!");
+        Trainer treneris = new Trainer(vards, vecums, limenis);
         
         return treneris;
     }
