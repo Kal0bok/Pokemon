@@ -16,10 +16,6 @@ public class Pokedatnis {
     private static final String[] atbilde = {"Jā", "Nē"};
     
     public static Trainer createTrainer(String trenerisImage) {
-    	
-    	MainMenu menu = new MainMenu();
-    	String izvAtt = menu.trainImage();
-    	if (izvAtt == null) return null;
 
         String tVards = Metodes.virkneParbaud("Ievadi trenera vārdu:");
         if (tVards == null) {
@@ -34,10 +30,11 @@ public class Pokedatnis {
         Trainer treneris = new Trainer(tVards, vecums, limenis);
 
         JOptionPane.showMessageDialog(null,
-                "Trainer '" + tVards + "' created with image: " + trenerisImage + "!");
+                "Trainer '" + tVards + "' created!");
         
         return treneris;
     }
+    
 	
     public static void main(String[] args) {
     	String izvele;
@@ -80,7 +77,7 @@ public class Pokedatnis {
                 double def = (double) Metodes.skaitlaParbaude("Ievadi aizsardzību (1-100)", 1, 100);
                 if (def < 0) break;
 
-                double atk = (double) Metodes.skaitlaParbaude("Ievadi uzbrukumu (1-100)", 1, 100);
+                double atk = (double) Metodes.skaitlaParbaude("Ievadi uzbrukumu (1-10)", 1, 10);
                 if (atk < 0) break;
 
                 pokemoni.add(new Pokemons(vards, tips, lvl, hp, atk, def));
