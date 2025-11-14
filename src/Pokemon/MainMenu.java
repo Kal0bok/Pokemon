@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 public class MainMenu {
 	
 	private JFrame frame;
+	public static Trainer aktivTrener;
 	
     public MainMenu() {
     	
@@ -112,8 +113,10 @@ public class MainMenu {
 
         card1.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
+            	
+            	aktivTrener = new Trainer("Ash Kečums", 12, 10);
+            	
                 frame.dispose(); 
-
                 showAshInfo(); 
             }
         });
@@ -121,13 +124,15 @@ public class MainMenu {
         card2.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
             	frame.dispose();
-            	
-                JOptionPane.showMessageDialog(frame, "Tu izvēlējies izveidot paši!");   
+            	 
                 Trainer treneris = Pokedatnis.createTrainer(null);
                 if (treneris == null) {
                     SwingUtilities.invokeLater(() -> trainer());
                     return;
                 }
+                
+                aktivTrener = treneris;
+                
                 showIzvInfo(treneris.getVards(), treneris.getVecums(), treneris.getLimenis());
                 
             }
@@ -140,7 +145,7 @@ public class MainMenu {
         frame.setVisible(true);
     }
    
-    private void showAshInfo() {
+    public  void showAshInfo() {
         JFrame info = new JFrame("Profile");
         info.setSize(400, 500);
         info.setLocationRelativeTo(null);
@@ -199,7 +204,7 @@ public class MainMenu {
         info.setVisible(true);
     }
     
-    private void showIzvInfo(String vards, int vecums, int limenis) {
+    public  void showIzvInfo(String vards, int vecums, int limenis) {
         JFrame info = new JFrame("Profile");
         info.setSize(400, 500);
         info.setLocationRelativeTo(null);
@@ -209,7 +214,8 @@ public class MainMenu {
 
         JLabel photo = new JLabel();
         photo.setHorizontalAlignment(SwingConstants.CENTER);
-        photo.setIcon(new ImageIcon(
+        JLabel jLabel = new JLabel();
+		jLabel.setIcon(new ImageIcon(
                 new ImageIcon(getClass().getResource("/Image/67.png"))
                         .getImage()
                         .getScaledInstance(150, 150, Image.SCALE_SMOOTH)

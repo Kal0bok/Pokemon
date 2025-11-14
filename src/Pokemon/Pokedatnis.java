@@ -148,10 +148,21 @@ public class Pokedatnis {
                 break;
                 
             case 5:
-                JOptionPane.showMessageDialog(null, "Tev vel nav trenera.");
+                
+                if(MainMenu.aktivTrener == null) {
+                	JOptionPane.showMessageDialog(null, "Treneris vel nav izvelets");
+                }
+                
+                if(MainMenu.aktivTrener.getVards().equals("Ash Kečums")) {
+                	MainMenu mainMenu = new MainMenu();
+					mainMenu.showAshInfo();
+                }else {
+                	 MainMenu mainMenu2 = new MainMenu();
+					mainMenu2.showIzvInfo(MainMenu.aktivTrener.getVards(), MainMenu.aktivTrener.getVecums(), MainMenu.aktivTrener.getLimenis());
+                }
+                
                 break;
-            	
-            case 6:
+			case 6:
                 JOptionPane.showMessageDialog(null, "Arena cīņa vēl nav izveidota.");
                 break;
                 
