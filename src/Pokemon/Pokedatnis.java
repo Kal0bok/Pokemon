@@ -154,11 +154,11 @@ public class Pokedatnis {
                 }
                 
                 if(MainMenu.aktivTrener.getVards().equals("Ash Kečums")) {
-                	MainMenu mainMenu = new MainMenu();
-					mainMenu.showAshInfo();
-                }else {
-                	 MainMenu mainMenu2 = new MainMenu();
-					mainMenu2.showIzvInfo(MainMenu.aktivTrener.getVards(), MainMenu.aktivTrener.getVecums(), MainMenu.aktivTrener.getLimenis());
+					Ash.showAshInfo();
+					return;
+                }else if (MainMenu.aktivTrener.getVards().equals("Ash Kečums")) {
+					Leon.showIzvInfo(MainMenu.aktivTrener.getVards(), MainMenu.aktivTrener.getVecums(), MainMenu.aktivTrener.getLimenis());
+					
                 }
                 
                 break;

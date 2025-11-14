@@ -131,7 +131,7 @@ public class MainMenu {
                     return;
                 }
                 
-                aktivTrener = treneris;
+                aktivTrener = treneris;  
                 
                 showIzvInfo(treneris.getVards(), treneris.getVecums(), treneris.getLimenis());
                 
@@ -145,7 +145,7 @@ public class MainMenu {
         frame.setVisible(true);
     }
    
-    public  void showAshInfo() {
+    private void showAshInfo() {
         JFrame info = new JFrame("Profile");
         info.setSize(400, 500);
         info.setLocationRelativeTo(null);
@@ -204,7 +204,7 @@ public class MainMenu {
         info.setVisible(true);
     }
     
-    public  void showIzvInfo(String vards, int vecums, int limenis) {
+    private void showIzvInfo(String vards, int vecums, int limenis) {
         JFrame info = new JFrame("Profile");
         info.setSize(400, 500);
         info.setLocationRelativeTo(null);
@@ -214,8 +214,7 @@ public class MainMenu {
 
         JLabel photo = new JLabel();
         photo.setHorizontalAlignment(SwingConstants.CENTER);
-        JLabel jLabel = new JLabel();
-		jLabel.setIcon(new ImageIcon(
+        photo.setIcon(new ImageIcon(
                 new ImageIcon(getClass().getResource("/Image/67.png"))
                         .getImage()
                         .getScaledInstance(150, 150, Image.SCALE_SMOOTH)
