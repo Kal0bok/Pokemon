@@ -26,5 +26,5 @@ Objektorientēta Java programma ar GUI (`JOptionPane`), kas ļauj:
 1. Kompilē visus `.java` failus
 2. Palaid `Pokemons` klasi
 
-## Autors
-Tavs Vārds, 2025
+## Autori
+Bogdans Čumaks un Ņikita Ņikodimovs, 2025
