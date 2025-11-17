@@ -42,7 +42,7 @@ public class Trainer {
             info += "Nav pievienots neviens pokemons";
         } else {
             for (Pokemons p : pokemons) {
-                info += "\n- " + p.getName() + " (Līmenis " + p.getLevel() + ")";
+                info += "\n- " + p.getVards() + " (Līmenis " + p.getLimenis() + ")";
             }
         }
         return info;

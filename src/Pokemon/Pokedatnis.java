@@ -120,7 +120,7 @@ public class Pokedatnis {
                 if (pokemoni.size() > 0) {
                     int id = Metodes.pokemonIzvele(pokemoni);
                     if (id >= 0) {
-                        JOptionPane.showMessageDialog(null, pokemoni.get(id).display());
+                        JOptionPane.showMessageDialog(null, pokemoni.get(id).info());
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Nav neviena Pokemona!");
