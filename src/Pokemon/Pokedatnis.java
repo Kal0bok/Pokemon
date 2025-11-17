@@ -77,8 +77,16 @@ public class Pokedatnis {
                 double atk = (double) Metodes.skaitlaParbaude("Ievadi uzbrukumu (1-10)", 1, 10);
                 if (atk < 0) break;
 
-                pokemoni.add(new Pokemons(vards, tips, lvl, hp, atk, def));
+                pokemoni.add(new Pokemons(vards, tips, (int) lvl, hp, atk, def) {
+                            @Override
+                            public String ipaUzbruk() {
+                                return getVards() + " izmanto " + getTips() + " uzbrukumu!";
+                            }
+                        }
+                    );
+                
                 JOptionPane.showMessageDialog(null, "Pokemon pievienots!");
+                
                 break;
             	
             case 1:
