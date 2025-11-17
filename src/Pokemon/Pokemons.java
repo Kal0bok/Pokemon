@@ -1,61 +1,64 @@
 package Pokemon;
 
-public class Pokemons implements Comparable<Pokemons> {
-    private String name;
-    private String type;
-    private int level;
-    private double hp;
-    private double attack;
-    private double defense;
+public abstract class Pokemons implements Comparable<Pokemons> {
 
-    public Pokemons(String name, String type, double level, double hp, double attack, double defense) {
-        this.name = name;
-        this.type = type;
-        this.level = (int) level;
-        this.hp = hp;
-        this.attack = attack;
-        this.defense = defense;
-    }
-    
-    public String getName() {
-        return name;
+    private String vards;
+    private String tips;
+    private int limenis;
+    private double dzivibas;
+    private double uzbrukums;
+    private double aizsardziba;
+
+    public Pokemons(String vards, String tips, int limenis, double dzivibas, double uzbrukums, double aizsardziba) {
+        this.vards = vards;
+        this.tips = tips;
+        this.limenis = limenis;
+        this.dzivibas = dzivibas;
+        this.uzbrukums = uzbrukums;
+        this.aizsardziba = aizsardziba;
     }
 
-    public String getType() {
-        return type;
+    // ---------- GETTERI ----------
+    public String getVards() { return vards; }
+    public String getTips() { return tips; }
+    public int getLimenis() { return limenis; }
+    public double getDzivibas() { return dzivibas; }
+    public double getUzbrukums() { return uzbrukums; }
+    public double getAizsardziba() { return aizsardziba; }
+
+    // ---------- METODES ----------
+    public void saņemtBojājumus(double daudzums) {
+        dzivibas -= daudzums;
+        if (dzivibas < 0) dzivibas = 0;
     }
 
-    public int getLevel() {
-        return level;
+    public double dotBojajumus() {
+        return uzbrukums * (limenis / 2.0);
     }
 
-    public double getHp() {
-        return hp;
+    public double aizsargaties() {
+        return aizsardziba * 0.7;
     }
 
-    public double getAttack() {
-        return attack;
+    public String ipasaisUzbrukums() {
+        return vards + " izmanto īpašo uzbrukumu!";
     }
 
-    public double getDefense() {
-        return defense;
+    public String rādītInfo() {
+        return "Vārds: " + vards +
+               "\nTips: " + tips +
+               "\nLīmenis: " + limenis +
+               "\nDzīvības: " + dzivibas +
+               "\nUzbrukums: " + uzbrukums +
+               "\nAizsardzība: " + aizsardziba;
     }
 
-    public String display() {
-        return "Name: " + name +
-               "\nType: " + type +
-               "\nLevel: " + level +
-               "\nHP: " + hp +
-               "\nAttack: " + attack +
-               "\nDefense: " + defense;
+    public String īsaInfo() {
+        return vards + " (" + tips + ") - Līmenis: " + limenis;
     }
 
-    public String izvadit() {
-        return name + " (" + type + ") - Level: " + level;
+    @Override
+    public int compareTo(Pokemons cits) {
+        return Integer.compare(this.limenis, cits.limenis);
     }
-        
-        @Override
-        public int compareTo(Pokemons other) {
-            return Integer.compare(this.level, other.level);
-        }
-    }
+}
