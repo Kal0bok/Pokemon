@@ -29,8 +29,7 @@ public class Leon {
 
         JLabel photo = new JLabel();
         photo.setHorizontalAlignment(SwingConstants.CENTER);
-        JLabel jLabel = new JLabel();
-        jLabel.setIcon(new ImageIcon(
+        photo.setIcon(new ImageIcon(
                 new ImageIcon(Leon.class.getResource("/Image/67.png"))
                         .getImage()
                         .getScaledInstance(150, 150, Image.SCALE_SMOOTH)

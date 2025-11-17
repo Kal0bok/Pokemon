@@ -156,12 +156,11 @@ public class Pokedatnis {
                 if(MainMenu.aktivTrener.getVards().equals("Ash Kečums")) {
 					Ash.showAshInfo();
 					return;
-                }else if (MainMenu.aktivTrener.getVards().equals("Ash Kečums")) {
+                }else {
 					Leon.showIzvInfo(MainMenu.aktivTrener.getVards(), MainMenu.aktivTrener.getVecums(), MainMenu.aktivTrener.getLimenis());
-					
+					return;
                 }
                 
-                break;
 			case 6:
                 JOptionPane.showMessageDialog(null, "Arena cīņa vēl nav izveidota.");
                 break;

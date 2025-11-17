@@ -106,7 +106,7 @@ public class MainMenu {
         );
 
         JPanel card2 = createGameCard(
-                "67",
+                "SixSeven",
                 getClass().getResource("/GIF/leon.gif"),
                 "676767"
         );
@@ -128,7 +128,6 @@ public class MainMenu {
                 Trainer treneris = Pokedatnis.createTrainer(null);
                 if (treneris == null) {
                     SwingUtilities.invokeLater(() -> trainer());
-                    return;
                 }
                 
                 aktivTrener = treneris;  
