@@ -70,6 +70,6 @@ public abstract class Pokemons implements Comparable<Pokemons> {
 
     @Override
     public int compareTo(Pokemons cits) {
-        return Integer.compare(this.limenis, cits.limenis);
+        return Double.compare(this.uzbruk, cits.uzbruk);
     }
 }
