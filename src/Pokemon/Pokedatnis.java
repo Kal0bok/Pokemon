@@ -57,6 +57,11 @@ public class Pokedatnis {
 
 
             case 0:
+            	if(pokemoni.size() == 3) {
+            		JOptionPane.showMessageDialog(null, "Jūms ir maksimals pokemonu skaits!");
+            		break;
+            	}
+            	
             	String vards = Metodes.virkneParbaud("Ievadi Pokemona vārdu:");
                 if (vards == null) break;
 
