@@ -12,8 +12,9 @@ import javax.swing.ScrollPaneConstants;
 
 public class Pokedatnis {
 	
-	private static final String[] tipi = {"Electric", "Fire", "Water", "Grass", "Psychic"};
+	private static final String[] tipi = {"Fire", "Psychic"};
     private static final String[] atbilde = {"Jā", "Nē"};
+    public static ArrayList<Pokemons> pokemoni = new ArrayList<>();
     
     public static Trainer createTrainer(String trenerisImage) {
 
@@ -40,7 +41,6 @@ public class Pokedatnis {
                 "Pokemonu saraksts", "Pokemona profils", "Kārtot pēc stipruma", "Trenera profils", "Arena cīņas",
                 "Apturet programmu"};
         
-        ArrayList<Pokemons> pokemoni = new ArrayList<>();
         
         do {
             izvele = (String) JOptionPane.showInputDialog(
@@ -110,7 +110,7 @@ public class Pokedatnis {
 							"\n_________________________________\n";
 					}
 					
-					JTextArea ta = new JTextArea (str, 10, 40);
+					JTextArea ta = new JTextArea (str, 15, 45);
 					ta.setEditable(false);
 					JScrollPane sp = new JScrollPane(ta);
 					sp.setVerticalScrollBarPolicy(
@@ -136,24 +136,30 @@ public class Pokedatnis {
                 break;
             	
             case 4:
-                if (pokemoni.size() > 0) {
-                    String atb = (String) JOptionPane.showInputDialog(null,
-                            "Kārtot pēc spēka augoši?",
-                            "Izvēle",
-                            JOptionPane.QUESTION_MESSAGE,
-                            null, atbilde, atbilde[0]);
-
-                    if (atb != null) {
-                        if (atb.equals("Jā")) Collections.sort(pokemoni);
-                        else Collections.sort(pokemoni, Collections.reverseOrder());
-
-                        JOptionPane.showMessageDialog(null, "Pokemoni sakārtoti!");
-                    }
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "Nav ko kārtot!");
-                }
-                break;
+            	if(pokemoni.size() > 0) {
+					String atb = (String) JOptionPane.showInputDialog(null,
+							"Kārtot pokemonus pēc spēka augoši?", "Izvēle",
+							JOptionPane.INFORMATION_MESSAGE, null, 
+							atbilde, atbilde[0]);
+					if(atb != null) {
+						if(atb.equals("Jā")) {
+							 Collections.sort(pokemoni);
+							JOptionPane.showMessageDialog(null, 
+									"Konti sakārtoti augoši!", "Kārtošana",
+									JOptionPane.INFORMATION_MESSAGE);
+						}else {
+							Collections.sort(pokemoni, Collections.reverseOrder());
+							JOptionPane.showMessageDialog(null, 
+									"Konti sakārtoti dilstoši!", "Kārtošana",
+									JOptionPane.INFORMATION_MESSAGE);
+						}
+					}
+				}else {
+					JOptionPane.showMessageDialog(null, "Nav ievadīts neviens konts",
+							"Kļūda", JOptionPane.ERROR_MESSAGE);
+					break;
+				}
+				break;
                 
             case 5:
                 

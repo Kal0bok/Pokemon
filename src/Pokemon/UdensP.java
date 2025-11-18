@@ -2,8 +2,8 @@ package Pokemon;
 
 public class UdensP extends Pokemons {
 
-    public UdensP(String vards, String tips, int limenis, double dziv, double uzbruk, double aizsarg) {
-        super(vards, "Water", limenis, dziv, uzbruk, aizsarg);
+	public UdensP() {
+        super("Squirtle", "Water", 5, 100, 5, 100);
     }
 
     @Override
