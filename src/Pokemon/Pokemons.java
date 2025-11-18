@@ -1,5 +1,18 @@
 package Pokemon;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
 public abstract class Pokemons implements Comparable<Pokemons> {
 
     private String vards;
@@ -62,7 +75,57 @@ public abstract class Pokemons implements Comparable<Pokemons> {
                "\nDzīvības: " + dziv +
                "\nUzbrukums: " + uzbruk +
                "\nAizsardzība: " + aizsarg;
+        
     }
+    
+    public void showProfile() {
+    	 JDialog info = new JDialog((JFrame)null, "Pokemon Profile", true);
+        info.setSize(350, 450);
+        info.setLocationRelativeTo(null);
+        info.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        info.setLayout(new BorderLayout());
+        info.getContentPane().setBackground(new Color(30, 40, 60));
+        info.setResizable(false);
+
+        JLabel title = new JLabel(getVards(), SwingConstants.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, 26));
+        title.setForeground(Color.YELLOW);
+        title.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+
+        JPanel stats = new JPanel(new GridLayout(6, 1, 5, 5));
+        stats.setBackground(new Color(30, 40, 60));
+
+        stats.add(makeLabel("Pokemona vārds: " + getVards()));
+        stats.add(makeLabel("Tips: " + getTips()));
+        stats.add(makeLabel("Līmenis: " + getLimenis()));
+        stats.add(makeLabel("Dzīvības: " + getDziv()));
+        stats.add(makeLabel("Uzbrukums: " + getUzbruk()));
+        stats.add(makeLabel("Aizsardzība: " + getAizsarg()));
+
+        JButton close = new JButton("Aizvērt");
+        close.addActionListener(e -> {
+            info.dispose();            
+        });
+
+        JPanel bottom = new JPanel();
+        bottom.setBackground(new Color(30, 40, 60));
+        bottom.add(close);
+
+        info.add(title, BorderLayout.NORTH);
+        info.add(stats, BorderLayout.CENTER);
+        info.add(bottom, BorderLayout.SOUTH);
+        
+        info.setVisible(true);
+        
+    }
+    
+    private JLabel makeLabel(String text) {
+        JLabel lbl = new JLabel(text);
+        lbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        lbl.setForeground(Color.WHITE);
+        return lbl;
+    }
+
 
     public String info() {
         return vards + " (" + tips + ") - Līmenis: " + limenis;
@@ -72,4 +135,6 @@ public abstract class Pokemons implements Comparable<Pokemons> {
     public int compareTo(Pokemons cits) {
         return Double.compare(this.uzbruk, cits.uzbruk);
     }
+
+
 }

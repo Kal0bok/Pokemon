@@ -10,4 +10,9 @@ public class UdensP extends Pokemons {
     public String ipaUzbruk() {
         return getVards() + " use Water Splash!";
     }
+
+	public static void showSquirtle(String vards, int vecums, int limenis) {
+		// TODO Auto-generated method stub
+		
+	}
 }

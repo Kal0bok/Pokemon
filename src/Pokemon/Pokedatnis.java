@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -15,6 +16,7 @@ public class Pokedatnis {
 	private static final String[] tipi = {"Fire", "Psychic"};
     private static final String[] atbilde = {"Jā", "Nē"};
     public static ArrayList<Pokemons> pokemoni = new ArrayList<>();
+    public static JFrame mainFrame;
     
     public static Trainer createTrainer(String trenerisImage) {
 
@@ -128,12 +130,13 @@ public class Pokedatnis {
 					break;
 				}
                 break;
-            	
+                
+                
             case 3:
                 if (pokemoni.size() > 0) {
                     int id = Metodes.pokemonIzvele(pokemoni);
                     if (id >= 0) {
-                        JOptionPane.showMessageDialog(null, pokemoni.get(id).info());
+                        pokemoni.get(id).showProfile(); 	
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Nav neviena Pokemona!");

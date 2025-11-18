@@ -10,4 +10,9 @@ public class ElektriskaisP extends Pokemons {
     public String ipaUzbruk() {
         return getVards() + " use Electric Shock!";
     }
+
+	public static void showPikachu(String string, int i, int j) {
+		// TODO Auto-generated method stub
+		
+	}
 }
