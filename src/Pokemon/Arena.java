@@ -1,7 +1,23 @@
 package Pokemon;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.Timer;
 
 public class Arena {
 
@@ -62,10 +78,6 @@ public class Arena {
         return btn;
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new Arena());
-    }
-    
     private void showPokemonSelect() {
         frame.dispose();
 
@@ -104,6 +116,18 @@ public class Arena {
 
         selectFrame.setLocationRelativeTo(null);
         selectFrame.setVisible(true);
+
+        MouseAdapter click = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JLabel chosenGif = (JLabel) e.getSource();
+                showChosenPokemon(selectFrame, chosenGif.getIcon());
+            }
+        };
+
+        gif1.addMouseListener(click);
+        gif2.addMouseListener(click);
+        gif3.addMouseListener(click);
     }
     
     private JLabel createGif(String path) {
