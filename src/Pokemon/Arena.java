@@ -177,35 +177,66 @@ public class Arena {
         oldFrame.dispose();
 
         JFrame empty = new JFrame("Arena");
-        empty.setSize(800, 500);
+        empty.setSize(1000, 600);
         empty.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         empty.setResizable(false);
         
-        JLabel background = createScaledGifBackground("/GIF/background.gif", 800, 500);
-        background.setLayout(new BorderLayout());
+        JLayeredPane layeredPane = new JLayeredPane();
+        layeredPane.setPreferredSize(new Dimension(1000, 600));
         
-        JLabel arenaTitle = new JLabel("ARENA", SwingConstants.CENTER);
-        arenaTitle.setFont(new Font("Arial", Font.BOLD, 48));
-        arenaTitle.setForeground(Color.WHITE);
-        arenaTitle.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
+        JLabel bgLabel = createScaledGifBackground("/GIF/Arena1.gif", 1000, 600);
+        bgLabel.setBounds(0, 0, 1000, 600);
+        layeredPane.add(bgLabel, Integer.valueOf(0));
         
-        JButton backButton = createButton("ATPAKAL", new Color(70, 130, 180));
-        backButton.setFont(new Font("Arial", Font.PLAIN, 18));
-        backButton.addActionListener(e -> {
-            empty.dispose();
-            createMainWindow();
-        });
+        JPanel topStatsPanel = new JPanel(new GridLayout(1, 2));
+        topStatsPanel.setOpaque(false);
+        topStatsPanel.setBounds(0, 10, 1000, 80);
         
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.setOpaque(false);
-        bottomPanel.add(backButton);
+        JPanel leftStats = createStatsPanel("HP: 100/100", "Armor: 50");
+        leftStats.setBounds(100, 10, 300, 80);
         
-        background.add(arenaTitle, BorderLayout.NORTH);
-        background.add(bottomPanel, BorderLayout.SOUTH);
+        JPanel rightStats = createStatsPanel("HP: 80/100", "Armor: 30");
+        rightStats.setBounds(600, 10, 300, 80);
         
-        empty.setContentPane(background);
+        JLabel leftPokemon = createGif("/GIF/machamp.gif");
+        leftPokemon.setBounds(100, 200, 300, 300);
+        
+        JLabel rightPokemon = createGif("/GIF/pikachu.gif");
+        rightPokemon.setBounds(600, 200, 300, 300);
+        
+        layeredPane.add(leftStats, Integer.valueOf(1));
+        layeredPane.add(rightStats, Integer.valueOf(1));
+        layeredPane.add(leftPokemon, Integer.valueOf(1));
+        layeredPane.add(rightPokemon, Integer.valueOf(1));
+        
+        empty.setContentPane(layeredPane);
         empty.setLocationRelativeTo(null);
         empty.setVisible(true);
+    }
+
+    private JPanel createStatsPanel(String hpText, String armorText) {
+        JPanel statsPanel = new JPanel(new GridLayout(2, 1, 5, 5));
+        statsPanel.setOpaque(false);
+        statsPanel.setPreferredSize(new Dimension(300, 80));
+        
+        JLabel hpLabel = createStatLabel(hpText, Color.RED);
+        JLabel armorLabel = createStatLabel(armorText, Color.BLUE);
+        
+        statsPanel.add(hpLabel);
+        statsPanel.add(armorLabel);
+        
+        return statsPanel;
+    }
+
+    private JLabel createStatLabel(String text, Color color) {
+        JLabel label = new JLabel(text, SwingConstants.CENTER);
+        label.setFont(new Font("Arial", Font.BOLD, 20));
+        label.setForeground(Color.WHITE);
+        label.setOpaque(true);
+        label.setBackground(new Color(0, 0, 0, 180));
+        label.setBorder(BorderFactory.createLineBorder(color, 3));
+        label.setPreferredSize(new Dimension(300, 35));
+        return label;
     }
 
     private JLabel createScaledGifBackground(String path, int width, int height) {
