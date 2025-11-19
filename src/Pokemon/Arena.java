@@ -39,7 +39,7 @@ public class Arena {
         exit.setFont(new Font("Arial", Font.PLAIN, 22));
 
         start.addActionListener(e -> showArenaSelect());
-        exit.addActionListener(e -> frame.dispose());
+        exit.addActionListener(e -> Pokedatnis.main(new String[]{}));
 
         buttonsPanel.add(start);
         buttonsPanel.add(exit);
