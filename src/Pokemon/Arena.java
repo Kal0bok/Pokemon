@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 public class Arena {
@@ -200,5 +201,9 @@ public class Arena {
         empty.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         empty.setLocationRelativeTo(null);
         empty.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(Arena::new);
     }
 }
