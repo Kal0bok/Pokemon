@@ -127,30 +127,33 @@ public class Arena {
             JLabel chosen = new JLabel(icon);
             chosen.setHorizontalAlignment(SwingConstants.CENTER);
 
-            selectFrame.add(title, BorderLayout.NORTH);
+            JLabel title2 = new JLabel("Laba izvēle!", SwingConstants.CENTER);
+            title2.setFont(new Font("Arial", Font.BOLD, 30));
+            title2.setForeground(Color.WHITE);  
+            title2.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
+
+            JButton cont = new JButton("Turpināt");
+            cont.setFont(new Font("Arial", Font.BOLD, 22));
+            cont.setBackground(new Color(0, 170, 0));
+            cont.setOpaque(true);
+            cont.setContentAreaFilled(true);
+            cont.setForeground(Color.WHITE);
+            cont.setBorder(BorderFactory.createLineBorder(new Color(0, 255, 0), 3));
+            cont.addActionListener(ev -> showEmptyWindow(selectFrame));
+
+            JPanel bottom = new JPanel();
+            bottom.setOpaque(false);
+            bottom.add(cont);
+
+            selectFrame.add(title2, BorderLayout.NORTH);
             selectFrame.add(chosen, BorderLayout.CENTER);
+            selectFrame.add(bottom, BorderLayout.SOUTH);
+
             selectFrame.revalidate();
             selectFrame.repaint();
         });
 
         timer.setRepeats(false);
         timer.start();
-        
-        JButton cont = new JButton("Turpināt");
-        cont.setFont(new Font("Arial", Font.BOLD, 22));
-        cont.setBackground(new Color(0, 170, 0));
-        cont.setOpaque(true);
-        cont.setContentAreaFilled(true);
-        cont.setForeground(Color.WHITE);
-        cont.setBorder(BorderFactory.createLineBorder(new Color(0, 255, 0), 3));
-
-        cont.addActionListener(ev -> showEmptyWindow(selectFrame));
-
-        JPanel bottom = new JPanel();
-        bottom.setOpaque(false);
-        bottom.add(cont);
-
-        selectFrame.add(bottom, BorderLayout.SOUTH);
     }
- 
 }
