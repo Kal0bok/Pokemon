@@ -1,24 +1,9 @@
 package Pokemon;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-import javax.swing.BorderFactory;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
+import javax.swing.*;
 
 public class Arena {
 
@@ -34,7 +19,7 @@ public class Arena {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setResizable(false);
 
-        JLabel background = new JLabel(new ImageIcon(getClass().getResource("/GIF/Arena1.gif")));
+        JLabel background = createScaledGifBackground("/GIF/Arena1.gif", 600, 400);
         background.setLayout(new BorderLayout());
 
         JLabel title = new JLabel("POKEMON GAME", SwingConstants.CENTER);
@@ -42,16 +27,12 @@ public class Arena {
         title.setForeground(Color.BLACK);
         title.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
 
-        JPanel buttonsPanel = new JPanel();
+        JPanel buttonsPanel = new JPanel(new GridLayout(2, 1, 15, 15));
         buttonsPanel.setOpaque(false);
-        buttonsPanel.setLayout(new GridLayout(2, 1, 15, 15));
         buttonsPanel.setBorder(BorderFactory.createEmptyBorder(40, 180, 80, 180));
 
         JButton start = createButton("START", new Color(255, 140, 0));
         JButton exit = createButton("EXIT", new Color(150, 0, 0));
-
-        start.setPreferredSize(new Dimension(120, 35));
-        exit.setPreferredSize(new Dimension(120, 35));
 
         start.setFont(new Font("Arial", Font.PLAIN, 22));
         exit.setFont(new Font("Arial", Font.PLAIN, 22));
@@ -69,7 +50,7 @@ public class Arena {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
-    
+
     private JButton createButton(String text, Color color) {
         JButton btn = new JButton(text);
         btn.setBackground(color);
@@ -86,7 +67,7 @@ public class Arena {
         selectFrame.setSize(600, 400);
         selectFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        JLabel background = new JLabel(new ImageIcon(getClass().getResource("/GIF/back1.gif")));
+        JLabel background = createScaledGifBackground("/GIF/back1.gif", 600, 400);
         background.setLayout(new BorderLayout());
         selectFrame.setContentPane(background);
 
@@ -130,14 +111,14 @@ public class Arena {
         gif2.addMouseListener(click);
         gif3.addMouseListener(click);
     }
-    
+
     private JLabel createGif(String path) {
         JLabel label = new JLabel(new ImageIcon(getClass().getResource(path)));
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setCursor(new Cursor(Cursor.HAND_CURSOR));
         return label;
     }
-    
+
     private void showChosenPokemon(JFrame selectFrame, Icon icon) {
         selectFrame.getContentPane().removeAll();
         selectFrame.setLayout(new BorderLayout());
@@ -147,7 +128,7 @@ public class Arena {
         title.setForeground(Color.WHITE);
         title.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
 
-        JLabel stageGif = new JLabel(new ImageIcon(getClass().getResource("/GIF/choosen.gif")));
+        JLabel stageGif = createGif("/GIF/choosen.gif");
         stageGif.setHorizontalAlignment(SwingConstants.CENTER);
 
         selectFrame.add(title, BorderLayout.NORTH);
@@ -172,7 +153,6 @@ public class Arena {
             cont.setFont(new Font("Arial", Font.BOLD, 22));
             cont.setBackground(new Color(0, 170, 0));
             cont.setOpaque(true);
-            cont.setContentAreaFilled(true);
             cont.setForeground(Color.WHITE);
             cont.setBorder(BorderFactory.createLineBorder(new Color(0, 255, 0), 3));
             cont.addActionListener(ev -> showEmptyWindow(selectFrame));
@@ -192,15 +172,47 @@ public class Arena {
         timer.setRepeats(false);
         timer.start();
     }
-    
+
     private void showEmptyWindow(JFrame oldFrame) {
         oldFrame.dispose();
 
         JFrame empty = new JFrame("Arena");
         empty.setSize(800, 500);
         empty.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        empty.setResizable(false);
+        
+        JLabel background = createScaledGifBackground("/GIF/background.gif", 800, 500);
+        background.setLayout(new BorderLayout());
+        
+        JLabel arenaTitle = new JLabel("ARENA", SwingConstants.CENTER);
+        arenaTitle.setFont(new Font("Arial", Font.BOLD, 48));
+        arenaTitle.setForeground(Color.WHITE);
+        arenaTitle.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
+        
+        JButton backButton = createButton("ATPAKAL", new Color(70, 130, 180));
+        backButton.setFont(new Font("Arial", Font.PLAIN, 18));
+        backButton.addActionListener(e -> {
+            empty.dispose();
+            createMainWindow();
+        });
+        
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setOpaque(false);
+        bottomPanel.add(backButton);
+        
+        background.add(arenaTitle, BorderLayout.NORTH);
+        background.add(bottomPanel, BorderLayout.SOUTH);
+        
+        empty.setContentPane(background);
         empty.setLocationRelativeTo(null);
         empty.setVisible(true);
+    }
+
+    private JLabel createScaledGifBackground(String path, int width, int height) {
+        ImageIcon icon = new ImageIcon(getClass().getResource(path));
+        Image scaled = icon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT);
+        ImageIcon scaledIcon = new ImageIcon(scaled);
+        return new JLabel(scaledIcon);
     }
 
     public static void main(String[] args) {
