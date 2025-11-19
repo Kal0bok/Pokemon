@@ -8,6 +8,7 @@ import javax.swing.*;
 public class Arena {
 
     private JFrame frame;
+    private String selectedArena;
 
     public Arena() {
         createMainWindow();
@@ -37,7 +38,7 @@ public class Arena {
         start.setFont(new Font("Arial", Font.PLAIN, 22));
         exit.setFont(new Font("Arial", Font.PLAIN, 22));
 
-        start.addActionListener(e -> showPokemonSelect());
+        start.addActionListener(e -> showArenaSelect());
         exit.addActionListener(e -> frame.dispose());
 
         buttonsPanel.add(start);
@@ -51,22 +52,82 @@ public class Arena {
         frame.setVisible(true);
     }
 
-    private JButton createButton(String text, Color color) {
-        JButton btn = new JButton(text);
-        btn.setBackground(color);
-        btn.setForeground(Color.WHITE);
-        btn.setFocusPainted(false);
-        btn.setBorder(BorderFactory.createEmptyBorder(6, 5, 6, 5));
-        return btn;
+    private void showArenaSelect() {
+        frame.dispose();
+
+        JFrame arenaFrame = new JFrame("Arenas izvēle");
+        arenaFrame.setSize(800, 600);
+        arenaFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        JLabel background = createScaledGifBackground("/GIF/mainback.gif", 800, 600);
+        background.setLayout(new BorderLayout());
+        arenaFrame.setContentPane(background);
+
+        JLabel title = new JLabel("Izvēlies arenu", SwingConstants.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, 36));
+        title.setForeground(Color.WHITE);
+        title.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
+
+        JPanel arenasPanel = new JPanel(new GridLayout(2, 2, 20, 20));
+        arenasPanel.setOpaque(false);
+        arenasPanel.setBorder(BorderFactory.createEmptyBorder(20, 60, 60, 60));
+
+        String[] arenaNames = {"Volcano", "Temple", "Heaven", "Dungeon"};
+        String[] arenaPaths = {
+            "/GIF/background.gif",
+            "/GIF/background11.gif", 
+            "/GIF/background12.gif",
+            "/GIF/background13.gif"
+        };
+
+        for (int i = 0; i < 4; i++) {
+            final String arenaPath = arenaPaths[i];
+            final String arenaName = arenaNames[i];
+            JPanel arenaCard = createArenaCard(arenaName, arenaPath, arenaFrame);
+            arenasPanel.add(arenaCard);
+        }
+
+        background.add(title, BorderLayout.NORTH);
+        background.add(arenasPanel, BorderLayout.CENTER);
+
+        arenaFrame.setLocationRelativeTo(null);
+        arenaFrame.setVisible(true);
+    }
+
+    private JPanel createArenaCard(String arenaName, String arenaPath, JFrame arenaFrame) {
+        JPanel card = new JPanel(new BorderLayout(10, 10));
+        card.setOpaque(false);
+
+        JLabel nameLabel = new JLabel(arenaName, SwingConstants.CENTER);
+        nameLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        nameLabel.setForeground(Color.WHITE);
+        nameLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+
+        JLabel gifLabel = createGif(arenaPath);
+        gifLabel.setPreferredSize(new Dimension(200, 150));
+        gifLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        gifLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                selectedArena = arenaPath;
+                showPokemonSelect();
+                arenaFrame.dispose();
+            }
+        });
+
+        card.add(nameLabel, BorderLayout.NORTH);
+        card.add(gifLabel, BorderLayout.CENTER);
+
+        return card;
     }
 
     private void showPokemonSelect() {
-        frame.dispose();
-
         JFrame selectFrame = new JFrame("Pokemona izvēle");
         selectFrame.setSize(600, 400);
         selectFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+        // Фон для выбора покемона - back1
         JLabel background = createScaledGifBackground("/GIF/back1.gif", 600, 400);
         background.setLayout(new BorderLayout());
         selectFrame.setContentPane(background);
@@ -112,6 +173,15 @@ public class Arena {
         gif3.addMouseListener(click);
     }
 
+    private JButton createButton(String text, Color color) {
+        JButton btn = new JButton(text);
+        btn.setBackground(color);
+        btn.setForeground(Color.WHITE);
+        btn.setFocusPainted(false);
+        btn.setBorder(BorderFactory.createEmptyBorder(6, 5, 6, 5));
+        return btn;
+    }
+
     private JLabel createGif(String path) {
         JLabel label = new JLabel(new ImageIcon(getClass().getResource(path)));
         label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -123,6 +193,11 @@ public class Arena {
         selectFrame.getContentPane().removeAll();
         selectFrame.setLayout(new BorderLayout());
 
+        // Фон для окна "Laba izvēle!" - back
+        JLabel background = createScaledGifBackground("/GIF/back.gif", 600, 400);
+        background.setLayout(new BorderLayout());
+        selectFrame.setContentPane(background);
+
         JLabel title = new JLabel("Laba izvēle!", SwingConstants.CENTER);
         title.setFont(new Font("Arial", Font.BOLD, 30));
         title.setForeground(Color.WHITE);
@@ -131,8 +206,8 @@ public class Arena {
         JLabel stageGif = createGif("/GIF/choosen.gif");
         stageGif.setHorizontalAlignment(SwingConstants.CENTER);
 
-        selectFrame.add(title, BorderLayout.NORTH);
-        selectFrame.add(stageGif, BorderLayout.CENTER);
+        background.add(title, BorderLayout.NORTH);
+        background.add(stageGif, BorderLayout.CENTER);
 
         selectFrame.revalidate();
         selectFrame.repaint();
@@ -140,6 +215,11 @@ public class Arena {
         Timer timer = new Timer(2300, e -> {
             selectFrame.getContentPane().removeAll();
             selectFrame.setLayout(new BorderLayout());
+
+            // Фон для второго окна "Laba izvēle!" - тоже back
+            JLabel bg2 = createScaledGifBackground("/GIF/back.gif", 600, 400);
+            bg2.setLayout(new BorderLayout());
+            selectFrame.setContentPane(bg2);
 
             JLabel chosen = new JLabel(icon);
             chosen.setHorizontalAlignment(SwingConstants.CENTER);
@@ -161,9 +241,9 @@ public class Arena {
             bottom.setOpaque(false);
             bottom.add(cont);
 
-            selectFrame.add(title2, BorderLayout.NORTH);
-            selectFrame.add(chosen, BorderLayout.CENTER);
-            selectFrame.add(bottom, BorderLayout.SOUTH);
+            bg2.add(title2, BorderLayout.NORTH);
+            bg2.add(chosen, BorderLayout.CENTER);
+            bg2.add(bottom, BorderLayout.SOUTH);
 
             selectFrame.revalidate();
             selectFrame.repaint();
@@ -184,7 +264,8 @@ public class Arena {
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(new Dimension(1000, 600));
         
-        JLabel bgLabel = createScaledGifBackground("/GIF/Arena1.gif", 1000, 600);
+        // Фон для арены - выбранная арена
+        JLabel bgLabel = createScaledGifBackground(selectedArena, 1000, 600);
         bgLabel.setBounds(0, 0, 1000, 600);
         layeredPane.add(bgLabel, Integer.valueOf(0));
         
