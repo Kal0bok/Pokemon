@@ -127,7 +127,6 @@ public class Arena {
         selectFrame.setSize(600, 400);
         selectFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        // Фон для выбора покемона - back1
         JLabel background = createScaledGifBackground("/GIF/back1.gif", 600, 400);
         background.setLayout(new BorderLayout());
         selectFrame.setContentPane(background);
@@ -193,7 +192,6 @@ public class Arena {
         selectFrame.getContentPane().removeAll();
         selectFrame.setLayout(new BorderLayout());
 
-        // Фон для окна "Laba izvēle!" - back
         JLabel background = createScaledGifBackground("/GIF/back.gif", 600, 400);
         background.setLayout(new BorderLayout());
         selectFrame.setContentPane(background);
@@ -216,7 +214,6 @@ public class Arena {
             selectFrame.getContentPane().removeAll();
             selectFrame.setLayout(new BorderLayout());
 
-            // Фон для второго окна "Laba izvēle!" - тоже back
             JLabel bg2 = createScaledGifBackground("/GIF/back.gif", 600, 400);
             bg2.setLayout(new BorderLayout());
             selectFrame.setContentPane(bg2);
@@ -264,7 +261,6 @@ public class Arena {
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(new Dimension(1000, 600));
         
-        // Фон для арены - выбранная арена
         JLabel bgLabel = createScaledGifBackground(selectedArena, 1000, 600);
         bgLabel.setBounds(0, 0, 1000, 600);
         layeredPane.add(bgLabel, Integer.valueOf(0));
@@ -285,14 +281,26 @@ public class Arena {
         JLabel rightPokemon = createGif("/GIF/pikachu.gif");
         rightPokemon.setBounds(600, 200, 300, 300);
         
+        JLabel vsGif = createGif("/GIF/vs.gif"); 
+        vsGif.setBounds(450, 250, 150, 150); 
+        
         layeredPane.add(leftStats, Integer.valueOf(1));
         layeredPane.add(rightStats, Integer.valueOf(1));
         layeredPane.add(leftPokemon, Integer.valueOf(1));
         layeredPane.add(rightPokemon, Integer.valueOf(1));
+        layeredPane.add(vsGif, Integer.valueOf(2)); 
         
         empty.setContentPane(layeredPane);
         empty.setLocationRelativeTo(null);
         empty.setVisible(true);
+        
+        Timer timer = new Timer(2000, e -> {
+            layeredPane.remove(vsGif);
+            layeredPane.revalidate();
+            layeredPane.repaint();
+        });
+        timer.setRepeats(false);
+        timer.start();
     }
 
     private JPanel createStatsPanel(String hpText, String armorText) {
