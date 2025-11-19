@@ -95,6 +95,13 @@ public class Arena {
         selectFrame.setVisible(true);
     }
     
+    private JLabel createGif(String path) {
+        JLabel label = new JLabel(new ImageIcon(getClass().getResource(path)));
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        label.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        return label;
+    }
+    
     private void showChosenPokemon(JFrame selectFrame, Icon icon) {
         selectFrame.getContentPane().removeAll();
         selectFrame.setLayout(new BorderLayout());
@@ -145,7 +152,5 @@ public class Arena {
 
         selectFrame.add(bottom, BorderLayout.SOUTH);
     }
-    
-    
-    
+ 
 }
