@@ -13,7 +13,7 @@ public class MainMenu {
 	public MainMenu() {
 	    frame = new JFrame("Game");
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    frame.setSize(500, 290);
+	    frame.setSize(500, 285);
 	    frame.setResizable(false);
 	    frame.setLayout(new BorderLayout());
 	    
@@ -59,11 +59,11 @@ public class MainMenu {
 
 	private JButton createButton(String text, Color bg) {
 	    JButton btn = new JButton(text);
-	    btn.setFont(new Font("Arial", Font.BOLD, 22));
+	    btn.setFont(new Font("Arial", Font.BOLD, 20));
 	    btn.setForeground(Color.WHITE);
 	    btn.setBackground(bg);
 	    btn.setFocusPainted(false);
-	    btn.setBorder(BorderFactory.createEmptyBorder(12, 30, 12, 30));
+	    btn.setBorder(BorderFactory.createEmptyBorder(12, 20, 12, 30));
 	    btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	    btn.setOpaque(true);
 	    return btn;
