@@ -54,4 +54,45 @@ public class Arena {
         buttonsPanel.add(exit);
         background.add(buttonsPanel, BorderLayout.CENTER);
     }
+    
+    private void showPokemonSelect() {
+        frame.dispose();
+
+        JFrame selectFrame = new JFrame("Pokemona izvēle");
+        selectFrame.setSize(600, 400);
+        selectFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        JLabel background = new JLabel(new ImageIcon(getClass().getResource("/GIF/back1.gif")));
+        background.setLayout(new BorderLayout());
+        selectFrame.setContentPane(background);
+
+        JLabel title = new JLabel("Izvēlies pokemonu:", SwingConstants.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, 30));
+        title.setForeground(Color.WHITE);
+        title.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
+
+        JPanel gifs = new JPanel(new GridLayout(1, 3, 10, 0));
+        gifs.setOpaque(false);
+        gifs.setBorder(BorderFactory.createEmptyBorder(10, 40, 40, 40));
+
+        JLabel gif1 = createGif("/GIF/machamp.gif");
+        JLabel gif2 = createGif("/GIF/pikachu.gif");
+        JLabel gif3 = createGif("/GIF/squirlte.gif");
+
+        Dimension gifSize = new Dimension(130, 130);
+        gif1.setPreferredSize(gifSize);
+        gif2.setPreferredSize(gifSize);
+        gif3.setPreferredSize(gifSize);
+
+        gifs.add(gif1);
+        gifs.add(gif2);
+        gifs.add(gif3);
+
+        background.add(title, BorderLayout.NORTH);
+        background.add(gifs, BorderLayout.CENTER);
+
+        selectFrame.setLocationRelativeTo(null);
+        selectFrame.setVisible(true);
+    }
+    
 }
