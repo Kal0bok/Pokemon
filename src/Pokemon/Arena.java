@@ -52,6 +52,15 @@ public class Arena {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
+    
+    private JButton createButton(String text, Color color) {
+        JButton btn = new JButton(text);
+        btn.setBackground(color);
+        btn.setForeground(Color.WHITE);
+        btn.setFocusPainted(false);
+        btn.setBorder(BorderFactory.createEmptyBorder(6, 5, 6, 5));
+        return btn;
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new Arena());
