@@ -95,4 +95,39 @@ public class Arena {
         selectFrame.setVisible(true);
     }
     
+    private void showChosenPokemon(JFrame selectFrame, Icon icon) {
+        selectFrame.getContentPane().removeAll();
+        selectFrame.setLayout(new BorderLayout());
+
+        JLabel title = new JLabel("Laba izvēle!", SwingConstants.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, 30));
+        title.setForeground(Color.WHITE);
+        title.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
+
+        JLabel stageGif = new JLabel(new ImageIcon(getClass().getResource("/GIF/choosen.gif")));
+        stageGif.setHorizontalAlignment(SwingConstants.CENTER);
+
+        selectFrame.add(title, BorderLayout.NORTH);
+        selectFrame.add(stageGif, BorderLayout.CENTER);
+
+        selectFrame.revalidate();
+        selectFrame.repaint();
+
+        Timer timer = new Timer(2300, e -> {
+            selectFrame.getContentPane().removeAll();
+            selectFrame.setLayout(new BorderLayout());
+
+            JLabel chosen = new JLabel(icon);
+            chosen.setHorizontalAlignment(SwingConstants.CENTER);
+
+            selectFrame.add(title, BorderLayout.NORTH);
+            selectFrame.add(chosen, BorderLayout.CENTER);
+            selectFrame.revalidate();
+            selectFrame.repaint();
+        });
+
+        timer.setRepeats(false);
+        timer.start();
+    }
+    
 }
