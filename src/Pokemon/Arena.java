@@ -128,6 +128,24 @@ public class Arena {
 
         timer.setRepeats(false);
         timer.start();
+        
+        JButton cont = new JButton("Turpināt");
+        cont.setFont(new Font("Arial", Font.BOLD, 22));
+        cont.setBackground(new Color(0, 170, 0));
+        cont.setOpaque(true);
+        cont.setContentAreaFilled(true);
+        cont.setForeground(Color.WHITE);
+        cont.setBorder(BorderFactory.createLineBorder(new Color(0, 255, 0), 3));
+
+        cont.addActionListener(ev -> showEmptyWindow(selectFrame));
+
+        JPanel bottom = new JPanel();
+        bottom.setOpaque(false);
+        bottom.add(cont);
+
+        selectFrame.add(bottom, BorderLayout.SOUTH);
     }
+    
+    
     
 }
