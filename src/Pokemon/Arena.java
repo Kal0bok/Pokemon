@@ -32,5 +32,26 @@ public class Arena {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(Arena::new);
+        
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setOpaque(false);
+        buttonsPanel.setLayout(new GridLayout(2, 1, 15, 15));
+        buttonsPanel.setBorder(BorderFactory.createEmptyBorder(40, 180, 80, 180));
+
+        JButton start = new JButton("START");
+        start.setPreferredSize(new Dimension(120, 35));
+        start.setFont(new Font("Arial", Font.PLAIN, 22));
+        start.setBackground(new Color(255, 140, 0));
+        start.setForeground(Color.WHITE);
+
+        JButton exit = new JButton("EXIT");
+        exit.setPreferredSize(new Dimension(120, 35));
+        exit.setFont(new Font("Arial", Font.PLAIN, 22));
+        exit.setBackground(new Color(150, 0, 0));
+        exit.setForeground(Color.WHITE);
+
+        buttonsPanel.add(start);
+        buttonsPanel.add(exit);
+        background.add(buttonsPanel, BorderLayout.CENTER);
     }
 }
