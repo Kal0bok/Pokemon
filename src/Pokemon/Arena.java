@@ -156,4 +156,14 @@ public class Arena {
         timer.setRepeats(false);
         timer.start();
     }
+    
+    private void showEmptyWindow(JFrame oldFrame) {
+        oldFrame.dispose();
+
+        JFrame empty = new JFrame("Arena");
+        empty.setSize(800, 500);
+        empty.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        empty.setLocationRelativeTo(null);
+        empty.setVisible(true);
+    }
 }
