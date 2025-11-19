@@ -183,9 +183,9 @@ public class Pokedatnis {
 					return;
                 }
                 
-			case 6:
-                JOptionPane.showMessageDialog(null, "Arena cīņa vēl nav izveidota.");
-                break;
+				case 6:
+					new Arena();
+	                break;
                 
             case 7:
                 JOptionPane.showMessageDialog(null, "Programma ir aptureta");
