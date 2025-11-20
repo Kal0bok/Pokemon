@@ -50,7 +50,6 @@ public class Metodes {
         }
     }
     
-    // НОВЫЙ МЕТОД для целых чисел
     public static Integer skaitlaParbaudeInt(String zinojums, int min, int max) {
         String ievade;
         Integer skaitlis;
@@ -95,7 +94,6 @@ public class Metodes {
             return -1;
         }
         
-        // Находим индекс выбранного покемона
         for (int i = 0; i < kSaraksts.length; i++) {
             if (kSaraksts[i].equals(izveletais)) {
                 return i;
@@ -104,7 +102,6 @@ public class Metodes {
         return -1;
     }
     
-    // НОВЫЙ МЕТОД для подтверждения действий
     public static boolean apstiprinatDarbibu(String zinojums) {
         int result = JOptionPane.showConfirmDialog(null, zinojums, "Apstiprinājums", 
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
