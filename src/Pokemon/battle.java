@@ -66,4 +66,36 @@ private Random random = new Random();
     private void enemyTurn() {
         playerTurn = true;
     }
+    
+    
+    public String useNormalAttack() {
+        if (!playerTurn) return "Pretinieks uzbruka!";
+        
+        double damage = calculateNormalDamage();
+        String result = applyDamageToEnemy(damage);
+        
+        playerTurn = false;
+        enemyTurn();
+        return result;
+    }
+    
+    private double calculateNormalDamage() {
+        return playerPokemon.getUzbruk() + playerTrainer.getLimenis();
+    }
+    
+    private String applyDamageToEnemy(double damage) {
+        if (enemyHasShield) {
+            enemyHasShield = false;
+            return playerPokemon.getVards() + " Uzbruka! Jūs saglaba aizsargs!";
+        } else {
+            enemyPokemon.saņBojās(damage);
+            String result = playerPokemon.getVards() + " uzbruka " + damage + " bojājumu!";
+            
+            if (enemyPokemon.getDziv() <= 0) {
+                result += "\n" + enemyPokemon.getVards() + " Uzvarēts!";
+            }
+            
+            return result;
+        }
+    }
 }
