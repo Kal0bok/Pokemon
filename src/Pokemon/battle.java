@@ -2,6 +2,8 @@ package Pokemon;
 
 import java.util.Random;
 
+import javax.swing.JFrame;
+
 public class battle {
     private Pokemons playerPokemon;
     private Pokemons enemyPokemon;
@@ -109,5 +111,20 @@ private static final double SUPER_ATTACK_DAMAGE = 50;
         playerTurn = false;
         enemyTurn();
         return result;
+    }
+    
+private battle battle;
+    
+    private void showEmptyWindow(JFrame oldFrame) {
+        oldFrame.dispose();
+
+        Pokemons playerPokemon = new UdensP();
+        Pokemons enemyPokemon = new ElektriskaisP(); 
+        
+        Trainer playerTrainer = MainMenu.aktivTrener;
+        
+        battle = new battle(playerPokemon, enemyPokemon, playerTrainer);
+
+        battleButtons(layeredPane);
     }
 }
