@@ -73,7 +73,6 @@ public class Pokedatnis {
                         JOptionPane.QUESTION_MESSAGE, null, tipi, tipi[0]);
                 if (tips == null) break;
 
-                // ИСПРАВЛЕННЫЕ СТРОКИ:
                 Integer lvl = Metodes.skaitlaParbaudeInt("Ievadi līmeni (1-50)", 1, 50);
                 if (lvl == null || lvl < 0) break;
 
@@ -86,7 +85,6 @@ public class Pokedatnis {
                 Double atk = Metodes.skaitlaParbaude("Ievadi uzbrukumu (1-10)", 1, 10);
                 if (atk == null || atk < 0) break;
 
-                // Создание покемона в зависимости от типа
                 if (tips.equals("Electric")) {
                     pokemoni.add(new ElektriskaisP(vards, lvl, hp, atk, def));
                 } else if (tips.equals("Water")) {
@@ -94,7 +92,6 @@ public class Pokedatnis {
                 } else if (tips.equals("Fire")) {
                     pokemoni.add(new Uguns(vards, lvl, hp, atk, def));
                 } else {
-                    // Для других типов используем абстрактный класс
                     pokemoni.add(new Pokemons(vards, tips, lvl, hp, atk, def) {
                         @Override
                         public String ipaUzbruk() {
@@ -103,7 +100,7 @@ public class Pokedatnis {
                         
                         @Override
                         public Color getCardColor() {
-                            return Color.LIGHT_GRAY; // Цвет по умолчанию
+                            return Color.LIGHT_GRAY; 
                         }
                     });
                 }
