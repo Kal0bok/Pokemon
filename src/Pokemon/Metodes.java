@@ -1,8 +1,14 @@
 package Pokemon;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
+
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 public class Metodes {
     
@@ -22,6 +28,21 @@ public class Metodes {
                         "Nekorekti dati", JOptionPane.WARNING_MESSAGE);
             }
         }
+    }
+    
+    public static void paradiZinojumu(String virsraksts, String zinojums) {
+        JTextArea textArea = new JTextArea(zinojums);
+        textArea.setEditable(false);
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+        textArea.setBackground(new Color(240, 240, 240));
+        textArea.setFont(new Font("Arial", Font.PLAIN, 12));
+        
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane.setPreferredSize(new Dimension(400, 300));
+        
+        JOptionPane.showMessageDialog(null, scrollPane, virsraksts, 
+            JOptionPane.INFORMATION_MESSAGE);
     }
 
     public static Double skaitlaParbaude(String zinojums, double min, double max) {
