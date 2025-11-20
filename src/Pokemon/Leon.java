@@ -89,32 +89,29 @@ public class Leon {
         continueBtn.addActionListener(e -> {
             info.dispose();
             closeAllWindows();
-            SwingUtilities.invokeLater(() -> Pokedatnis.main(new String[]{}));
-        });
-
-        JButton exitBtn = createButton("IZIET", new Color(200, 60, 60));
-        exitBtn.addActionListener(e -> {
-            int confirm = JOptionPane.showConfirmDialog(info, 
-                "Vai tiešām vēlaties iziet no programmas?", 
-                "Apstiprinājums", 
-                JOptionPane.YES_NO_OPTION);
-            if (confirm == JOptionPane.YES_OPTION) {
-                System.exit(0);
-            }
+            startGame();
         });
 
         buttonPanel.add(continueBtn);
-        buttonPanel.add(Box.createHorizontalStrut(20));
-        buttonPanel.add(exitBtn);
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
         
         info.setVisible(true);
     }
     
+    private static void startGame() {
+        SwingUtilities.invokeLater(() -> {
+            try {
+                Pokedatnis.main(new String[]{});
+            } catch (Exception e) {
+                System.err.println("Kļūda palaižot spēli: " + e.getMessage());
+            }
+        });
+    }
+    
     private static void closeAllWindows() {
         Window[] windows = Window.getWindows();
         for (Window window : windows) {
-            if (window.isVisible() && window != Window.getWindows()[0]) {
+            if (window.isVisible()) {
                 window.dispose();
             }
         }
