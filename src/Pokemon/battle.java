@@ -1,15 +1,6 @@
 package Pokemon;
 
-import java.awt.Component;
-import java.awt.Point;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.Random;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-import javax.swing.JOptionPane;
 
 public class battle {
     private Pokemons playerPokemon;
@@ -18,205 +9,141 @@ public class battle {
     private boolean playerTurn;
     private boolean playerHasShield;
     private boolean enemyHasShield;
+    private Random random;
     
     public battle(Pokemons playerPokemon, Pokemons enemyPokemon, Trainer playerTrainer) {
         this.playerPokemon = playerPokemon;
         this.enemyPokemon = enemyPokemon;
         this.playerTrainer = playerTrainer;
-        this.playerTurn = true; 
+        this.playerTurn = true;
         this.playerHasShield = false;
         this.enemyHasShield = false;
+        this.random = new Random();
     }
     
-    public Pokemons getPlayerPokemon() {
-    	return playerPokemon; 
-    	}
+    public Pokemons getPlayerPokemon() { return playerPokemon; }
+    public Pokemons getEnemyPokemon() { return enemyPokemon; }
+    public boolean isPlayerTurn() { return playerTurn; }
+    public boolean playerHasShield() { return playerHasShield; }
+    public boolean enemyHasShield() { return enemyHasShield; }
     
-    public Pokemons getEnemyPokemon() { 
-    	return enemyPokemon; 
-    	}
-    
-    public boolean isPlayerTurn() { 
-    	return playerTurn; 
-    	}
-    
-    public boolean playerHasShield() { 
-    	return playerHasShield;
-    	}
-    
-    public boolean enemyHasShield() { 
-    	return enemyHasShield;
-    	}
-    
-private Random random = new Random();
-    
-    public String useDefenseAction() {
-        if (!playerTurn) return "Pretinieks uzbruka!";
+    public String izmantotAizsardzibu() {
+        if (!playerTurn) return "Nav jūsu gājiens!";
         
         if (random.nextBoolean()) {
-            double maxHp = getMaxHp(playerPokemon);
+            double maxHp = 100;
             playerPokemon.saņBojās(playerPokemon.getDziv() - maxHp);
             playerTurn = false;
-            enemyTurn();
-            return playerPokemon.getVards() + " Sasniedz pilnu dzivibu!";
+            ienaidniekaGajiens();
+            return playerPokemon.getVards() + " Pilnībā atjaunoja veselību!";
         } else {
             playerHasShield = true;
             playerTurn = false;
-            enemyTurn();
-            return playerPokemon.getVards() + " Sasniedz aizsardzību uz nakamo uzbrukumu!";
+            ienaidniekaGajiens();
+            return playerPokemon.getVards() + " Ieguva vairogu uz nākamo triecienu!";
         }
     }
     
-    private double getMaxHp(Pokemons pokemon) {
-
-        return 100;    
-    }
-    
-    private void enemyTurn() {
-        playerTurn = true;
-    }
-    
-    
-    public String useNormalAttack() {
-        if (!playerTurn) return "Pretinieks uzbruka!";
+    public String izmantotParastoUzbrukumu() {
+        if (!playerTurn) return "Nav jūsu gājiens!";
         
-        double damage = calculateNormalDamage();
-        String result = applyDamageToEnemy(damage);
+        double bojajums = aprekinatParastoBojajumu();
+        String rezultats = uzliktBojajumuIenaidniekam(bojajums);
         
         playerTurn = false;
-        enemyTurn();
-        return result;
+        ienaidniekaGajiens();
+        return rezultats;
     }
     
-    private double calculateNormalDamage() {
+    public String izmantotSuperUzbrukumu() {
+        if (!playerTurn) return "Nav jūsu gājiens!";
+        
+        String rezultats = uzliktBojajumuIenaidniekam(50);
+        playerTurn = false;
+        ienaidniekaGajiens();
+        return rezultats;
+    }
+    
+    private double aprekinatParastoBojajumu() {
         return playerPokemon.getUzbruk() + playerTrainer.getLimenis();
     }
     
-    private String applyDamageToEnemy(double damage) {
+    private String uzliktBojajumuIenaidniekam(double bojajums) {
         if (enemyHasShield) {
             enemyHasShield = false;
-            return playerPokemon.getVards() + " Uzbruka! Vairogs противника поглотил урон!";
+            return playerPokemon.getVards() + " Uzbruk! Ienaidnieka vairogs absorbēja bojājumu!";
         } else {
-            double currentHp = enemyPokemon.getDziv();
-            enemyPokemon.saņBojās(damage);
-            String result = playerPokemon.getVards() + " uzbruka " + damage + " bojājumi!";
+            enemyPokemon.saņBojās(bojajums);
+            String rezultats = playerPokemon.getVards() + " nodara " + bojajums + " bojājumus!";
             
             if (enemyPokemon.getDziv() <= 0) {
-                result += "\n" + enemyPokemon.getVards() + " Uzvarēts!";
+                rezultats += "\n" + enemyPokemon.getVards() + " Ir sakauts!";
             }
             
-            return result;
-        }
-    }
-
-private static final double SUPER_ATTACK_DAMAGE = 50;
-    
-    public String useSuperAttack() {
-        if (!playerTurn) return "Pretinieks uzbruka!";
-        
-        String result = applyDamageToEnemy(SUPER_ATTACK_DAMAGE);
-        playerTurn = false;
-        enemyTurn();
-        return result;
-    }
-    
-private battle battle;
-    
-    private void showEmptyWindow(JFrame oldFrame) {
-        oldFrame.dispose();
-
-        Pokemons playerPokemon = new UdensP();
-        Pokemons enemyPokemon = new ElektriskaisP(); 
-        
-        Trainer playerTrainer = MainMenu.aktivTrener;
-        
-        battle = new battle(playerPokemon, enemyPokemon, playerTrainer);
-
-        battleButtons(layeredPane);
-    }
-    
-    private void battleButtons(JLayeredPane layeredPane) {
-        Component[] components = layeredPane.getComponents();
-        for (Component comp : components) {
-            if (comp instanceof JLabel) {
-                JLabel label = (JLabel) comp;
-                if (label.getIcon() != null) {
-                    addActionListenerToLabel(label);
-                }
-            }
-        }
-    }
-       
-    private void addActionListenerToLabel(JLabel actionLabel) {
-        actionLabel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                Point location = actionLabel.getLocation();
-                handleBattleAction(location);
-            }
-        });
-    }
-    
-    private void handleBattleAction(Point actionLocation) {
-        if (actionLocation.x < 300) { 
-            String result = battle.useDefenseAction();
-            showBattleMessage(result);
-        } else if (actionLocation.x < 700) { 
-            String result = battle.useNormalAttack();
-            showBattleMessage(result);
-        } else { 
-            String result = battle.useSuperAttack();
-            showBattleMessage(result);
-        }
-        
-        updateHpDisplay();
-    }
-    
-    private void showBattleMessage(String message) {
-        JOptionPane.showMessageDialog(null, message, "Ciņa!", JOptionPane.INFORMATION_MESSAGE);
-    }
-    
-    private void updateHpDisplay() {
-    }
-    
-    private void addActionListenersToBattleButtons(JLayeredPane layeredPane) {
-        for (Component comp : layeredPane.getComponents()) {
-            if (comp instanceof JLabel) {
-                JLabel label = (JLabel) comp;
-                Point location = label.getLocation();
-                
-                if (location.x == 50 && location.y == 470) { 
-                    label.addMouseListener(createActionListener("defense"));
-                } else if (location.x == 450 && location.y == 470) { 
-                    label.addMouseListener(createActionListener("attack"));
-                } else if (location.x == 850 && location.y == 470) { 
-                    label.addMouseListener(createActionListener("super"));
-                }
-            }
+            return rezultats;
         }
     }
     
-    private MouseAdapter createActionListener(String actionType) {
-        return new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                switch (actionType) {
-                    case "defense":
-                        String defenseResult = battle.useDefenseAction();
-                        showBattleMessage(defenseResult);
-                        break;
-                    case "attack":
-                        String attackResult = battle.useNormalAttack();
-                        showBattleMessage(attackResult);
-                        break;
-                    case "super":
-                        String superResult = battle.useSuperAttack();
-                        showBattleMessage(superResult);
-                        break;
-                }
-                updateHpDisplay();
+    private void ienaidniekaGajiens() {
+        if (enemyPokemon.getDziv() > 0) {
+            int darbiba = random.nextInt(3);
+            String ienaidniekaRezultats = "";
+            
+            switch (darbiba) {
+                case 0:
+                    ienaidniekaRezultats = ienaidniekaAizsardziba();
+                    break;
+                case 1:
+                    ienaidniekaRezultats = ienaidniekaParastaisUzbrukums();
+                    break;
+                case 2:
+                    ienaidniekaRezultats = ienaidniekaSuperUzbrukums();
+                    break;
             }
-        };
+            
+            paradiIenaidniekaDarbibu(ienaidniekaRezultats);
+        }
+        
+        playerTurn = true;
     }
     
+    private String ienaidniekaAizsardziba() {
+        if (random.nextBoolean()) {
+            double maxHp = 100;
+            enemyPokemon.saņBojās(enemyPokemon.getDziv() - maxHp);
+            return enemyPokemon.getVards() + " Pilnībā atjaunoja veselību!";
+        } else {
+            enemyHasShield = true;
+            return enemyPokemon.getVards() + " Ieguva vairogu uz nākamo triecienu!";
+        }
+    }
+    
+    private String ienaidniekaParastaisUzbrukums() {
+        double bojajums = enemyPokemon.getUzbruk() + 5;
+        return uzliktBojajumuSpeletajam(bojajums);
+    }
+    
+    private String ienaidniekaSuperUzbrukums() {
+        return uzliktBojajumuSpeletajam(50);
+    }
+    
+    private String uzliktBojajumuSpeletajam(double bojajums) {
+        if (playerHasShield) {
+            playerHasShield = false;
+            return enemyPokemon.getVards() + " Uzbruk! Jūsu vairogs absorbēja bojājumu!";
+        } else {
+            playerPokemon.saņBojās(bojajums);
+            String rezultats = enemyPokemon.getVards() + " nodara " + bojajums + " bojājumus!";
+            
+            if (playerPokemon.getDziv() <= 0) {
+                rezultats += "\nJūsu pokemons ir sakauts!";
+            }
+            
+            return rezultats;
+        }
+    }
+    
+    private void paradiIenaidniekaDarbibu(String zina) {
+        System.out.println("Ienaidnieka darbība: " + zina);
+    }
 }
