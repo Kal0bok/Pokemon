@@ -221,6 +221,15 @@ public class Pokedatnis {
         if (MainMenu.aktivTrener.getVards().equals("Ash Ketchum")) {
             Ash.showAshInfo();
         } else {
+
+            Leon.showIzvInfo(MainMenu.aktivTrener.getVards(), 
+                           MainMenu.aktivTrener.getVecums(), 
+                           MainMenu.aktivTrener.getLimenis());
+        }
+        
+        if (MainMenu.aktivTrener.getVards().equals("Ash Ketchum")) {
+            Ash.showAshInfo();
+        } else {
             Leon.showIzvInfo(MainMenu.aktivTrener.getVards(), 
                            MainMenu.aktivTrener.getVecums(), 
                            MainMenu.aktivTrener.getLimenis());
