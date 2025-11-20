@@ -226,7 +226,7 @@ public class Arena {
             title2.setForeground(Color.WHITE);  
             title2.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
 
-            JButton cont = new JButton("Turpināt");
+            JButton cont = new JButton("Start");
             cont.setFont(new Font("Arial", Font.BOLD, 22));
             cont.setBackground(new Color(0, 170, 0));
             cont.setOpaque(true);
@@ -265,10 +265,6 @@ public class Arena {
         bgLabel.setBounds(0, 0, 1000, 600);
         layeredPane.add(bgLabel, Integer.valueOf(0));
         
-        JPanel topStatsPanel = new JPanel(new GridLayout(1, 2));
-        topStatsPanel.setOpaque(false);
-        topStatsPanel.setBounds(0, 10, 1000, 80);
-        
         JPanel leftStats = createStatsPanel("HP: 100/100", "Armor: 50");
         leftStats.setBounds(100, 10, 300, 80);
         
@@ -284,11 +280,15 @@ public class Arena {
         JLabel vsGif = createGif("/GIF/vs.gif"); 
         vsGif.setBounds(450, 250, 150, 150); 
         
+        JLabel pauseLabel = createPauseLabel();
+        pauseLabel.setBounds(485, 25, 30, 30);
+        
         layeredPane.add(leftStats, Integer.valueOf(1));
         layeredPane.add(rightStats, Integer.valueOf(1));
         layeredPane.add(leftPokemon, Integer.valueOf(1));
         layeredPane.add(rightPokemon, Integer.valueOf(1));
-        layeredPane.add(vsGif, Integer.valueOf(2)); 
+        layeredPane.add(vsGif, Integer.valueOf(2));
+        layeredPane.add(pauseLabel, Integer.valueOf(3));
         
         empty.setContentPane(layeredPane);
         empty.setLocationRelativeTo(null);
@@ -301,6 +301,27 @@ public class Arena {
         });
         timer.setRepeats(false);
         timer.start();
+    }
+
+    private JLabel createPauseLabel() {
+        JLabel pauseLabel = new JLabel();
+        pauseLabel.setPreferredSize(new Dimension(100, 100));
+        
+        ImageIcon pauseIcon = new ImageIcon(getClass().getResource("/Image/pause.png"));
+        if (pauseIcon.getImage() != null) {
+            Image scaledPause = pauseIcon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+            pauseLabel.setIcon(new ImageIcon(scaledPause));
+        } else {
+            pauseLabel.setText("II");
+            pauseLabel.setFont(new Font("Arial", Font.BOLD, 20));
+            pauseLabel.setForeground(Color.WHITE);
+        }
+        
+        pauseLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        pauseLabel.setVerticalAlignment(SwingConstants.CENTER);
+        pauseLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        return pauseLabel;
     }
 
     private JPanel createStatsPanel(String hpText, String armorText) {
