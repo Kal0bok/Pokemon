@@ -284,6 +284,15 @@ public class Arena {
         JLabel pauseLabel = createPauseLabel();
         pauseLabel.setBounds(485, 25, 30, 30);
         
+        JLabel bottomLeftImage = createBottomImage("/Image/left_item.png"); 
+        bottomLeftImage.setBounds(50, 500, 100, 80); 
+        
+        JLabel bottomCenterImage = createBottomImage("/Image/center_item.png"); 
+        bottomCenterImage.setBounds(450, 500, 100, 80); 
+        
+        JLabel bottomRightImage = createBottomImage("/Image/right_item.png"); 
+        bottomRightImage.setBounds(850, 500, 100, 80); 
+        
         pauseLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -298,6 +307,10 @@ public class Arena {
         layeredPane.add(vsGif, Integer.valueOf(2));
         layeredPane.add(pauseLabel, Integer.valueOf(3));
         
+        layeredPane.add(bottomLeftImage, Integer.valueOf(1));
+        layeredPane.add(bottomCenterImage, Integer.valueOf(1));
+        layeredPane.add(bottomRightImage, Integer.valueOf(1));
+        
         empty.setContentPane(layeredPane);
         empty.setLocationRelativeTo(null);
         empty.setVisible(true);
@@ -309,6 +322,30 @@ public class Arena {
         });
         timer.setRepeats(false);
         timer.start();
+    }
+    
+    private JLabel createBottomImage(String path) {
+        JLabel imageLabel = new JLabel();
+        imageLabel.setPreferredSize(new Dimension(100, 80));
+        
+        ImageIcon icon = new ImageIcon(getClass().getResource(path));
+        if (icon.getImage() != null) {
+            Image scaledImage = icon.getImage().getScaledInstance(100, 80, Image.SCALE_SMOOTH);
+            imageLabel.setIcon(new ImageIcon(scaledImage));
+        } else {
+            imageLabel.setText("Image");
+            imageLabel.setFont(new Font("Arial", Font.BOLD, 14));
+            imageLabel.setForeground(Color.WHITE);
+            imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            imageLabel.setOpaque(true);
+            imageLabel.setBackground(new Color(100, 100, 100, 200));
+        }
+        
+        imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        imageLabel.setVerticalAlignment(SwingConstants.CENTER);
+        imageLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        return imageLabel;
     }
 
     private void showPauseOverlay(JLayeredPane layeredPane) {
