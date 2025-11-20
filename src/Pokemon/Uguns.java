@@ -15,7 +15,6 @@ public class Uguns extends Pokemons {
     
     @Override
     public double dotBoja() {
-        // Огненные атаки очень сильны
         return super.dotBoja() * 1.5;
     }
     
@@ -26,6 +25,6 @@ public class Uguns extends Pokemons {
     
     @Override
     public Color getCardColor() {
-        return new Color(255, 150, 150); // Красный для огненных
+        return new Color(255, 150, 150); 
     }
 }
