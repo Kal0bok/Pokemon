@@ -15,12 +15,10 @@ public class MainMenu {
     }
     
     private void initialize() {
-        // Устанавливаем Look and Feel ДО создания компонентов
         try {
             UIManager.setLookAndFeel(UIManager.getLookAndFeel());
         } catch (Exception e) {
             System.err.println("Nevar iestatīt sistēmas izskatu: " + e.getMessage());
-            // Продолжаем с стандартным Look and Feel
         }
         
         frame = new JFrame("Pokémon Game");
@@ -29,12 +27,10 @@ public class MainMenu {
         frame.setResizable(false);
         frame.setLayout(new BorderLayout());
         
-        // Создаем панель с фоном
         JPanel backgroundPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                // Создаем градиентный фон
                 Graphics2D g2d = (Graphics2D) g;
                 Color color1 = new Color(30, 60, 120);
                 Color color2 = new Color(10, 30, 60);
@@ -44,14 +40,12 @@ public class MainMenu {
             }
         };
         backgroundPanel.setLayout(new BorderLayout());
-        
-        // Заголовок
+
         JLabel title = new JLabel("POKÉMON GAME", SwingConstants.CENTER);
         title.setFont(new Font("Arial", Font.BOLD, 36));
         title.setForeground(Color.YELLOW);
         title.setBorder(BorderFactory.createEmptyBorder(30, 0, 20, 0));
         
-        // Панель кнопок
         JPanel buttonPanel = new JPanel(new GridLayout(3, 1, 15, 15));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 100, 30, 100));
         buttonPanel.setOpaque(false);
@@ -68,7 +62,6 @@ public class MainMenu {
         buttonPanel.add(aboutBtn);
         buttonPanel.add(exitBtn);
         
-        // Нижняя панель
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         bottomPanel.setOpaque(false);
         
@@ -104,7 +97,6 @@ public class MainMenu {
         btn.setContentAreaFilled(false);
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
-        // Эффект при наведении
         btn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btn.setForeground(Color.YELLOW);
@@ -191,7 +183,6 @@ public class MainMenu {
         mainPanel.setBackground(new Color(20, 30, 60));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
         
-        // Карточка тренера Ash
         JPanel ashCard = createTrainerCard(
             "Ash Ketchum", 
             "The passionate Pokémon Trainer from Pallet Town", 
@@ -199,7 +190,6 @@ public class MainMenu {
             "• Pikachu (Electric)\n• Charizard (Fire)\n• Bulbasaur (Grass)"
         );
         
-        // Карточка кастомного тренера
         JPanel customCard = createTrainerCard(
             "Custom Trainer", 
             "Create your own trainer profile", 
@@ -210,7 +200,6 @@ public class MainMenu {
         ashCard.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 aktivTrener = new Trainer("Ash Ketchum", 12, 10);
-                // Добавляем стартовых покемонов
                 Pokedatnis.pokemoni.add(new ElektriskaisP("Pikachu", 5, 80, 8.5, 6.0));
                 Pokedatnis.pokemoni.add(new Uguns("Charizard", 8, 120, 9.5, 7.0));
                 trainerFrame.dispose();
@@ -242,7 +231,6 @@ public class MainMenu {
         ));
         card.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
-        // Анимация при наведении
         card.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent e) {
                 card.setBorder(BorderFactory.createCompoundBorder(
@@ -306,7 +294,6 @@ public class MainMenu {
         
         aktivTrener = new Trainer(name, age, level);
         
-        // Добавляем стартовых покемонов
         Pokedatnis.pokemoni.add(new ElektriskaisP("Pikachu", 5, 80, 8.5, 6.0));
         Pokedatnis.pokemoni.add(new UdensP("Squirtle", 5, 85, 7.0, 7.5));
         
@@ -324,14 +311,12 @@ public class MainMenu {
         mainPanel.setBackground(new Color(240, 248, 255));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         
-        // Заголовок
         JLabel title = new JLabel("TRAINER PROFILE", SwingConstants.CENTER);
         title.setFont(new Font("Arial", Font.BOLD, 28));
         title.setForeground(new Color(30, 60, 120));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         title.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
-        
-        // Информация о тренере
+
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new GridLayout(0, 1, 10, 10));
         infoPanel.setBackground(Color.WHITE);
@@ -345,7 +330,6 @@ public class MainMenu {
         infoPanel.add(createInfoLabel("Level: " + trainer.getLimenis()));
         infoPanel.add(createInfoLabel("Pokémon: " + Pokedatnis.pokemoni.size()));
         
-        // Кнопка продолжения
         JButton continueBtn = new JButton("START ADVENTURE");
         continueBtn.setFont(new Font("Arial", Font.BOLD, 16));
         continueBtn.setBackground(new Color(50, 150, 50));
@@ -377,20 +361,9 @@ public class MainMenu {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             try {
-                // ПРАВИЛЬНЫЙ ВАРИАНТ 1:
-                UIManager.setLookAndFeel(UIManager.getLookAndFeel());
-                
-                // ИЛИ ПРАВИЛЬНЫЙ ВАРИАНТ 2:
-                // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                
-                // ИЛИ конкретный Look and Feel:
-                // UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-                // UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-                // UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-                
+                UIManager.setLookAndFeel(UIManager.getLookAndFeel());     
             } catch (Exception e) {
-                System.err.println("Nevar iestatīt Look and Feel: " + e.getMessage());
-                // Используем стандартный Look and Feel
+                System.err.println("Nevar iestatīt Look and Feel:  " + e.getMessage());
             }
             new MainMenu();
         });
