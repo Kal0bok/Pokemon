@@ -9,6 +9,7 @@ import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 
 public class battle {
     private Pokemons playerPokemon;
@@ -155,5 +156,28 @@ private battle battle;
             }
         });
     }
+    
+    private void handleBattleAction(Point actionLocation) {
+        if (actionLocation.x < 300) { 
+            String result = battle.useDefenseAction();
+            showBattleMessage(result);
+        } else if (actionLocation.x < 700) { 
+            String result = battle.useNormalAttack();
+            showBattleMessage(result);
+        } else { 
+            String result = battle.useSuperAttack();
+            showBattleMessage(result);
+        }
+        
+        updateHpDisplay();
+    }
+    
+    private void showBattleMessage(String message) {
+        JOptionPane.showMessageDialog(null, message, "Бой", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private void updateHpDisplay() {
+    }
+}
     
 }
