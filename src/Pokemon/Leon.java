@@ -52,21 +52,21 @@ public class Leon {
         addInfoLine(infoPanel, "Vārds:", vards);
         addInfoLine(infoPanel, "Vecums:", vecums + " gadi");
         addInfoLine(infoPanel, "Līmenis:", limenis + "");
-
+        
         JSeparator separator = new JSeparator();
         separator.setForeground(Color.YELLOW);
         separator.setMaximumSize(new Dimension(400, 2));
         infoPanel.add(Box.createVerticalStrut(15));
         infoPanel.add(separator);
         infoPanel.add(Box.createVerticalStrut(15));
-
+        
         JLabel pokemonTitle = new JLabel("POKEMONI:");
         pokemonTitle.setFont(new Font("Arial", Font.BOLD, 16));
         pokemonTitle.setForeground(Color.YELLOW);
         pokemonTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
         infoPanel.add(pokemonTitle);
         infoPanel.add(Box.createVerticalStrut(10));
-
+        
         if (Pokedatnis.pokemoni.isEmpty()) {
             JLabel noPokemon = new JLabel("Nav pokemonu");
             noPokemon.setFont(new Font("Arial", Font.ITALIC, 14));
@@ -85,21 +85,26 @@ public class Leon {
         buttonPanel.setOpaque(false);
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20));
 
-        JButton backBtn = createButton("ATPAKAĻ", new Color(200, 60, 60));
-        backBtn.addActionListener(e -> info.dispose());
-
         JButton continueBtn = createButton("TURPINĀT", new Color(60, 180, 60));
         continueBtn.addActionListener(e -> {
             info.dispose();
+            closeAllWindows();
             SwingUtilities.invokeLater(() -> Pokedatnis.main(new String[]{}));
         });
 
-        buttonPanel.add(backBtn);
-        buttonPanel.add(Box.createHorizontalStrut(20));
         buttonPanel.add(continueBtn);
-
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+        
         info.setVisible(true);
+    }
+    
+    private static void closeAllWindows() {
+        Window[] windows = Window.getWindows();
+        for (Window window : windows) {
+            if (window.isVisible() && window != Window.getWindows()[0]) {
+                window.dispose();
+            }
+        }
     }
     
     private static void addInfoLine(JPanel panel, String label, String value) {
