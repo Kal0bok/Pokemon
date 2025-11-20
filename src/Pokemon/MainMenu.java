@@ -275,19 +275,19 @@ public class MainMenu {
     }
     
     private void createCustomTrainer() {
-        String name = Metodes.virkneParbaud("Enter your trainer name:");
+        String name = Metodes.virkneParbaud("Ievadi trenera vārdu:");
         if (name == null) {
             selectTrainer();
             return;
         }
         
-        Integer age = Metodes.skaitlaParbaudeInt("Enter your age (10-99):", 10, 99);
+        Integer age = Metodes.skaitlaParbaudeInt("Ievadi vecumu (10-99):", 10, 99);
         if (age == null || age < 0) {
             selectTrainer();
             return;
         }
         
-        Integer level = Metodes.skaitlaParbaudeInt("Enter your trainer level (1-10):", 1, 10);
+        Integer level = Metodes.skaitlaParbaudeInt("Ievadi trenera līmeni (1-10):", 1, 10);
         if (level == null || level < 0) {
             selectTrainer();
             return;
