@@ -1,81 +1,178 @@
 package Pokemon;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.Image;
-
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
+import java.awt.*;
+import javax.swing.*;
 
 public class Leon {
 
-	public static  void showIzvInfo(String vards, int vecums, double d) {
-        JFrame info = new JFrame("Profile");
-        info.setSize(400, 500);
+    public static void showIzvInfo(String vards, int vecums, int limenis) {
+        JDialog info = new JDialog((JFrame)null, "Trenera Profils", true);
+        info.setSize(500, 600);
         info.setLocationRelativeTo(null);
-        info.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        info.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         info.setLayout(new BorderLayout());
-        info.getContentPane().setBackground(new Color(20, 30, 60));
+        
+        JPanel mainPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                GradientPaint gradient = new GradientPaint(0, 0, new Color(30, 60, 120), 
+                        getWidth(), getHeight(), new Color(10, 30, 60));
+                g2d.setPaint(gradient);
+                g2d.fillRect(0, 0, getWidth(), getHeight());
+            }
+        };
+        mainPanel.setLayout(new BorderLayout());
+        info.setContentPane(mainPanel);
 
-        JLabel photo = new JLabel();
-        photo.setHorizontalAlignment(SwingConstants.CENTER);
-        photo.setIcon(new ImageIcon(
-                new ImageIcon(Leon.class.getResource("/Image/67.png"))
-                        .getImage()
-                        .getScaledInstance(150, 150, Image.SCALE_SMOOTH)
-        ));
+        JPanel headerPanel = new JPanel(new BorderLayout());
+        headerPanel.setOpaque(false);
+        headerPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        
+        JLabel icon = new JLabel("⚡", SwingConstants.CENTER);
+        icon.setFont(new Font("Arial", Font.PLAIN, 64));
+        icon.setForeground(Color.YELLOW);
+        
+        JLabel title = new JLabel("TRENERA PROFILS", SwingConstants.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, 24));
+        title.setForeground(Color.WHITE);
+        title.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
+        
+        headerPanel.add(icon, BorderLayout.CENTER);
+        headerPanel.add(title, BorderLayout.SOUTH);
+        
+        mainPanel.add(headerPanel, BorderLayout.NORTH);
 
-        info.add(photo, BorderLayout.NORTH);
+        JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+        infoPanel.setOpaque(false);
+        infoPanel.setBorder(BorderFactory.createEmptyBorder(0, 40, 20, 40));
 
-        JPanel textPanel = new JPanel();
-        textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
-        textPanel.setBackground(new Color(20, 30, 60));
-        textPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        addInfoLine(infoPanel, "Vārds:", vards);
+        addInfoLine(infoPanel, "Vecums:", vecums + " gadi");
+        addInfoLine(infoPanel, "Līmenis:", limenis + "");
 
-        JLabel name = new JLabel("Vārds: " + vards);
-        JLabel level = new JLabel("Trenera līmenis: " + d);
-        JLabel age = new JLabel("Vecums: " + vecums);
+        JSeparator separator = new JSeparator();
+        separator.setForeground(Color.YELLOW);
+        separator.setMaximumSize(new Dimension(400, 2));
+        infoPanel.add(Box.createVerticalStrut(15));
+        infoPanel.add(separator);
+        infoPanel.add(Box.createVerticalStrut(15));
 
-        JLabel pokemonsTitle = new JLabel("Pokemoni:");
-        JLabel p1 = new JLabel("• Pikachu (elektriskais tips) — 5. līmenis");
-        JLabel p2 = new JLabel("• Vaporeon (ūdens tips) — 5. līmenis");
+        JLabel pokemonTitle = new JLabel("POKEMONI:");
+        pokemonTitle.setFont(new Font("Arial", Font.BOLD, 16));
+        pokemonTitle.setForeground(Color.YELLOW);
+        pokemonTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+        infoPanel.add(pokemonTitle);
+        infoPanel.add(Box.createVerticalStrut(10));
 
-        for (JLabel lbl : new JLabel[]{name, level, age, pokemonsTitle, p1, p2}) {
-            lbl.setForeground(Color.WHITE);
-            lbl.setFont(new Font("Arial", Font.PLAIN, 18));
-            lbl.setAlignmentX(Component.CENTER_ALIGNMENT);
-            textPanel.add(lbl);
-            textPanel.add(Box.createVerticalStrut(10));
+        if (Pokedatnis.pokemoni.isEmpty()) {
+            JLabel noPokemon = new JLabel("Nav pokemonu");
+            noPokemon.setFont(new Font("Arial", Font.ITALIC, 14));
+            noPokemon.setForeground(Color.LIGHT_GRAY);
+            noPokemon.setAlignmentX(Component.CENTER_ALIGNMENT);
+            infoPanel.add(noPokemon);
+        } else {
+            for (Pokemons p : Pokedatnis.pokemoni) {
+                addPokemonLine(infoPanel, p);
+            }
         }
 
-        info.add(textPanel, BorderLayout.CENTER);
+        mainPanel.add(infoPanel, BorderLayout.CENTER);
 
-        JButton continueBtn = new JButton("Atpakaļ");
-        continueBtn.setFont(new Font("Arial", Font.BOLD, 18));
-        continueBtn.setBackground(Color.RED);
-        continueBtn.setForeground(Color.WHITE);
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        buttonPanel.setOpaque(false);
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20));
+
+        JButton backBtn = createButton("ATPAKAĻ", new Color(200, 60, 60));
+        backBtn.addActionListener(e -> info.dispose());
+
+        JButton continueBtn = createButton("TURPINĀT", new Color(60, 180, 60));
         continueBtn.addActionListener(e -> {
             info.dispose();
             SwingUtilities.invokeLater(() -> Pokedatnis.main(new String[]{}));
         });
 
-        JPanel bottom = new JPanel();
-        bottom.setBackground(new Color(20, 30, 60));
-        bottom.add(continueBtn);
+        buttonPanel.add(backBtn);
+        buttonPanel.add(Box.createHorizontalStrut(20));
+        buttonPanel.add(continueBtn);
 
-        info.add(bottom, BorderLayout.SOUTH);
-
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
         info.setVisible(true);
     }
-	
+    
+    private static void addInfoLine(JPanel panel, String label, String value) {
+        JPanel linePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        linePanel.setOpaque(false);
+        linePanel.setMaximumSize(new Dimension(400, 30));
+        
+        JLabel labelLbl = new JLabel(label);
+        labelLbl.setFont(new Font("Arial", Font.BOLD, 14));
+        labelLbl.setForeground(Color.WHITE);
+        labelLbl.setPreferredSize(new Dimension(80, 20));
+        
+        JLabel valueLbl = new JLabel(value);
+        valueLbl.setFont(new Font("Arial", Font.PLAIN, 14));
+        valueLbl.setForeground(Color.YELLOW);
+        
+        linePanel.add(labelLbl);
+        linePanel.add(valueLbl);
+        panel.add(linePanel);
+        panel.add(Box.createVerticalStrut(5));
+    }
+    
+    private static void addPokemonLine(JPanel panel, Pokemons pokemon) {
+        JPanel pokemonPanel = new JPanel(new BorderLayout());
+        pokemonPanel.setOpaque(false);
+        pokemonPanel.setMaximumSize(new Dimension(400, 30));
+        pokemonPanel.setBorder(BorderFactory.createEmptyBorder(2, 20, 2, 20));
+        
+        JLabel nameLabel = new JLabel("• " + pokemon.getVards());
+        nameLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        nameLabel.setForeground(Color.WHITE);
+        
+        JLabel infoLabel = new JLabel(pokemon.getTips() + " - Lv." + pokemon.getLimenis());
+        infoLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        infoLabel.setForeground(Color.CYAN);
+        
+        pokemonPanel.add(nameLabel, BorderLayout.WEST);
+        pokemonPanel.add(infoLabel, BorderLayout.EAST);
+        
+        panel.add(pokemonPanel);
+        panel.add(Box.createVerticalStrut(3));
+    }
+    
+    private static JButton createButton(String text, Color color) {
+        JButton button = new JButton(text) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(color);
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
+                g2.setColor(Color.WHITE);
+                g2.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 15, 15);
+                g2.dispose();
+                super.paintComponent(g);
+            }
+        };
+        button.setFont(new Font("Arial", Font.BOLD, 14));
+        button.setForeground(Color.WHITE);
+        button.setPreferredSize(new Dimension(120, 35));
+        button.setContentAreaFilled(false);
+        button.setFocusPainted(false);
+        button.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
+        
+        button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                button.setForeground(Color.YELLOW);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                button.setForeground(Color.WHITE);
+            }
+        });
+        
+        return button;
+    }
 }
