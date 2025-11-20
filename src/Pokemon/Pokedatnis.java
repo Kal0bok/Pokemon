@@ -58,7 +58,7 @@ public class Pokedatnis {
                     
                 case 3: 
                     paradiPokemonaProfilu();
-                    break;
+                    return;
                     
                 case 4: 
                     kartotPokemonus();

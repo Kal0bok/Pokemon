@@ -85,7 +85,6 @@ public class Leon {
         buttonPanel.setOpaque(false);
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20));
 
-        // Две кнопки: продолжить и выйти
         JButton continueBtn = createButton("TURPINĀT", new Color(60, 180, 60));
         continueBtn.addActionListener(e -> {
             info.dispose();

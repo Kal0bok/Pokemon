@@ -14,6 +14,7 @@ public class MainMenu {
         initialize();
     }
     
+    // Galvenā inicializācijas metode, kas izveido galveno izvēlni
     private void initialize() {
         try {
             UIManager.setLookAndFeel(UIManager.getLookAndFeel());
@@ -21,15 +22,16 @@ public class MainMenu {
             System.err.println("Nevar iestatīt sistēmas izskatu: " + e.getMessage());
         }
         
+        // Galvenā loga izveide un konfigurācija
         frame = new JFrame("Pokémon Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
         frame.setResizable(false);
         frame.setLayout(new BorderLayout());
         
+        // Panēls ar gradienta fona krāsu
         JPanel backgroundPanel = new JPanel() {		
-
-			@Override
+            @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Graphics2D g2d = (Graphics2D) g;
@@ -42,19 +44,23 @@ public class MainMenu {
         };
         backgroundPanel.setLayout(new BorderLayout());
 
+        // Virsraksta izveide
         JLabel title = new JLabel("POKÉMON GAME", SwingConstants.CENTER);
         title.setFont(new Font("Arial", Font.BOLD, 36));
         title.setForeground(Color.YELLOW);
         title.setBorder(BorderFactory.createEmptyBorder(30, 0, 20, 0));
         
+        // Pogu paneļa izveide
         JPanel buttonPanel = new JPanel(new GridLayout(3, 1, 15, 15));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 100, 30, 100));
         buttonPanel.setOpaque(false);
         
+        // Galveno pogu izveide
         JButton startBtn = createStyledButton("START GAME", new Color(0, 150, 0));
         JButton aboutBtn = createStyledButton("ABOUT", new Color(0, 100, 200));
         JButton exitBtn = createStyledButton("EXIT", new Color(200, 0, 0));
         
+        // Pogu notikumu apstrāde
         startBtn.addActionListener(e -> selectTrainer());
         aboutBtn.addActionListener(e -> showAbout());
         exitBtn.addActionListener(e -> exitGame());
@@ -63,12 +69,14 @@ public class MainMenu {
         buttonPanel.add(aboutBtn);
         buttonPanel.add(exitBtn);
         
+        // Apakšējā paneļa izveide ar palīdzības pogu
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         bottomPanel.setOpaque(false);
         
         JButton helpBtn = createHelpButton();
         bottomPanel.add(helpBtn);
         
+        // Komponentu pievienošana galvenajam panelim
         backgroundPanel.add(title, BorderLayout.NORTH);
         backgroundPanel.add(buttonPanel, BorderLayout.CENTER);
         backgroundPanel.add(bottomPanel, BorderLayout.SOUTH);
@@ -78,6 +86,7 @@ public class MainMenu {
         frame.setVisible(true);
     }
     
+    // Metode stilizētu pogu izveidei
     private JButton createStyledButton(String text, Color color) {
         JButton btn = new JButton(text) {
             @Override
@@ -98,6 +107,7 @@ public class MainMenu {
         btn.setContentAreaFilled(false);
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
+        // Peles notikumu apstrāde - izmaiņas kad peles kursors atrodas virs pogas
         btn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btn.setForeground(Color.YELLOW);
@@ -110,6 +120,7 @@ public class MainMenu {
         return btn;
     }
     
+    // Palīdzības pogas izveides metode
     private JButton createHelpButton() {
         JButton helpBtn = new JButton("?");
         helpBtn.setFont(new Font("Arial", Font.BOLD, 16));
@@ -120,6 +131,7 @@ public class MainMenu {
         return helpBtn;
     }
     
+    // Palīdzības loga attēlošanas metode
     private void showHelp() {
         String helpText = """
             <html>
@@ -138,6 +150,7 @@ public class MainMenu {
         JOptionPane.showMessageDialog(frame, helpText, "Help", JOptionPane.INFORMATION_MESSAGE);
     }
     
+    // Par spēles loga attēlošanas metode
     private void showAbout() {
         String aboutText = """
             <html>
@@ -161,6 +174,7 @@ public class MainMenu {
         JOptionPane.showMessageDialog(frame, aboutText, "About", JOptionPane.INFORMATION_MESSAGE);
     }
     
+    // Spēles iziešanas metode ar apstiprinājumu
     private void exitGame() {
         int confirm = JOptionPane.showConfirmDialog(frame, 
             "Are you sure you want to exit?", "Exit Game", 
@@ -172,6 +186,7 @@ public class MainMenu {
         }
     }
     
+    // Trenera izvēles loga attēlošanas metode
     private void selectTrainer() {
         frame.setVisible(false);
         
@@ -184,6 +199,7 @@ public class MainMenu {
         mainPanel.setBackground(new Color(20, 30, 60));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
         
+        // Trenera karšu izveide
         JPanel ashCard = createTrainerCard(
             "Ash Ketchum", 
             "The passionate Pokémon Trainer from Pallet Town", 
@@ -198,6 +214,7 @@ public class MainMenu {
             "• Choose your name\n• Select your age\n• Build your team"
         );
         
+        // Peles klikšķa notikumu apstrāde trenera izvēlei
         ashCard.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 aktivTrener = new Trainer("Ash Ketchum", 12, 10);
@@ -222,6 +239,7 @@ public class MainMenu {
         trainerFrame.setVisible(true);
     }
     
+    // Trenera kartes izveides metode
     private JPanel createTrainerCard(String name, String description, Color color, String pokemons) {
         JPanel card = new JPanel();
         card.setLayout(new BorderLayout());
@@ -232,6 +250,7 @@ public class MainMenu {
         ));
         card.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
+        // Peles notikumu apstrāde kartes izskatam
         card.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent e) {
                 card.setBorder(BorderFactory.createCompoundBorder(
@@ -274,6 +293,7 @@ public class MainMenu {
         return card;
     }
     
+    // Pielāgota trenera izveides metode
     private void createCustomTrainer() {
         String name = Metodes.virkneParbaud("Ievadi trenera vārdu:");
         if (name == null) {
@@ -295,12 +315,14 @@ public class MainMenu {
         
         aktivTrener = new Trainer(name, age, level);
         
+        // Noklusēto pokemonu pievienošana
         Pokedatnis.pokemoni.add(new ElektriskaisP("Pikachu", 5, 80, 8.5, 6.0));
         Pokedatnis.pokemoni.add(new UdensP("Squirtle", 5, 85, 7.0, 7.5));
         
         showTrainerProfile(aktivTrener, false);
     }
     
+    // Trenera profila attēlošanas metode
     private void showTrainerProfile(Trainer trainer, boolean isAsh) {
         JFrame profileFrame = new JFrame("Trainer Profile");
         profileFrame.setSize(500, 600);
@@ -326,6 +348,7 @@ public class MainMenu {
             BorderFactory.createEmptyBorder(15, 15, 15, 15)
         ));
         
+        // Trenera informācijas aizpildīšana
         infoPanel.add(createInfoLabel("Name: " + trainer.getVards()));
         infoPanel.add(createInfoLabel("Age: " + trainer.getVecums()));
         infoPanel.add(createInfoLabel("Level: " + trainer.getLimenis()));
@@ -353,12 +376,14 @@ public class MainMenu {
         profileFrame.setVisible(true);
     }
     
+    // Informācijas etiķetes izveides palīgmetode
     private JLabel createInfoLabel(String text) {
         JLabel label = new JLabel(text);
         label.setFont(new Font("Arial", Font.PLAIN, 16));
         return label;
     }
     
+    // Galvenā metode programmas palaišanai
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             try {
