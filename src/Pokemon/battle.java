@@ -10,6 +10,8 @@ public class battle {
     private boolean playerHasShield;
     private boolean enemyHasShield;
     private Random random;
+    private long lastSuperAttackTime;
+    private static final long SUPER_ATTACK_COOLDOWN = 60000; // 60 sekundes
     
     public battle(Pokemons playerPokemon, Pokemons enemyPokemon, Trainer playerTrainer) {
         this.playerPokemon = playerPokemon;
@@ -19,6 +21,7 @@ public class battle {
         this.playerHasShield = false;
         this.enemyHasShield = false;
         this.random = new Random();
+        this.lastSuperAttackTime = 0;
     }
     
     public Pokemons getPlayerPokemon() { return playerPokemon; }
@@ -31,16 +34,14 @@ public class battle {
         if (!playerTurn) return "Nav jūsu gājiens!";
         
         if (random.nextBoolean()) {
-            double maxHp = 100;
+            double maxHp = playerPokemon.getDziv() + 50; // Pilnīga atjaunošana
             playerPokemon.saņBojās(playerPokemon.getDziv() - maxHp);
             playerTurn = false;
-            ienaidniekaGajiens();
-            return playerPokemon.getVards() + " Pilnībā atjaunoja veselību!";
+            return playerPokemon.getVards() + " pilnībā atjaunoja veselību!";
         } else {
             playerHasShield = true;
             playerTurn = false;
-            ienaidniekaGajiens();
-            return playerPokemon.getVards() + " Ieguva vairogu uz nākamo triecienu!";
+            return playerPokemon.getVards() + " ieguva vairogu uz nākamo triecienu!";
         }
     }
     
@@ -49,18 +50,22 @@ public class battle {
         
         double bojajums = aprekinatParastoBojajumu();
         String rezultats = uzliktBojajumuIenaidniekam(bojajums);
-        
         playerTurn = false;
-        ienaidniekaGajiens();
         return rezultats;
     }
     
     public String izmantotSuperUzbrukumu() {
         if (!playerTurn) return "Nav jūsu gājiens!";
         
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastSuperAttackTime < SUPER_ATTACK_COOLDOWN) {
+            long remainingTime = (SUPER_ATTACK_COOLDOWN - (currentTime - lastSuperAttackTime)) / 1000;
+            return "Super uzbrukums vēl nav gatavs! Gaidiet " + remainingTime + " sekundes!";
+        }
+        
+        lastSuperAttackTime = currentTime;
         String rezultats = uzliktBojajumuIenaidniekam(50);
         playerTurn = false;
-        ienaidniekaGajiens();
         return rezultats;
     }
     
@@ -71,50 +76,50 @@ public class battle {
     private String uzliktBojajumuIenaidniekam(double bojajums) {
         if (enemyHasShield) {
             enemyHasShield = false;
-            return playerPokemon.getVards() + " Uzbruk! Ienaidnieka vairogs absorbēja bojājumu!";
+            return playerPokemon.getVards() + " uzbruk! Ienaidnieka vairogs absorbēja bojājumu!";
         } else {
+            double currentHp = enemyPokemon.getDziv();
             enemyPokemon.saņBojās(bojajums);
             String rezultats = playerPokemon.getVards() + " nodara " + bojajums + " bojājumus!";
             
             if (enemyPokemon.getDziv() <= 0) {
-                rezultats += "\n" + enemyPokemon.getVards() + " Ir sakauts!";
+                rezultats += "\n" + enemyPokemon.getVards() + " ir sakauts!";
             }
             
             return rezultats;
         }
     }
     
-    private void ienaidniekaGajiens() {
-        if (enemyPokemon.getDziv() > 0) {
-            int darbiba = random.nextInt(3);
-            String ienaidniekaRezultats = "";
-            
-            switch (darbiba) {
-                case 0:
-                    ienaidniekaRezultats = ienaidniekaAizsardziba();
-                    break;
-                case 1:
-                    ienaidniekaRezultats = ienaidniekaParastaisUzbrukums();
-                    break;
-                case 2:
-                    ienaidniekaRezultats = ienaidniekaSuperUzbrukums();
-                    break;
-            }
-            
-            paradiIenaidniekaDarbibu(ienaidniekaRezultats);
+    public String veiktIenaidniekaGajienu() {
+        if (enemyPokemon.getDziv() <= 0) return "";
+        
+        int darbiba = random.nextInt(3);
+        String ienaidniekaRezultats = "";
+        
+        switch (darbiba) {
+            case 0:
+                ienaidniekaRezultats = ienaidniekaAizsardziba();
+                break;
+            case 1:
+                ienaidniekaRezultats = ienaidniekaParastaisUzbrukums();
+                break;
+            case 2:
+                ienaidniekaRezultats = ienaidniekaSuperUzbrukums();
+                break;
         }
         
         playerTurn = true;
+        return ienaidniekaRezultats;
     }
     
     private String ienaidniekaAizsardziba() {
         if (random.nextBoolean()) {
-            double maxHp = 100;
+            double maxHp = enemyPokemon.getDziv() + 50;
             enemyPokemon.saņBojās(enemyPokemon.getDziv() - maxHp);
-            return enemyPokemon.getVards() + " Pilnībā atjaunoja veselību!";
+            return enemyPokemon.getVards() + " pilnībā atjaunoja veselību!";
         } else {
             enemyHasShield = true;
-            return enemyPokemon.getVards() + " Ieguva vairogu uz nākamo triecienu!";
+            return enemyPokemon.getVards() + " ieguva vairogu uz nākamo triecienu!";
         }
     }
     
@@ -130,7 +135,7 @@ public class battle {
     private String uzliktBojajumuSpeletajam(double bojajums) {
         if (playerHasShield) {
             playerHasShield = false;
-            return enemyPokemon.getVards() + " Uzbruk! Jūsu vairogs absorbēja bojājumu!";
+            return enemyPokemon.getVards() + " uzbruk! Jūsu vairogs absorbēja bojājumu!";
         } else {
             playerPokemon.saņBojās(bojajums);
             String rezultats = enemyPokemon.getVards() + " nodara " + bojajums + " bojājumus!";
@@ -141,9 +146,5 @@ public class battle {
             
             return rezultats;
         }
-    }
-    
-    private void paradiIenaidniekaDarbibu(String zina) {
-        System.out.println("Ienaidnieka darbība: " + zina);
     }
 }
