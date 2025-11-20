@@ -25,7 +25,6 @@ public class Arena extends JFrame {
             return;
         }
         
-        // Выбор покемонов для боя
         String[] options = new String[Pokedatnis.pokemoni.size()];
         for (int i = 0; i < Pokedatnis.pokemoni.size(); i++) {
             options[i] = Pokedatnis.pokemoni.get(i).toString();
@@ -49,7 +48,6 @@ public class Arena extends JFrame {
             return;
         }
         
-        // Находим выбранных покемонов
         for (Pokemons p : Pokedatnis.pokemoni) {
             if (p.toString().equals(choice1)) pokemon1 = p;
             if (p.toString().equals(choice2)) pokemon2 = p;
@@ -69,9 +67,7 @@ public class Arena extends JFrame {
         battlePanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         battlePanel.setBackground(new Color(240, 240, 240));
         
-        // Панель первого покемона
         JPanel p1Panel = createPokemonBattlePanel(pokemon1, pokemon2);
-        // Панель второго покемона  
         JPanel p2Panel = createPokemonBattlePanel(pokemon2, pokemon1);
         
         battlePanel.add(p1Panel);
@@ -79,7 +75,6 @@ public class Arena extends JFrame {
         
         add(battlePanel, BorderLayout.CENTER);
         
-        // Кнопка начала боя
         JButton startBattleBtn = new JButton("SĀKT CĪŅU!");
         startBattleBtn.setFont(new Font("Arial", Font.BOLD, 18));
         startBattleBtn.setBackground(Color.RED);
@@ -127,7 +122,6 @@ public class Arena extends JFrame {
         while (pokemon1.getDziv() > 0 && pokemon2.getDziv() > 0 && round <= 10) {
             battleLog.append("*** RUNDE " + round + " ***\n");
             
-            // Атака
             double damage = attacker.dotBoja() - defender.aizsarg();
             if (damage < 1) damage = 1;
             
@@ -138,13 +132,11 @@ public class Arena extends JFrame {
             battleLog.append(defender.getVards() + " atlikušās dzīvības: " + 
                 String.format("%.1f", defender.getDziv()) + "\n\n");
             
-            // Проверка на победу
             if (defender.getDziv() <= 0) {
                 battleLog.append("*** " + attacker.getVards() + " UZVAR! ***\n");
                 break;
             }
             
-            // Смена ролей
             Pokemons temp = attacker;
             attacker = defender;
             defender = temp;
@@ -155,7 +147,6 @@ public class Arena extends JFrame {
             battleLog.append("*** CĪŅA BEIDZAS NEIZŠĶIRTĀ! ***\n");
         }
         
-        // Показ результатов боя
         JTextArea battleArea = new JTextArea(battleLog.toString(), 20, 50);
         battleArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(battleArea);
