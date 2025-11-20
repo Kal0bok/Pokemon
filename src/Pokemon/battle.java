@@ -86,10 +86,11 @@ private Random random = new Random();
     private String applyDamageToEnemy(double damage) {
         if (enemyHasShield) {
             enemyHasShield = false;
-            return playerPokemon.getVards() + " Uzbruka! Jūs saglaba aizsargs!";
+            return playerPokemon.getVards() + " Uzbruka! Vairogs противника поглотил урон!";
         } else {
+            double currentHp = enemyPokemon.getDziv();
             enemyPokemon.saņBojās(damage);
-            String result = playerPokemon.getVards() + " uzbruka " + damage + " bojājumu!";
+            String result = playerPokemon.getVards() + " uzbruka " + damage + " bojājumi!";
             
             if (enemyPokemon.getDziv() <= 0) {
                 result += "\n" + enemyPokemon.getVards() + " Uzvarēts!";
@@ -97,5 +98,16 @@ private Random random = new Random();
             
             return result;
         }
+    }
+
+private static final double SUPER_ATTACK_DAMAGE = 50;
+    
+    public String useSuperAttack() {
+        if (!playerTurn) return "Pretinieks uzbruka!";
+        
+        String result = applyDamageToEnemy(SUPER_ATTACK_DAMAGE);
+        playerTurn = false;
+        enemyTurn();
+        return result;
     }
 }
