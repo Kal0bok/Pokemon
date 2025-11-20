@@ -1,8 +1,14 @@
 package Pokemon;
 
+import java.awt.Component;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Random;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 
 public class battle {
     private Pokemons playerPokemon;
@@ -127,4 +133,27 @@ private battle battle;
 
         battleButtons(layeredPane);
     }
+    
+    private void battleButtons(JLayeredPane layeredPane) {
+        Component[] components = layeredPane.getComponents();
+        for (Component comp : components) {
+            if (comp instanceof JLabel) {
+                JLabel label = (JLabel) comp;
+                if (label.getIcon() != null) {
+                    addActionListenerToLabel(label);
+                }
+            }
+        }
+    }
+       
+    private void addActionListenerToLabel(JLabel actionLabel) {
+        actionLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Point location = actionLabel.getLocation();
+                handleBattleAction(location);
+            }
+        });
+    }
+    
 }
