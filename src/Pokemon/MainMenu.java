@@ -27,8 +27,9 @@ public class MainMenu {
         frame.setResizable(false);
         frame.setLayout(new BorderLayout());
         
-        JPanel backgroundPanel = new JPanel() {
-            @Override
+        JPanel backgroundPanel = new JPanel() {		
+
+			@Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Graphics2D g2d = (Graphics2D) g;
