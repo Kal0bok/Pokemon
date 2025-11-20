@@ -314,8 +314,13 @@ public class Arena {
         } else {
             pauseLabel.setText("II");
             pauseLabel.setFont(new Font("Arial", Font.BOLD, 20));
-            pauseLabel.setForeground(Color.WHITE);
+            pauseLabel.setForeground(Color.BLACK); 
         }
+        
+        pauseLabel.setOpaque(true);
+        pauseLabel.setBackground(Color.WHITE);
+        
+        pauseLabel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         
         pauseLabel.setHorizontalAlignment(SwingConstants.CENTER);
         pauseLabel.setVerticalAlignment(SwingConstants.CENTER);
