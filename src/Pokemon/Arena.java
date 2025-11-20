@@ -284,14 +284,14 @@ public class Arena {
         JLabel pauseLabel = createPauseLabel();
         pauseLabel.setBounds(485, 25, 30, 30);
         
-        JLabel bottomLeftImage = createBottomImage("/Image/left_item.png"); 
-        bottomLeftImage.setBounds(50, 500, 100, 80); 
+        JLabel bottomLeftImage = createBottomImage("/Image/defense.png"); 
+        bottomLeftImage.setBounds(50, 470, 100, 80); 
         
-        JLabel bottomCenterImage = createBottomImage("/Image/center_item.png"); 
-        bottomCenterImage.setBounds(450, 500, 100, 80); 
+        JLabel bottomCenterImage = createBottomImage("/Image/attack.png"); 
+        bottomCenterImage.setBounds(450, 470, 100, 80); 
         
-        JLabel bottomRightImage = createBottomImage("/Image/right_item.png"); 
-        bottomRightImage.setBounds(850, 500, 100, 80); 
+        JLabel bottomRightImage = createBottomImage("/Image/power.png"); 
+        bottomRightImage.setBounds(850, 470, 100, 80); 
         
         pauseLabel.addMouseListener(new MouseAdapter() {
             @Override
