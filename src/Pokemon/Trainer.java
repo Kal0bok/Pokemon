@@ -5,17 +5,17 @@ import java.util.ArrayList;
 public class Trainer {
     private String vards;
     private int vecums;
-    private double limenis;
+    private int limenis;
     private ArrayList<Pokemons> pokemons;
 
-    public Trainer(String vards, int vecums, double level) {
+    public Trainer(String vards, int vecums, int limenis) { 
         this.vards = vards;
         this.vecums = vecums;
-        this.limenis = level;
+        this.limenis = limenis;
         this.pokemons = new ArrayList<>();
     }
 
-	public String getVards() {
+    public String getVards() {
         return vards;
     }
 
@@ -23,7 +23,7 @@ public class Trainer {
         return vecums;
     }
 
-    public double getLimenis() {
+    public int getLimenis() { 
         return limenis;
     }
 
@@ -33,6 +33,10 @@ public class Trainer {
 
     public void addPokemon(Pokemons p) {
         pokemons.add(p);
+    }
+
+    public void removePokemon(Pokemons p) {
+        pokemons.remove(p);
     }
 
     public String treneraInfo() {
@@ -46,5 +50,16 @@ public class Trainer {
             }
         }
         return info;
+    }
+
+    public String getHtmlInfo() {
+        StringBuilder html = new StringBuilder();
+        html.append("<html><body style='width: 300px;'>");
+        html.append("<h3 style='color: #3366CC;'>").append(vards).append("</h3>");
+        html.append("<p><b>Vecums:</b> ").append(vecums).append("</p>");
+        html.append("<p><b>Līmenis:</b> ").append(limenis).append("</p>");
+        html.append("<p><b>Pokemoni:</b> ").append(pokemons.size()).append("</p>");
+        html.append("</body></html>");
+        return html.toString();
     }
 }
