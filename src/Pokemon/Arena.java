@@ -10,6 +10,7 @@ public class Arena {
     private JFrame frame;
     private String selectedArena;
     private JPanel pauseOverlay; 
+    private battle battleManager;
 
     public Arena() {
         createMainWindow();
@@ -262,91 +263,136 @@ public class Arena {
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(new Dimension(1000, 600));
         
-        Pokemons playerPokemon = new UdensP();
-        Pokemons enemyPokemon = new ElektriskaisP();
-        Trainer playerTrainer = MainMenu.aktivTrener;
+        Pokemons speletajaPokemons = new UdensP();
+        Pokemons ienaidniekaPokemons = new ElektriskaisP();
+        Trainer speletajaTreneris = MainMenu.aktivTrener;
         
-        battle battleManager = new battle(playerPokemon, enemyPokemon, playerTrainer);
+        battleManager = new battle(speletajaPokemons, ienaidniekaPokemons, speletajaTreneris);
         
         JLabel bgLabel = createScaledGifBackground(selectedArena, 1000, 600);
         bgLabel.setBounds(0, 0, 1000, 600);
         layeredPane.add(bgLabel, Integer.valueOf(0));
         
-        JLabel defenseButton = createActionButton("/Image/defense.png", 50, 470, "defense");
-        JLabel attackButton = createActionButton("/Image/attack.png", 450, 470, "attack");
-        JLabel superButton = createActionButton("/Image/power.png", 850, 470, "super");
+        JLabel aizsardzibasPoga = izveidotDarbibasPogu("/Image/defense.png", 50, 470, "aizsardziba");
+        JLabel uzbrukumaPoga = izveidotDarbibasPogu("/Image/attack.png", 450, 470, "uzbrukums");
+        JLabel superPoga = izveidotDarbibasPogu("/Image/power.png", 850, 470, "super");
         
-        layeredPane.add(defenseButton, Integer.valueOf(1));
-        layeredPane.add(attackButton, Integer.valueOf(1));
-        layeredPane.add(superButton, Integer.valueOf(1));
+        layeredPane.add(aizsardzibasPoga, Integer.valueOf(1));
+        layeredPane.add(uzbrukumaPoga, Integer.valueOf(1));
+        layeredPane.add(superPoga, Integer.valueOf(1));
         
-        JPanel leftStats = createStatsPanel("HP: 100/100", "Armor: 50");
-        leftStats.setBounds(100, 10, 300, 80);
+        JPanel kreisieStatistika = izveidotStatistikasPanel("HP: 100/100", "Bruņas: 50");
+        kreisieStatistika.setBounds(100, 10, 300, 80);
         
-        JPanel rightStats = createStatsPanel("HP: 80/100", "Armor: 30");
-        rightStats.setBounds(600, 10, 300, 80);
+        JPanel labieStatistika = izveidotStatistikasPanel("HP: 80/100", "Bruņas: 30");
+        labieStatistika.setBounds(600, 10, 300, 80);
         
-        JLabel leftPokemon = createGif("/GIF/machamp.gif");
-        leftPokemon.setBounds(100, 200, 300, 300);
+        JLabel kreisaisPokemons = createGif("/GIF/machamp.gif");
+        kreisaisPokemons.setBounds(100, 200, 300, 300);
         
-        JLabel rightPokemon = createGif("/GIF/pikachu.gif");
-        rightPokemon.setBounds(600, 200, 300, 300);
+        JLabel labaisPokemons = createGif("/GIF/pikachu.gif");
+        labaisPokemons.setBounds(600, 200, 300, 300);
         
         JLabel vsGif = createGif("/GIF/vs.gif"); 
         vsGif.setBounds(450, 250, 150, 150); 
         
-        JLabel pauseLabel = createPauseLabel();
-        pauseLabel.setBounds(485, 25, 30, 30);
+        JLabel pauzesEtiķete = createPauseLabel();
+        pauzesEtiķete.setBounds(485, 25, 30, 30);
         
-        pauseLabel.addMouseListener(new MouseAdapter() {
+        pauzesEtiķete.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 showPauseOverlay(layeredPane);
             }
         });
         
-        layeredPane.add(leftStats, Integer.valueOf(1));
-        layeredPane.add(rightStats, Integer.valueOf(1));
-        layeredPane.add(leftPokemon, Integer.valueOf(1));
-        layeredPane.add(rightPokemon, Integer.valueOf(1));
+        layeredPane.add(kreisieStatistika, Integer.valueOf(1));
+        layeredPane.add(labieStatistika, Integer.valueOf(1));
+        layeredPane.add(kreisaisPokemons, Integer.valueOf(1));
+        layeredPane.add(labaisPokemons, Integer.valueOf(1));
         layeredPane.add(vsGif, Integer.valueOf(2));
-        layeredPane.add(pauseLabel, Integer.valueOf(3));
+        layeredPane.add(pauzesEtiķete, Integer.valueOf(3));
         
         empty.setContentPane(layeredPane);
         empty.setLocationRelativeTo(null);
         empty.setVisible(true);
         
-        Timer timer = new Timer(2000, e -> {
+        Timer taimeris = new Timer(2000, e -> {
             layeredPane.remove(vsGif);
             layeredPane.revalidate();
             layeredPane.repaint();
         });
-        timer.setRepeats(false);
-        timer.start();
+        taimeris.setRepeats(false);
+        taimeris.start();
     }
-    
-    private JLabel createBottomImage(String path) {
-        JLabel imageLabel = new JLabel();
-        imageLabel.setPreferredSize(new Dimension(100, 80));
+
+    private JLabel izveidotDarbibasPogu(String attelaCels, int x, int y, String darbibasTips) {
+        JLabel poga = new JLabel();
+        poga.setBounds(x, y, 100, 80);
         
-        ImageIcon icon = new ImageIcon(getClass().getResource(path));
-        if (icon.getImage() != null) {
-            Image scaledImage = icon.getImage().getScaledInstance(100, 80, Image.SCALE_SMOOTH);
-            imageLabel.setIcon(new ImageIcon(scaledImage));
+        ImageIcon ikona = new ImageIcon(getClass().getResource(attelaCels));
+        if (ikona.getImage() != null) {
+            Image skaletsAttels = ikona.getImage().getScaledInstance(100, 80, Image.SCALE_SMOOTH);
+            poga.setIcon(new ImageIcon(skaletsAttels));
         } else {
-            imageLabel.setText("Image");
-            imageLabel.setFont(new Font("Arial", Font.BOLD, 14));
-            imageLabel.setForeground(Color.WHITE);
-            imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-            imageLabel.setOpaque(true);
-            imageLabel.setBackground(new Color(100, 100, 100, 200));
+            poga.setText(darbibasTips.toUpperCase());
+            poga.setFont(new Font("Arial", Font.BOLD, 14));
+            poga.setForeground(Color.WHITE);
+            poga.setHorizontalAlignment(SwingConstants.CENTER);
+            poga.setOpaque(true);
+            poga.setBackground(new Color(100, 100, 100, 200));
         }
         
-        imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        imageLabel.setVerticalAlignment(SwingConstants.CENTER);
-        imageLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        poga.setHorizontalAlignment(SwingConstants.CENTER);
+        poga.setVerticalAlignment(SwingConstants.CENTER);
+        poga.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
-        return imageLabel;
+        poga.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                apstradatKaujasDarbibu(darbibasTips);
+            }
+        });
+        
+        return poga;
+    }
+
+    private void apstradatKaujasDarbibu(String darbibasTips) {
+        if (battleManager == null) return;
+        
+        String rezultats = "";
+        
+        switch (darbibasTips) {
+            case "aizsardziba":
+                rezultats = battleManager.izmantotAizsardzibu();
+                break;
+            case "uzbrukums":
+                rezultats = battleManager.izmantotParastoUzbrukumu();
+                break;
+            case "super":
+                rezultats = battleManager.izmantotSuperUzbrukumu();
+                break;
+        }
+        
+        paradiKaujasZinu(rezultats);
+        atjauninatHpAttelosanu();
+        
+        if (battleManager.getPlayerPokemon().getDziv() <= 0) {
+            paradiKaujasZinu("Jūsu pokemons ir sakauts! Spēle beigusies.");
+        } else if (battleManager.getEnemyPokemon().getDziv() <= 0) {
+            paradiKaujasZinu("Ienaidnieks ir sakauts! Jūs uzvarējāt!");
+        }
+    }
+
+    private void paradiKaujasZinu(String zina) {
+        JOptionPane.showMessageDialog(null, zina, "Kauja", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void atjauninatHpAttelosanu() {
+        if (battleManager != null) {
+            System.out.println("Spēlētāja HP: " + battleManager.getPlayerPokemon().getDziv());
+            System.out.println("Ienaidnieka HP: " + battleManager.getEnemyPokemon().getDziv());
+        }
     }
 
     private void showPauseOverlay(JLayeredPane layeredPane) {
@@ -367,8 +413,8 @@ public class Arena {
         buttonPanel.setOpaque(false);
         buttonPanel.setPreferredSize(new Dimension(200, 150));
         
-        JButton resumeButton = createPauseButton("Resume", new Color(0, 150, 0));
-        JButton exitButton = createPauseButton("Exit", new Color(150, 0, 0));
+        JButton resumeButton = createPauseButton("Turpināt", new Color(0, 150, 0));
+        JButton exitButton = createPauseButton("Iziet", new Color(150, 0, 0));
         
         JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(layeredPane);
         
@@ -376,11 +422,9 @@ public class Arena {
             layeredPane.remove(pauseOverlay);
             layeredPane.revalidate();
             layeredPane.repaint();
-            System.out.println("Resume clicked - returning to game");
         });
         
         exitButton.addActionListener(e -> {
-            System.out.println("Exit clicked - closing program");
             if (currentFrame != null) {
                 currentFrame.dispose();
             }
@@ -437,13 +481,13 @@ public class Arena {
         return pauseLabel;
     }
 
-    private JPanel createStatsPanel(String hpText, String armorText) {
+    private JPanel izveidotStatistikasPanel(String hpText, String armorText) {
         JPanel statsPanel = new JPanel(new GridLayout(2, 1, 5, 5));
         statsPanel.setOpaque(false);
         statsPanel.setPreferredSize(new Dimension(300, 80));
         
-        JLabel hpLabel = createStatLabel(hpText, Color.RED);
-        JLabel armorLabel = createStatLabel(armorText, Color.BLUE);
+        JLabel hpLabel = izveidotStatistikasEtiķeti(hpText, Color.RED);
+        JLabel armorLabel = izveidotStatistikasEtiķeti(armorText, Color.BLUE);
         
         statsPanel.add(hpLabel);
         statsPanel.add(armorLabel);
@@ -451,7 +495,7 @@ public class Arena {
         return statsPanel;
     }
 
-    private JLabel createStatLabel(String text, Color color) {
+    private JLabel izveidotStatistikasEtiķeti(String text, Color color) {
         JLabel label = new JLabel(text, SwingConstants.CENTER);
         label.setFont(new Font("Arial", Font.BOLD, 20));
         label.setForeground(Color.WHITE);
