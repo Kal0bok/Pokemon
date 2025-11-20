@@ -20,24 +20,43 @@ public abstract class Pokemons implements Comparable<Pokemons> {
         this.aizsarg = aizsarg;
     }
 
-    // Геттеры
-    public String getVards() { return vards; }
-    public String getTips() { return tips; }
-    public int getLimenis() { return limenis; }
-    public double getDziv() { return dziv; }
-    public double getUzbruk() { return uzbruk; }
-    public double getAizsarg() { return aizsarg; }
+    public String getVards() {
+    	return vards; }
+    public String getTips() {
+    	return tips; 
+    	}
+    
+    public int getLimenis() {
+    	return limenis;
+    	}
+    
+    public double getDziv() { 
+    	return dziv; 
+    	}
+    
+    public double getUzbruk() {
+    	return uzbruk; 
+    	}
+    
+    public double getAizsarg() {
+    	return aizsarg; 
+    	}
 
-    // Сеттеры
-    public void setDziv(double dziv) { this.dziv = dziv; }
-    public void setUzbruk(double uzbruk) { this.uzbruk = uzbruk; }
-    public void setAizsarg(double aizsarg) { this.aizsarg = aizsarg; }
+    public void setDziv(double dziv) {
+    	this.dziv = dziv; 
+    	}
+    
+    public void setUzbruk(double uzbruk) { 
+    	this.uzbruk = uzbruk; 
+    	}
+    
+    public void setAizsarg(double aizsarg) {
+    	this.aizsarg = aizsarg; 
+    	}
 
-    // Абстрактные методы
     public abstract String ipaUzbruk();
     public abstract Color getCardColor();
 
-    // Конкретные методы
     public void saņBojās(double daudzums) {
         dziv -= daudzums;
         if (dziv < 0) dziv = 0;
@@ -90,13 +109,11 @@ public abstract class Pokemons implements Comparable<Pokemons> {
         mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
         mainPanel.setBackground(getCardColor().brighter());
         
-        // Заголовок
         JLabel title = new JLabel(vards, SwingConstants.CENTER);
         title.setFont(new Font("Arial", Font.BOLD, 24));
         title.setForeground(Color.DARK_GRAY);
         title.setBorder(BorderFactory.createEmptyBorder(0, 0, 15, 0));
         
-        // Статистика
         JPanel statsPanel = new JPanel(new GridLayout(0, 1, 8, 8));
         statsPanel.setBackground(Color.WHITE);
         statsPanel.setBorder(BorderFactory.createCompoundBorder(
@@ -111,7 +128,6 @@ public abstract class Pokemons implements Comparable<Pokemons> {
         statsPanel.add(createStatLabel("Aizsardzība: " + String.format("%.1f", aizsarg)));
         statsPanel.add(createStatLabel("Kopējais spēks: " + String.format("%.1f", aprēķinātSpēku())));
         
-        // Кнопки действий
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.setBackground(getCardColor().brighter());
         
