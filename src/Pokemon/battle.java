@@ -39,4 +39,31 @@ public class battle {
     	return enemyHasShield;
     	}
     
+private Random random = new Random();
+    
+    public String useDefenseAction() {
+        if (!playerTurn) return "Pretinieks uzbruka!";
+        
+        if (random.nextBoolean()) {
+            double maxHp = getMaxHp(playerPokemon);
+            playerPokemon.saņBojās(playerPokemon.getDziv() - maxHp);
+            playerTurn = false;
+            enemyTurn();
+            return playerPokemon.getVards() + " Sasniedz pilnu dzivibu!";
+        } else {
+            playerHasShield = true;
+            playerTurn = false;
+            enemyTurn();
+            return playerPokemon.getVards() + " Sasniedz aizsardzību uz nakamo uzbrukumu!";
+        }
+    }
+    
+    private double getMaxHp(Pokemons pokemon) {
+
+        return 100;    
+    }
+    
+    private void enemyTurn() {
+        playerTurn = true;
+    }
 }
