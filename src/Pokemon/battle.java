@@ -178,6 +178,22 @@ private battle battle;
     
     private void updateHpDisplay() {
     }
-}
+    
+    private void addActionListenersToBattleButtons(JLayeredPane layeredPane) {
+        for (Component comp : layeredPane.getComponents()) {
+            if (comp instanceof JLabel) {
+                JLabel label = (JLabel) comp;
+                Point location = label.getLocation();
+                
+                if (location.x == 50 && location.y == 470) { 
+                    label.addMouseListener(createActionListener("defense"));
+                } else if (location.x == 450 && location.y == 470) { 
+                    label.addMouseListener(createActionListener("attack"));
+                } else if (location.x == 850 && location.y == 470) { 
+                    label.addMouseListener(createActionListener("super"));
+                }
+            }
+        }
+    }
     
 }
