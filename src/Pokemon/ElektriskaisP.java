@@ -2,17 +2,12 @@ package Pokemon;
 
 public class ElektriskaisP extends Pokemons {
 
-	public ElektriskaisP() {
-        super("Pikachu", "Electric", 5, 100, 5, 100);
+    public ElektriskaisP() {
+        super("Pikachu", "Electric", 5, 100, 8, 80);
     }
 
     @Override
     public String ipaUzbruk() {
-        return getVards() + " use Electric Shock!";
+        return getVards() + " izmanto Zibens triecienu!";
     }
-
-	public static void showPikachu(String string, int i, int j) {
-		// TODO Auto-generated method stub
-		
-	}
 }
