@@ -312,10 +312,18 @@ public class Arena {
     }
 
     private void showPauseOverlay(JLayeredPane layeredPane) {
-    	pauseOverlay = new JPanel();
-    	pauseOverlay.setBounds(0, 0, 1000, 600);                   
-    	pauseOverlay.setBackground(new Color(0, 0, 0, 150)); 
-    	pauseOverlay.setLayout(new GridBagLayout());
+        pauseOverlay = new JPanel();
+        pauseOverlay.setBounds(0, 0, 1000, 600);
+        pauseOverlay.setLayout(new GridBagLayout());
+        
+        JLabel pauseBackground = createScaledGifBackground("/GIF/backi.gif", 1000, 600); 
+        pauseBackground.setBounds(0, 0, 1000, 600);
+        
+        JLayeredPane pauseLayeredPane = new JLayeredPane();
+        pauseLayeredPane.setPreferredSize(new Dimension(1000, 600));
+        pauseLayeredPane.setBounds(0, 0, 1000, 600);
+        
+        pauseLayeredPane.add(pauseBackground, Integer.valueOf(0));
         
         JPanel buttonPanel = new JPanel(new GridLayout(2, 1, 20, 20));
         buttonPanel.setOpaque(false);
@@ -335,7 +343,10 @@ public class Arena {
         buttonPanel.add(resumeButton);
         buttonPanel.add(exitButton);
         
-        pauseOverlay.add(buttonPanel);
+        buttonPanel.setBounds(400, 225, 200, 150);
+        pauseLayeredPane.add(buttonPanel, Integer.valueOf(1));
+        
+        pauseOverlay.add(pauseLayeredPane);
         
         layeredPane.add(pauseOverlay, Integer.valueOf(10));
         layeredPane.revalidate();
