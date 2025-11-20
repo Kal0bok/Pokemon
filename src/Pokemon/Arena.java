@@ -11,6 +11,7 @@ public class Arena {
     private String selectedArena;
     private JPanel pauseOverlay; 
     private battle battleManager;
+    private Pokemons izveletaisPokemons;
 
     public Arena() {
         createMainWindow();
@@ -165,6 +166,14 @@ public class Arena {
             @Override
             public void mouseClicked(MouseEvent e) {
                 JLabel chosenGif = (JLabel) e.getSource();
+                String pokemonPath = chosenGif.getIcon().toString();
+                if (pokemonPath.contains("machamp")) {
+                    izveletaisPokemons = new UdensP();
+                } else if (pokemonPath.contains("pikachu")) {
+                    izveletaisPokemons = new ElektriskaisP();
+                } else if (pokemonPath.contains("squirlte")) {
+                    izveletaisPokemons = new UdensP();
+                }
                 showChosenPokemon(selectFrame, chosenGif.getIcon());
             }
         };
@@ -263,11 +272,10 @@ public class Arena {
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(new Dimension(1000, 600));
         
-        Pokemons speletajaPokemons = new UdensP();
         Pokemons ienaidniekaPokemons = new ElektriskaisP();
         Trainer speletajaTreneris = MainMenu.aktivTrener;
         
-        battleManager = new battle(speletajaPokemons, ienaidniekaPokemons, speletajaTreneris);
+        battleManager = new battle(izveletaisPokemons, ienaidniekaPokemons, speletajaTreneris);
         
         JLabel bgLabel = createScaledGifBackground(selectedArena, 1000, 600);
         bgLabel.setBounds(0, 0, 1000, 600);
@@ -281,13 +289,26 @@ public class Arena {
         layeredPane.add(uzbrukumaPoga, Integer.valueOf(1));
         layeredPane.add(superPoga, Integer.valueOf(1));
         
-        JPanel kreisieStatistika = izveidotStatistikasPanel("HP: 100/100", "Bruņas: 50");
+        JPanel kreisieStatistika = izveidotStatistikasPanel(
+            "HP: " + (int)izveletaisPokemons.getDziv() + "/100", 
+            "Bruņas: " + (int)izveletaisPokemons.getAizsarg()
+        );
         kreisieStatistika.setBounds(100, 10, 300, 80);
         
-        JPanel labieStatistika = izveidotStatistikasPanel("HP: 80/100", "Bruņas: 30");
+        JPanel labieStatistika = izveidotStatistikasPanel(
+            "HP: " + (int)ienaidniekaPokemons.getDziv() + "/100", 
+            "Bruņas: " + (int)ienaidniekaPokemons.getAizsarg()
+        );
         labieStatistika.setBounds(600, 10, 300, 80);
         
-        JLabel kreisaisPokemons = createGif("/GIF/machamp.gif");
+        JLabel kreisaisPokemons;
+        if (izveletaisPokemons.getVards().equals("Squirtle")) {
+            kreisaisPokemons = createGif("/GIF/squirlte.gif");
+        } else if (izveletaisPokemons.getVards().equals("Pikachu")) {
+            kreisaisPokemons = createGif("/GIF/pikachu.gif");
+        } else {
+            kreisaisPokemons = createGif("/GIF/machamp.gif");
+        }
         kreisaisPokemons.setBounds(100, 200, 300, 300);
         
         JLabel labaisPokemons = createGif("/GIF/pikachu.gif");
@@ -350,14 +371,14 @@ public class Arena {
         poga.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                apstradatKaujasDarbibu(darbibasTips);
+                apstradatKaujasDarbibu(darbibasTips, poga);
             }
         });
         
         return poga;
     }
 
-    private void apstradatKaujasDarbibu(String darbibasTips) {
+    private void apstradatKaujasDarbibu(String darbibasTips, JLabel poga) {
         if (battleManager == null) return;
         
         String rezultats = "";
@@ -374,13 +395,22 @@ public class Arena {
                 break;
         }
         
-        paradiKaujasZinu(rezultats);
+        // Tūlīt pēc spēlētāja gājiena - ienaidnieka gājiens
+        if (!rezultats.contains("nav gatavs") && battleManager.getEnemyPokemon().getDziv() > 0) {
+            String ienaidniekaRezultats = battleManager.veiktIenaidniekaGajienu();
+            if (!ienaidniekaRezultats.isEmpty()) {
+                rezultats += "\n\n" + ienaidniekaRezultats;
+            }
+        }
+        
         atjauninatHpAttelosanu();
         
         if (battleManager.getPlayerPokemon().getDziv() <= 0) {
             paradiKaujasZinu("Jūsu pokemons ir sakauts! Spēle beigusies.");
         } else if (battleManager.getEnemyPokemon().getDziv() <= 0) {
             paradiKaujasZinu("Ienaidnieks ir sakauts! Jūs uzvarējāt!");
+        } else {
+            paradiKaujasZinu(rezultats);
         }
     }
 

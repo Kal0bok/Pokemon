@@ -11,7 +11,7 @@ public class battle {
     private boolean enemyHasShield;
     private Random random;
     private long lastSuperAttackTime;
-    private static final long SUPER_ATTACK_COOLDOWN = 60000; // 60 sekundes
+    private static final long SUPER_ATTACK_COOLDOWN = 60000; 
     
     public battle(Pokemons playerPokemon, Pokemons enemyPokemon, Trainer playerTrainer) {
         this.playerPokemon = playerPokemon;
