@@ -173,7 +173,7 @@ private battle battle;
     }
     
     private void showBattleMessage(String message) {
-        JOptionPane.showMessageDialog(null, message, "Бой", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, message, "Ciņa!", JOptionPane.INFORMATION_MESSAGE);
     }
     
     private void updateHpDisplay() {
