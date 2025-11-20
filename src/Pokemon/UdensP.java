@@ -19,7 +19,6 @@ public class UdensP extends Pokemons {
     
     @Override
     public double aizsarg() {
-        // Водные покемоны имеют лучшую защиту
         return super.aizsarg() * 1.3;
     }
     
@@ -30,6 +29,6 @@ public class UdensP extends Pokemons {
     
     @Override
     public Color getCardColor() {
-        return new Color(150, 200, 255); // Голубой для водных
+        return new Color(150, 200, 255); 
     }
 }
