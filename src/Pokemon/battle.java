@@ -48,7 +48,7 @@ public class battle {
     public String izmantotParastoUzbrukumu() {
         if (!playerTurn) return "Nav jūsu gājiens!";
         
-        double bojajums = aprekinatParastoBojajumu();
+        double bojajums = aprekinatParastoBojajumu1();
         String rezultats = uzliktBojajumuIenaidniekam(bojajums);
         playerTurn = false;
         return rezultats;
@@ -69,7 +69,7 @@ public class battle {
         return rezultats;
     }
     
-    private double aprekinatParastoBojajumu() {
+    private double aprekinatParastoBojajumu1() {
         return playerPokemon.getUzbruk() + playerTrainer.getLimenis();
     }
     

@@ -12,6 +12,10 @@ public class Arena {
     private JPanel pauseOverlay; 
     private battle battleManager;
     private Pokemons izveletaisPokemons;
+    private JLabel speletajaHpLabel;
+    private JLabel speletajaArmorLabel;
+    private JLabel ienaidniekaHpLabel;
+    private JLabel ienaidniekaArmorLabel;
 
     public Arena() {
         createMainWindow();
@@ -169,7 +173,6 @@ public class Arena {
                 String iconText = chosenGif.getIcon().toString();
                 
                 if (iconText.contains("machamp")) {
-                    izveletaisPokemons = new UdensP(); 
                     izveletaisPokemons = new Pokemons("Machamp", "Fighting", 5, 100, 10, 80) {
                         @Override
                         public String ipaUzbruk() {
@@ -281,7 +284,18 @@ public class Arena {
         layeredPane.setPreferredSize(new Dimension(1000, 600));
         
         Pokemons ienaidniekaPokemons = new ElektriskaisP();
-        Trainer speletajaTreneris = MainMenu.aktivTrener;
+        
+        Trainer speletajaTreneris;
+        if (MainMenu.aktivTrener == null) {
+            speletajaTreneris = new Trainer("Spēlētājs", 10, 5);
+            MainMenu.aktivTrener = speletajaTreneris;
+        } else {
+            speletajaTreneris = MainMenu.aktivTrener;
+        }
+        
+        if (izveletaisPokemons == null) {
+            izveletaisPokemons = new UdensP();
+        }
         
         battleManager = new battle(izveletaisPokemons, ienaidniekaPokemons, speletajaTreneris);
         
@@ -303,11 +317,17 @@ public class Arena {
         );
         kreisieStatistika.setBounds(100, 10, 300, 80);
         
+        speletajaHpLabel = (JLabel) kreisieStatistika.getComponent(0);
+        speletajaArmorLabel = (JLabel) kreisieStatistika.getComponent(1);
+        
         JPanel labieStatistika = izveidotStatistikasPanel(
             "HP: " + (int)ienaidniekaPokemons.getDziv() + "/100", 
             "Bruņas: " + (int)ienaidniekaPokemons.getAizsarg()
         );
         labieStatistika.setBounds(600, 10, 300, 80);
+        
+        ienaidniekaHpLabel = (JLabel) labieStatistika.getComponent(0);
+        ienaidniekaArmorLabel = (JLabel) labieStatistika.getComponent(1);
         
         JLabel kreisaisPokemons;
         if (izveletaisPokemons.getVards().equals("Squirtle")) {
@@ -403,7 +423,6 @@ public class Arena {
                 break;
         }
         
-        // Tūlīt pēc spēlētāja gājiena - ienaidnieka gājiens
         if (!rezultats.contains("nav gatavs") && battleManager.getEnemyPokemon().getDziv() > 0) {
             String ienaidniekaRezultats = battleManager.veiktIenaidniekaGajienu();
             if (!ienaidniekaRezultats.isEmpty()) {
@@ -428,8 +447,33 @@ public class Arena {
 
     private void atjauninatHpAttelosanu() {
         if (battleManager != null) {
-            System.out.println("Spēlētāja HP: " + battleManager.getPlayerPokemon().getDziv());
-            System.out.println("Ienaidnieka HP: " + battleManager.getEnemyPokemon().getDziv());
+            Pokemons speletajaPokemons = battleManager.getPlayerPokemon();
+            Pokemons ienaidniekaPokemons = battleManager.getEnemyPokemon();
+            
+            if (speletajaHpLabel != null) {
+                double currentHp = Math.max(0, speletajaPokemons.getDziv());
+                speletajaHpLabel.setText("HP: " + (int)currentHp + "/100");
+            }
+            
+            if (speletajaArmorLabel != null) {
+                speletajaArmorLabel.setText("Bruņas: " + (int)speletajaPokemons.getAizsarg());
+            }
+            
+            if (ienaidniekaHpLabel != null) {
+                double currentHp = Math.max(0, ienaidniekaPokemons.getDziv());
+                ienaidniekaHpLabel.setText("HP: " + (int)currentHp + "/100");
+            }
+            
+            if (ienaidniekaArmorLabel != null) {
+                ienaidniekaArmorLabel.setText("Bruņas: " + (int)ienaidniekaPokemons.getAizsarg());
+            }
+            
+            if (speletajaHpLabel != null) {
+                speletajaHpLabel.repaint();
+            }
+            if (ienaidniekaHpLabel != null) {
+                ienaidniekaHpLabel.repaint();
+            }
         }
     }
 
