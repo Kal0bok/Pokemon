@@ -196,4 +196,27 @@ private battle battle;
         }
     }
     
+    private MouseAdapter createActionListener(String actionType) {
+        return new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                switch (actionType) {
+                    case "defense":
+                        String defenseResult = battle.useDefenseAction();
+                        showBattleMessage(defenseResult);
+                        break;
+                    case "attack":
+                        String attackResult = battle.useNormalAttack();
+                        showBattleMessage(attackResult);
+                        break;
+                    case "super":
+                        String superResult = battle.useSuperAttack();
+                        showBattleMessage(superResult);
+                        break;
+                }
+                updateHpDisplay();
+            }
+        };
+    }
+    
 }
