@@ -166,14 +166,22 @@ public class Arena {
             @Override
             public void mouseClicked(MouseEvent e) {
                 JLabel chosenGif = (JLabel) e.getSource();
-                String pokemonPath = chosenGif.getIcon().toString();
-                if (pokemonPath.contains("machamp")) {
-                    izveletaisPokemons = new UdensP();
-                } else if (pokemonPath.contains("pikachu")) {
+                String iconText = chosenGif.getIcon().toString();
+                
+                if (iconText.contains("machamp")) {
+                    izveletaisPokemons = new UdensP(); 
+                    izveletaisPokemons = new Pokemons("Machamp", "Fighting", 5, 100, 10, 80) {
+                        @Override
+                        public String ipaUzbruk() {
+                            return getVards() + " izmanto Četru roku triecienu!";
+                        }
+                    };
+                } else if (iconText.contains("pikachu")) {
                     izveletaisPokemons = new ElektriskaisP();
-                } else if (pokemonPath.contains("squirlte")) {
+                } else if (iconText.contains("squirlte")) {
                     izveletaisPokemons = new UdensP();
                 }
+                
                 showChosenPokemon(selectFrame, chosenGif.getIcon());
             }
         };
