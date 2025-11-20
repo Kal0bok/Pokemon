@@ -9,6 +9,7 @@ public class Arena {
 
     private JFrame frame;
     private String selectedArena;
+    private JPanel pauseOverlay; // Панель для паузы
 
     public Arena() {
         createMainWindow();
@@ -283,6 +284,13 @@ public class Arena {
         JLabel pauseLabel = createPauseLabel();
         pauseLabel.setBounds(485, 25, 30, 30);
         
+        pauseLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                showPauseOverlay(layeredPane);
+            }
+        });
+        
         layeredPane.add(leftStats, Integer.valueOf(1));
         layeredPane.add(rightStats, Integer.valueOf(1));
         layeredPane.add(leftPokemon, Integer.valueOf(1));
@@ -301,6 +309,48 @@ public class Arena {
         });
         timer.setRepeats(false);
         timer.start();
+    }
+
+    private void showPauseOverlay(JLayeredPane layeredPane) {
+    	pauseOverlay = new JPanel();
+    	pauseOverlay.setBounds(0, 0, 1000, 600);                   
+    	pauseOverlay.setBackground(new Color(0, 0, 0, 150)); 
+    	pauseOverlay.setLayout(new GridBagLayout());
+        
+        JPanel buttonPanel = new JPanel(new GridLayout(2, 1, 20, 20));
+        buttonPanel.setOpaque(false);
+        buttonPanel.setPreferredSize(new Dimension(200, 150));
+        
+        JButton resumeButton = createPauseButton("Resume", new Color(0, 150, 0));
+        JButton exitButton = createPauseButton("Exit", new Color(150, 0, 0));
+        
+        resumeButton.addActionListener(e -> {
+            System.out.println("Resume clicked");
+        });
+        
+        exitButton.addActionListener(e -> {
+            System.out.println("Exit clicked");
+        });
+        
+        buttonPanel.add(resumeButton);
+        buttonPanel.add(exitButton);
+        
+        pauseOverlay.add(buttonPanel);
+        
+        layeredPane.add(pauseOverlay, Integer.valueOf(10));
+        layeredPane.revalidate();
+        layeredPane.repaint();
+    }
+    
+    private JButton createPauseButton(String text, Color color) {
+        JButton btn = new JButton(text);
+        btn.setBackground(color);
+        btn.setForeground(Color.WHITE);
+        btn.setFont(new Font("Arial", Font.BOLD, 20));
+        btn.setFocusPainted(false);
+        btn.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        return btn;
     }
 
     private JLabel createPauseLabel() {
