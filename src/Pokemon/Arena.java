@@ -9,7 +9,7 @@ public class Arena {
 
     private JFrame frame;
     private String selectedArena;
-    private JPanel pauseOverlay; // Панель для паузы
+    private JPanel pauseOverlay; 
 
     public Arena() {
         createMainWindow();
@@ -332,12 +332,21 @@ public class Arena {
         JButton resumeButton = createPauseButton("Resume", new Color(0, 150, 0));
         JButton exitButton = createPauseButton("Exit", new Color(150, 0, 0));
         
+        JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(layeredPane);
+        
         resumeButton.addActionListener(e -> {
-            System.out.println("Resume clicked");
+            layeredPane.remove(pauseOverlay);
+            layeredPane.revalidate();
+            layeredPane.repaint();
+            System.out.println("Resume clicked - returning to game");
         });
         
         exitButton.addActionListener(e -> {
-            System.out.println("Exit clicked");
+            System.out.println("Exit clicked - closing program");
+            if (currentFrame != null) {
+                currentFrame.dispose();
+            }
+            System.exit(0);
         });
         
         buttonPanel.add(resumeButton);
