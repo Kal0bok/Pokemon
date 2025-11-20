@@ -48,24 +48,6 @@ Objektorientēta Java programma ar GUI (JOptionPane), kas ļauj:
 
 ---
 
-## Projekta Struktūra
-
-Pokemon/
-├── MainMenu.java # Galvenā izvēlne un trenera izvēle
-├── Pokedatnis.java # Galvenā programmas loģika
-├── Pokemons.java # Abstraktā bāzes klase
-├── ElektriskaisP.java # Elektriskā tipa pokemons
-├── UdensP.java # Ūdens tipa pokemons
-├── Uguns.java # Uguns tipa pokemons
-├── Trainer.java # Trenera klase
-├── Metodes.java # Palīgmetodes un validācija
-├── Arena.java # Cīņu sistēma
-├── Ash.java # Ash Ketchum profils
-└── Leon.java # Custom trenera profils
-
-
----
-
 ## Iespējas
 
 ✅ **Jauns pokemons** — Izveidot jebkura tipa pokemonu  
