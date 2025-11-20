@@ -4,7 +4,7 @@ import java.awt.Color;
 
 public class Uguns extends Pokemons {
     
-    public Uguns(String vards, int limenis, double dziv, double uzbruk, double aizsarg) {
+	public Uguns(String vards, int limenis, double dziv, double uzbruk, double aizsarg) {
         super(vards, "Fire", limenis, dziv, uzbruk, aizsarg);
     }
     
