@@ -19,7 +19,7 @@ import javax.swing.SwingUtilities;
 
 public class Leon {
 
-	public static  void showIzvInfo(String vards, int vecums, int limenis) {
+	public static  void showIzvInfo(String vards, int vecums, double d) {
         JFrame info = new JFrame("Profile");
         info.setSize(400, 500);
         info.setLocationRelativeTo(null);
@@ -43,7 +43,7 @@ public class Leon {
         textPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         JLabel name = new JLabel("Vārds: " + vards);
-        JLabel level = new JLabel("Trenera līmenis: " + limenis);
+        JLabel level = new JLabel("Trenera līmenis: " + d);
         JLabel age = new JLabel("Vecums: " + vecums);
 
         JLabel pokemonsTitle = new JLabel("Pokemoni:");

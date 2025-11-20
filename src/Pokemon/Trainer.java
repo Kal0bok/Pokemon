@@ -5,13 +5,13 @@ import java.util.ArrayList;
 public class Trainer {
     private String vards;
     private int vecums;
-    private int limenis;
+    private double limenis;
     private ArrayList<Pokemons> pokemons;
 
-    public Trainer(String vards, int vecums, int limenis) {
+    public Trainer(String vards, int vecums, double level) {
         this.vards = vards;
         this.vecums = vecums;
-        this.limenis = limenis;
+        this.limenis = level;
         this.pokemons = new ArrayList<>();
     }
 
@@ -23,7 +23,7 @@ public class Trainer {
         return vecums;
     }
 
-    public int getLimenis() {
+    public double getLimenis() {
         return limenis;
     }
 

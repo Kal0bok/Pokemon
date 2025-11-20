@@ -1,20 +1,9 @@
 package Pokemon;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridLayout;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import java.awt.*;
+import javax.swing.*;
 
 public abstract class Pokemons implements Comparable<Pokemons> {
-
     private String vards;
     private String tips;
     private int limenis;
@@ -31,28 +20,26 @@ public abstract class Pokemons implements Comparable<Pokemons> {
         this.aizsarg = aizsarg;
     }
 
+    // Геттеры
+    public String getVards() { return vards; }
+    public String getTips() { return tips; }
+    public int getLimenis() { return limenis; }
+    public double getDziv() { return dziv; }
+    public double getUzbruk() { return uzbruk; }
+    public double getAizsarg() { return aizsarg; }
 
-    public String getVards() { 
-    	return vards; }
-    
-    public String getTips() { 
-    	return tips; }
-    
-    public int getLimenis() { 
-    	return limenis; }
-    
-    public double getDziv() { 
-    	return dziv; }
-    
-    public double getUzbruk() { 
-    	return uzbruk; }
-    
-    public double getAizsarg() { 
-    	return aizsarg; }
+    // Сеттеры
+    public void setDziv(double dziv) { this.dziv = dziv; }
+    public void setUzbruk(double uzbruk) { this.uzbruk = uzbruk; }
+    public void setAizsarg(double aizsarg) { this.aizsarg = aizsarg; }
 
+    // Абстрактные методы
+    public abstract String ipaUzbruk();
+    public abstract Color getCardColor();
 
+    // Конкретные методы
     public void saņBojās(double daudzums) {
-    	dziv -= daudzums;
+        dziv -= daudzums;
         if (dziv < 0) dziv = 0;
     }
 
@@ -64,77 +51,125 @@ public abstract class Pokemons implements Comparable<Pokemons> {
         return aizsarg * 0.7;
     }
 
-    public String ipaUzbruk() {
-        return vards + " izmanto īpašo uzbrukumu!";
+    public void dziedet() {
+        dziv += 20;
+        if (dziv > 200) dziv = 200;
+    }
+
+    public void attīstīt() {
+        limenis++;
+        uzbruk += 0.5;
+        aizsarg += 0.3;
+        dziv += 10;
     }
 
     public String izvadit() {
-        return "Vārds: " + vards +
-               "\nTips: " + tips +
-               "\nLīmenis: " + limenis +
-               "\nDzīvības: " + dziv +
-               "\nUzbrukums: " + uzbruk +
-               "\nAizsardzība: " + aizsarg;
-        
+        return String.format("""
+            Vārds: %s
+            Tips: %s
+            Līmenis: %d
+            Dzīvības: %.1f
+            Uzbrukums: %.1f
+            Aizsardzība: %.1f
+            Spēks: %.1f""", 
+            vards, tips, limenis, dziv, uzbruk, aizsarg, aprēķinātSpēku());
     }
-    
+
+    public double aprēķinātSpēku() {
+        return (dziv + uzbruk * 10 + aizsarg * 5) * limenis;
+    }
+
     public void showProfile() {
-    	 JDialog info = new JDialog((JFrame)null, "Pokemon Profile", true);
-        info.setSize(350, 450);
-        info.setLocationRelativeTo(null);
-        info.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        info.setLayout(new BorderLayout());
-        info.getContentPane().setBackground(new Color(30, 40, 60));
-        info.setResizable(false);
-
-        JLabel title = new JLabel(getVards(), SwingConstants.CENTER);
-        title.setFont(new Font("Arial", Font.BOLD, 26));
-        title.setForeground(Color.YELLOW);
-        title.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
-
-        JPanel stats = new JPanel(new GridLayout(6, 1, 5, 5));
-        stats.setBackground(new Color(30, 40, 60));
-
-        stats.add(makeLabel("Pokemona vārds: " + getVards()));
-        stats.add(makeLabel("Tips: " + getTips()));
-        stats.add(makeLabel("Līmenis: " + getLimenis()));
-        stats.add(makeLabel("Dzīvības: " + getDziv()));
-        stats.add(makeLabel("Uzbrukums: " + getUzbruk()));
-        stats.add(makeLabel("Aizsardzība: " + getAizsarg()));
-
-        JButton close = new JButton("Aizvērt");
-        close.addActionListener(e -> {
-            info.dispose();            
+        JDialog profile = new JDialog((JFrame)null, "Pokémon Profile - " + vards, true);
+        profile.setSize(400, 500);
+        profile.setLocationRelativeTo(null);
+        profile.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout(10, 10));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        mainPanel.setBackground(getCardColor().brighter());
+        
+        // Заголовок
+        JLabel title = new JLabel(vards, SwingConstants.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, 24));
+        title.setForeground(Color.DARK_GRAY);
+        title.setBorder(BorderFactory.createEmptyBorder(0, 0, 15, 0));
+        
+        // Статистика
+        JPanel statsPanel = new JPanel(new GridLayout(0, 1, 8, 8));
+        statsPanel.setBackground(Color.WHITE);
+        statsPanel.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(Color.GRAY),
+            BorderFactory.createEmptyBorder(10, 10, 10, 10)
+        ));
+        
+        statsPanel.add(createStatLabel("Tips: " + tips));
+        statsPanel.add(createStatLabel("Līmenis: " + limenis));
+        statsPanel.add(createStatLabel("Dzīvības: " + String.format("%.1f", dziv)));
+        statsPanel.add(createStatLabel("Uzbrukums: " + String.format("%.1f", uzbruk)));
+        statsPanel.add(createStatLabel("Aizsardzība: " + String.format("%.1f", aizsarg)));
+        statsPanel.add(createStatLabel("Kopējais spēks: " + String.format("%.1f", aprēķinātSpēku())));
+        
+        // Кнопки действий
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        buttonPanel.setBackground(getCardColor().brighter());
+        
+        JButton attackBtn = new JButton("Uzbrukt");
+        JButton healBtn = new JButton("Dziedēt");
+        JButton evolveBtn = new JButton("Attīstīt");
+        JButton closeBtn = new JButton("Aizvērt");
+        
+        attackBtn.addActionListener(e -> {
+            JOptionPane.showMessageDialog(profile, ipaUzbruk());
         });
-
-        JPanel bottom = new JPanel();
-        bottom.setBackground(new Color(30, 40, 60));
-        bottom.add(close);
-
-        info.add(title, BorderLayout.NORTH);
-        info.add(stats, BorderLayout.CENTER);
-        info.add(bottom, BorderLayout.SOUTH);
         
-        info.setVisible(true);
+        healBtn.addActionListener(e -> {
+            double oldHp = dziv;
+            dziedet();
+            JOptionPane.showMessageDialog(profile, 
+                String.format("%s dziedēts! Dzīvības: %.1f → %.1f", vards, oldHp, dziv));
+            profile.dispose();
+            showProfile();
+        });
         
+        evolveBtn.addActionListener(e -> {
+            int oldLevel = limenis;
+            attīstīt();
+            JOptionPane.showMessageDialog(profile, 
+                String.format("%s attīstījās! Līmenis: %d → %d", vards, oldLevel, limenis));
+            profile.dispose();
+            showProfile();
+        });
+        
+        closeBtn.addActionListener(e -> profile.dispose());
+        
+        buttonPanel.add(attackBtn);
+        buttonPanel.add(healBtn);
+        buttonPanel.add(evolveBtn);
+        buttonPanel.add(closeBtn);
+        
+        mainPanel.add(title, BorderLayout.NORTH);
+        mainPanel.add(statsPanel, BorderLayout.CENTER);
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+        
+        profile.add(mainPanel);
+        profile.setVisible(true);
     }
     
-    private JLabel makeLabel(String text) {
-        JLabel lbl = new JLabel(text);
-        lbl.setFont(new Font("Arial", Font.PLAIN, 16));
-        lbl.setForeground(Color.WHITE);
-        return lbl;
+    private JLabel createStatLabel(String text) {
+        JLabel label = new JLabel(text);
+        label.setFont(new Font("Arial", Font.PLAIN, 14));
+        return label;
     }
-
-
-    public String info() {
-        return vards + " (" + tips + ") - Līmenis: " + limenis;
-    }
-
+    
     @Override
     public int compareTo(Pokemons cits) {
-        return Double.compare(this.uzbruk, cits.uzbruk);
+        return Double.compare(this.aprēķinātSpēku(), cits.aprēķinātSpēku());
     }
-
-
+    
+    @Override
+    public String toString() {
+        return vards + " (" + tips + ") Lv." + limenis;
+    }
 }

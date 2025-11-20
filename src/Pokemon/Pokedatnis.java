@@ -1,5 +1,6 @@
 package Pokemon;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -59,12 +60,12 @@ public class Pokedatnis {
 
 
             case 0:
-            	if(pokemoni.size() == 3) {
-            		JOptionPane.showMessageDialog(null, "Jūms ir maksimals pokemonu skaits!");
-            		break;
-            	}
-            	
-            	String vards = Metodes.virkneParbaud("Ievadi Pokemona vārdu:");
+                if(pokemoni.size() == 3) {
+                    JOptionPane.showMessageDialog(null, "Jūms ir maksimālais pokemonu skaits (3)!");
+                    break;
+                }
+                
+                String vards = Metodes.virkneParbaud("Ievadi Pokemona vārdu:");
                 if (vards == null) break;
 
                 String tips = (String) JOptionPane.showInputDialog(null,
@@ -72,29 +73,40 @@ public class Pokedatnis {
                         JOptionPane.QUESTION_MESSAGE, null, tipi, tipi[0]);
                 if (tips == null) break;
 
-                double lvl = (double) Metodes.skaitlaParbaude("Ievadi līmeni (1-50)", 1, 50);
-                if (lvl < 0) break;
+                // ИСПРАВЛЕННЫЕ СТРОКИ:
+                Integer lvl = Metodes.skaitlaParbaudeInt("Ievadi līmeni (1-50)", 1, 50);
+                if (lvl == null || lvl < 0) break;
 
-                double hp = (double) Metodes.skaitlaParbaude("Ievadi HP (1-200)", 1, 200);
-                if (hp < 0) break;
+                Double hp = Metodes.skaitlaParbaude("Ievadi HP (1-200)", 1, 200);
+                if (hp == null || hp < 0) break;
 
-                double def = (double) Metodes.skaitlaParbaude("Ievadi aizsardzību (1-100)", 1, 100);
-                if (def < 0) break;
+                Double def = Metodes.skaitlaParbaude("Ievadi aizsardzību (1-100)", 1, 100);
+                if (def == null || def < 0) break;
 
-                double atk = (double) Metodes.skaitlaParbaude("Ievadi uzbrukumu (1-10)", 1, 10);
-                if (atk < 0) break;
+                Double atk = Metodes.skaitlaParbaude("Ievadi uzbrukumu (1-10)", 1, 10);
+                if (atk == null || atk < 0) break;
 
-                pokemoni.add(new Pokemons(vards, tips, (int) lvl, hp, atk, def) {
-                            @Override
-                            public String ipaUzbruk() {
-                                return getVards() + " izmanto " + getTips() + " uzbrukumu!";
-                            }
+                // Создание покемона в зависимости от типа
+                if (tips.equals("Electric")) {
+                    pokemoni.add(new ElektriskaisP(vards, lvl, hp, atk, def));
+                } else if (tips.equals("Water")) {
+                    pokemoni.add(new UdensP(vards, lvl, hp, atk, def));
+                } else if (tips.equals("Fire")) {
+                    pokemoni.add(new Uguns(vards, lvl, hp, atk, def));
+                } else {
+                    // Для других типов используем абстрактный класс
+                    pokemoni.add(new Pokemons(vards, tips, lvl, hp, atk, def) {
+                        @Override
+                        public String ipaUzbruk() {
+                            return getVards() + " izmanto " + getTips() + " uzbrukumu!";
                         }
-                    );
-                
-                JOptionPane.showMessageDialog(null, "Pokemon pievienots!");
-                
-                break;
+                        
+                        @Override
+                        public Color getCardColor() {
+                            return Color.LIGHT_GRAY; // Цвет по умолчанию
+                        }
+                    });
+                }
             	
             case 1:
                 if (pokemoni.size() > 0) {
