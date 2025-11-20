@@ -262,9 +262,23 @@ public class Arena {
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(new Dimension(1000, 600));
         
+        Pokemons playerPokemon = new UdensP();
+        Pokemons enemyPokemon = new ElektriskaisP();
+        Trainer playerTrainer = MainMenu.aktivTrener;
+        
+        battle battleManager = new battle(playerPokemon, enemyPokemon, playerTrainer);
+        
         JLabel bgLabel = createScaledGifBackground(selectedArena, 1000, 600);
         bgLabel.setBounds(0, 0, 1000, 600);
         layeredPane.add(bgLabel, Integer.valueOf(0));
+        
+        JLabel defenseButton = createActionButton("/Image/defense.png", 50, 470, "defense");
+        JLabel attackButton = createActionButton("/Image/attack.png", 450, 470, "attack");
+        JLabel superButton = createActionButton("/Image/power.png", 850, 470, "super");
+        
+        layeredPane.add(defenseButton, Integer.valueOf(1));
+        layeredPane.add(attackButton, Integer.valueOf(1));
+        layeredPane.add(superButton, Integer.valueOf(1));
         
         JPanel leftStats = createStatsPanel("HP: 100/100", "Armor: 50");
         leftStats.setBounds(100, 10, 300, 80);
@@ -284,15 +298,6 @@ public class Arena {
         JLabel pauseLabel = createPauseLabel();
         pauseLabel.setBounds(485, 25, 30, 30);
         
-        JLabel bottomLeftImage = createBottomImage("/Image/defense.png"); 
-        bottomLeftImage.setBounds(50, 470, 100, 80); 
-        
-        JLabel bottomCenterImage = createBottomImage("/Image/attack.png"); 
-        bottomCenterImage.setBounds(450, 470, 100, 80); 
-        
-        JLabel bottomRightImage = createBottomImage("/Image/power.png"); 
-        bottomRightImage.setBounds(850, 470, 100, 80); 
-        
         pauseLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -306,10 +311,6 @@ public class Arena {
         layeredPane.add(rightPokemon, Integer.valueOf(1));
         layeredPane.add(vsGif, Integer.valueOf(2));
         layeredPane.add(pauseLabel, Integer.valueOf(3));
-        
-        layeredPane.add(bottomLeftImage, Integer.valueOf(1));
-        layeredPane.add(bottomCenterImage, Integer.valueOf(1));
-        layeredPane.add(bottomRightImage, Integer.valueOf(1));
         
         empty.setContentPane(layeredPane);
         empty.setLocationRelativeTo(null);
