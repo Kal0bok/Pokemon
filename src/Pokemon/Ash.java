@@ -11,7 +11,7 @@ public class Ash {
         info.setLocationRelativeTo(null);
         info.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         info.setLayout(new BorderLayout());
-
+        
         JPanel mainPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -54,21 +54,21 @@ public class Ash {
         addInfoLine(infoPanel, "Reģions:", "Kanto");
         addInfoLine(infoPanel, "Līmenis:", "10");
         addInfoLine(infoPanel, "Mērķis:", "Pokemon Masters");
-
+        
         JSeparator separator = new JSeparator();
         separator.setForeground(Color.YELLOW);
         separator.setMaximumSize(new Dimension(400, 2));
         infoPanel.add(Box.createVerticalStrut(15));
         infoPanel.add(separator);
         infoPanel.add(Box.createVerticalStrut(15));
-
+        
         JLabel pokemonTitle = new JLabel("POKEMONI:");
         pokemonTitle.setFont(new Font("Arial", Font.BOLD, 16));
         pokemonTitle.setForeground(Color.YELLOW);
         pokemonTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
         infoPanel.add(pokemonTitle);
         infoPanel.add(Box.createVerticalStrut(10));
-
+        
         if (Pokedatnis.pokemoni.isEmpty()) {
             JLabel noPokemon = new JLabel("Nav pokemonu");
             noPokemon.setFont(new Font("Arial", Font.ITALIC, 14));
@@ -96,21 +96,26 @@ public class Ash {
         buttonPanel.setOpaque(false);
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20));
 
-        JButton backBtn = createButton("ATPAKAĻ", new Color(200, 60, 60));
-        backBtn.addActionListener(e -> info.dispose());
-
-        JButton continueBtn = createButton("TURPINĀT", new Color(60, 180, 60));
+        JButton continueBtn = createButton("ATPAKAĻ", new Color(60, 180, 60));
         continueBtn.addActionListener(e -> {
             info.dispose();
+            closeAllWindows();
             SwingUtilities.invokeLater(() -> Pokedatnis.main(new String[]{}));
         });
 
-        buttonPanel.add(backBtn);
-        buttonPanel.add(Box.createHorizontalStrut(20));
         buttonPanel.add(continueBtn);
-
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+        
         info.setVisible(true);
+    }
+    
+    private static void closeAllWindows() {
+        Window[] windows = Window.getWindows();
+        for (Window window : windows) {
+            if (window.isVisible() && window != Window.getWindows()[0]) {
+                window.dispose();
+            }
+        }
     }
     
     private static void addInfoLine(JPanel panel, String label, String value) {
@@ -174,7 +179,7 @@ public class Ash {
         button.setContentAreaFilled(false);
         button.setFocusPainted(false);
         button.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
-
+        
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 button.setForeground(Color.YELLOW);
