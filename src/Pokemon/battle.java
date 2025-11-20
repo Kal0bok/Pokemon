@@ -132,6 +132,13 @@ public class battle {
         return uzliktBojajumuSpeletajam(50);
     }
     
+    private double aprekinatParastoBojajumu() {
+        if (playerTrainer == null) {
+            return playerPokemon.getUzbruk() + 5; 
+        }
+        return playerPokemon.getUzbruk() + playerTrainer.getLimenis();
+    }
+    
     private String uzliktBojajumuSpeletajam(double bojajums) {
         if (playerHasShield) {
             playerHasShield = false;
