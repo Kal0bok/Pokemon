@@ -6,31 +6,29 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class MainMenu {
-    
+
     private JFrame frame;
     public static Trainer aktivTrener;
-    
+
     public MainMenu() {
         initialize();
     }
-    
-    // Galvenā inicializācijas metode, kas izveido galveno izvēlni
+
+    // Galvenā loga izveide
     private void initialize() {
         try {
             UIManager.setLookAndFeel(UIManager.getLookAndFeel());
         } catch (Exception e) {
             System.err.println("Nevar iestatīt sistēmas izskatu: " + e.getMessage());
         }
-        
-        // Galvenā loga izveide un konfigurācija
+
         frame = new JFrame("Pokémon Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
         frame.setResizable(false);
         frame.setLayout(new BorderLayout());
-        
-        // Panēls ar gradienta fona krāsu
-        JPanel backgroundPanel = new JPanel() {		
+
+        JPanel backgroundPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -44,49 +42,41 @@ public class MainMenu {
         };
         backgroundPanel.setLayout(new BorderLayout());
 
-        // Virsraksta izveide
         JLabel title = new JLabel("POKÉMON GAME", SwingConstants.CENTER);
         title.setFont(new Font("Arial", Font.BOLD, 36));
         title.setForeground(Color.YELLOW);
         title.setBorder(BorderFactory.createEmptyBorder(30, 0, 20, 0));
-        
-        // Pogu paneļa izveide
+
         JPanel buttonPanel = new JPanel(new GridLayout(3, 1, 15, 15));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 100, 30, 100));
         buttonPanel.setOpaque(false);
-        
-        // Galveno pogu izveide
+
         JButton startBtn = createStyledButton("START GAME", new Color(0, 150, 0));
         JButton aboutBtn = createStyledButton("ABOUT", new Color(0, 100, 200));
         JButton exitBtn = createStyledButton("EXIT", new Color(200, 0, 0));
-        
-        // Pogu notikumu apstrāde
+
         startBtn.addActionListener(e -> selectTrainer());
         aboutBtn.addActionListener(e -> showAbout());
         exitBtn.addActionListener(e -> exitGame());
-        
+
         buttonPanel.add(startBtn);
         buttonPanel.add(aboutBtn);
         buttonPanel.add(exitBtn);
-        
-        // Apakšējā paneļa izveide ar palīdzības pogu
+
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         bottomPanel.setOpaque(false);
-        
-        JButton helpBtn = createHelpButton();
-        bottomPanel.add(helpBtn);
-        
-        // Komponentu pievienošana galvenajam panelim
+        bottomPanel.add(createHelpButton());
+
         backgroundPanel.add(title, BorderLayout.NORTH);
         backgroundPanel.add(buttonPanel, BorderLayout.CENTER);
         backgroundPanel.add(bottomPanel, BorderLayout.SOUTH);
-        
+
         frame.setContentPane(backgroundPanel);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
-    
-    // Metode stilizētu pogu izveidei
+
+    // Pogu izskata veidošana
     private JButton createStyledButton(String text, Color color) {
         JButton btn = new JButton(text) {
             @Override
@@ -106,21 +96,15 @@ public class MainMenu {
         btn.setBorder(BorderFactory.createEmptyBorder(10, 25, 10, 25));
         btn.setContentAreaFilled(false);
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        
-        // Peles notikumu apstrāde - izmaiņas kad peles kursors atrodas virs pogas
-        btn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn.setForeground(Color.YELLOW);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btn.setForeground(Color.WHITE);
-            }
+
+        btn.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent evt) { btn.setForeground(Color.YELLOW); }
+            public void mouseExited(MouseEvent evt) { btn.setForeground(Color.WHITE); }
         });
-        
         return btn;
     }
-    
-    // Palīdzības pogas izveides metode
+
+    // Palīdzības poga
     private JButton createHelpButton() {
         JButton helpBtn = new JButton("?");
         helpBtn.setFont(new Font("Arial", Font.BOLD, 16));
@@ -130,268 +114,171 @@ public class MainMenu {
         helpBtn.addActionListener(e -> showHelp());
         return helpBtn;
     }
-    
-    // Palīdzības loga attēlošanas metode
+
+    // Palīdzības logs
     private void showHelp() {
         String helpText = """
-            <html>
-            <body style='width: 300px; padding: 10px;'>
-            <h2 style='color: #3366CC; text-align: center;'>Pokémon Game Help</h2>
-            <p><b>START GAME:</b> Begin your Pokémon adventure</p>
-            <p><b>ABOUT:</b> Learn about the game</p>
-            <p><b>EXIT:</b> Close the application</p>
-            <hr>
-            <p style='color: #666; font-size: 12px;'>
-            Create and battle with Pokémon! Choose your trainer and become the best!
-            </p>
-            </body>
-            </html>
+            <html><body style='width: 300px; padding: 10px;'>
+            <h2 style='color: #3366CC; text-align: center;'>Palīdzība</h2>
+            <p><b>START GAME:</b> Sākt spēli</p>
+            <p><b>ABOUT:</b> Par spēli</p>
+            <p><b>EXIT:</b> Iziet</p>
+            </body></html>
             """;
-        JOptionPane.showMessageDialog(frame, helpText, "Help", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(frame, helpText, "Palīdzība", JOptionPane.INFORMATION_MESSAGE);
     }
-    
-    // Par spēles loga attēlošanas metode
+
+    // "Par spēli" logs
     private void showAbout() {
         String aboutText = """
-            <html>
-            <body style='width: 350px; padding: 15px;'>
+            <html><body style='width: 350px; padding: 15px;'>
             <h2 style='color: #FF6600; text-align: center;'>Pokémon Game</h2>
-            <p style='text-align: center;'><b>Version 2.0</b></p>
-            <p>Features:</p>
+            <p style='text-align: center;'><b>Versija 2.0</b></p>
             <ul>
-            <li>Create custom Pokémon</li>
-            <li>Battle system</li>
-            <li>Trainer profiles</li>
-            <li>Pokémon management</li>
-            <li>Beautiful GUI</li>
+            <li>Pielāgoti Pokémoni</li>
+            <li>Cīņu sistēma</li>
+            <li>Treneru profili</li>
+            <li>Skaists GUI</li>
             </ul>
-            <p style='color: #666; font-size: 11px; text-align: center;'>
-            Created with Java Swing • OOP Principles
-            </p>
-            </body>
-            </html>
+            </body></html>
             """;
-        JOptionPane.showMessageDialog(frame, aboutText, "About", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(frame, aboutText, "Par spēli", JOptionPane.INFORMATION_MESSAGE);
     }
-    
-    // Spēles iziešanas metode ar apstiprinājumu
+
+    // Spēles aizvēršana
     private void exitGame() {
-        int confirm = JOptionPane.showConfirmDialog(frame, 
-            "Are you sure you want to exit?", "Exit Game", 
+        int confirm = JOptionPane.showConfirmDialog(frame,
+            "Vai tiešām vēlies iziet?", "Iziet no spēles",
             JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        
+
         if (confirm == JOptionPane.YES_OPTION) {
-            JOptionPane.showMessageDialog(frame, "Thank you for playing Pokémon Game!");
+            JOptionPane.showMessageDialog(frame, "Paldies par spēlēšanu!");
             System.exit(0);
         }
     }
-    
-    // Trenera izvēles loga attēlošanas metode
+
+    // Trenera izvēles logs
     private void selectTrainer() {
         frame.setVisible(false);
-        
-        JFrame trainerFrame = new JFrame("Select Your Trainer");
+
+        JFrame trainerFrame = new JFrame("Izvēlies treneri");
         trainerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         trainerFrame.setSize(800, 500);
         trainerFrame.setLocationRelativeTo(null);
-        
+
         JPanel mainPanel = new JPanel(new GridLayout(1, 2, 30, 30));
         mainPanel.setBackground(new Color(20, 30, 60));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
-        
-        // Trenera karšu izveide
+
         JPanel ashCard = createTrainerCard(
-            "Ash Ketchum", 
-            "The passionate Pokémon Trainer from Pallet Town", 
-            new Color(70, 130, 180),
+            "Ash Ketchum",
+            "Leģendārais treneris no Pallet Town",
+            new Color(180, 40, 40),
             "• Pikachu (Electric)\n• Charizard (Fire)\n• Bulbasaur (Grass)"
         );
-        
+
         JPanel customCard = createTrainerCard(
-            "Custom Trainer", 
-            "Create your own trainer profile", 
+            "Pielāgots treneris",
+            "Izveido pats savu profilu",
             new Color(60, 179, 113),
-            "• Choose your name\n• Select your age\n• Build your team"
+            "• Vārds\n• Vecums\n• Pokémoni"
         );
-        
-        // Peles klikšķa notikumu apstrāde trenera izvēlei
+
         ashCard.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 aktivTrener = new Trainer("Ash Ketchum", 12, 10);
+                Pokedatnis.pokemoni.clear();
                 Pokedatnis.pokemoni.add(new ElektriskaisP("Pikachu", 5, 80, 8.5, 6.0));
                 Pokedatnis.pokemoni.add(new Uguns("Charizard", 8, 120, 9.5, 7.0));
                 trainerFrame.dispose();
-                showTrainerProfile(aktivTrener, true);
+                Ash.showAshInfo();
             }
         });
-        
+
         customCard.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 trainerFrame.dispose();
                 createCustomTrainer();
             }
         });
-        
+
         mainPanel.add(ashCard);
         mainPanel.add(customCard);
-        
         trainerFrame.add(mainPanel);
         trainerFrame.setVisible(true);
     }
-    
-    // Trenera kartes izveides metode
-    private JPanel createTrainerCard(String name, String description, Color color, String pokemons) {
-        JPanel card = new JPanel();
-        card.setLayout(new BorderLayout());
+
+    // Trenera kartiņas izveide
+    private JPanel createTrainerCard(String name, String desc, Color color, String pokes) {
+        JPanel card = new JPanel(new BorderLayout());
         card.setBackground(color);
         card.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(Color.WHITE, 2),
             BorderFactory.createEmptyBorder(20, 20, 20, 20)
         ));
         card.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        
-        // Peles notikumu apstrāde kartes izskatam
+
         card.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent e) {
                 card.setBorder(BorderFactory.createCompoundBorder(
                     BorderFactory.createLineBorder(Color.YELLOW, 3),
-                    BorderFactory.createEmptyBorder(20, 20, 20, 20)
-                ));
+                    BorderFactory.createEmptyBorder(20, 20, 20, 20)));
             }
             public void mouseExited(MouseEvent e) {
                 card.setBorder(BorderFactory.createCompoundBorder(
                     BorderFactory.createLineBorder(Color.WHITE, 2),
-                    BorderFactory.createEmptyBorder(20, 20, 20, 20)
-                ));
+                    BorderFactory.createEmptyBorder(20, 20, 20, 20)));
             }
         });
-        
+
         JLabel nameLabel = new JLabel(name, SwingConstants.CENTER);
         nameLabel.setFont(new Font("Arial", Font.BOLD, 24));
         nameLabel.setForeground(Color.WHITE);
-        nameLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 15, 0));
-        
-        JTextArea descArea = new JTextArea(description);
-        descArea.setFont(new Font("Arial", Font.PLAIN, 14));
-        descArea.setForeground(Color.WHITE);
-        descArea.setBackground(color);
+
+        JTextArea descArea = new JTextArea(desc);
         descArea.setEditable(false);
+        descArea.setBackground(color);
+        descArea.setForeground(Color.WHITE);
+        descArea.setFont(new Font("Arial", Font.PLAIN, 14));
         descArea.setLineWrap(true);
         descArea.setWrapStyleWord(true);
-        
-        JTextArea pokemonArea = new JTextArea(pokemons);
-        pokemonArea.setFont(new Font("Arial", Font.ITALIC, 12));
-        pokemonArea.setForeground(Color.YELLOW);
-        pokemonArea.setBackground(color);
-        pokemonArea.setEditable(false);
-        pokemonArea.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
-        
+
+        JTextArea pokeArea = new JTextArea(pokes);
+        pokeArea.setEditable(false);
+        pokeArea.setBackground(color);
+        pokeArea.setForeground(Color.YELLOW);
+        pokeArea.setFont(new Font("Arial", Font.ITALIC, 12));
+
         card.add(nameLabel, BorderLayout.NORTH);
         card.add(descArea, BorderLayout.CENTER);
-        card.add(pokemonArea, BorderLayout.SOUTH);
-        
+        card.add(pokeArea, BorderLayout.SOUTH);
         return card;
     }
-    
-    // Pielāgota trenera izveides metode
+
+    // Pielāgota trenera izveide
     private void createCustomTrainer() {
         String name = Metodes.virkneParbaud("Ievadi trenera vārdu:");
-        if (name == null) {
+        if (name == null || name.trim().isEmpty()) {
             selectTrainer();
             return;
         }
-        
+
         Integer age = Metodes.skaitlaParbaudeInt("Ievadi vecumu (10-99):", 10, 99);
-        if (age == null || age < 0) {
-            selectTrainer();
-            return;
-        }
-        
-        Integer level = Metodes.skaitlaParbaudeInt("Ievadi trenera līmeni (1-10):", 1, 10);
-        if (level == null || level < 0) {
-            selectTrainer();
-            return;
-        }
-        
+        if (age == null) { selectTrainer(); return; }
+
+        Integer level = Metodes.skaitlaParbaudeInt("Ievadi līmeni (1-10):", 1, 10);
+        if (level == null) { selectTrainer(); return; }
+
         aktivTrener = new Trainer(name, age, level);
-        
-        // Noklusēto pokemonu pievienošana
+
+        Pokedatnis.pokemoni.clear();
         Pokedatnis.pokemoni.add(new ElektriskaisP("Pikachu", 5, 80, 8.5, 6.0));
         Pokedatnis.pokemoni.add(new UdensP("Squirtle", 5, 85, 7.0, 7.5));
-        
-        showTrainerProfile(aktivTrener, false);
-    }
-    
-    // Trenera profila attēlošanas metode
-    private void showTrainerProfile(Trainer trainer, boolean isAsh) {
-        JFrame profileFrame = new JFrame("Trainer Profile");
-        profileFrame.setSize(500, 600);
-        profileFrame.setLocationRelativeTo(null);
-        profileFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.setBackground(new Color(240, 248, 255));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        
-        JLabel title = new JLabel("TRAINER PROFILE", SwingConstants.CENTER);
-        title.setFont(new Font("Arial", Font.BOLD, 28));
-        title.setForeground(new Color(30, 60, 120));
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        title.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
 
-        JPanel infoPanel = new JPanel();
-        infoPanel.setLayout(new GridLayout(0, 1, 10, 10));
-        infoPanel.setBackground(Color.WHITE);
-        infoPanel.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(200, 200, 200)),
-            BorderFactory.createEmptyBorder(15, 15, 15, 15)
-        ));
-        
-        // Trenera informācijas aizpildīšana
-        infoPanel.add(createInfoLabel("Name: " + trainer.getVards()));
-        infoPanel.add(createInfoLabel("Age: " + trainer.getVecums()));
-        infoPanel.add(createInfoLabel("Level: " + trainer.getLimenis()));
-        infoPanel.add(createInfoLabel("Pokémon: " + Pokedatnis.pokemoni.size()));
-        
-        JButton continueBtn = new JButton("START ADVENTURE");
-        continueBtn.setFont(new Font("Arial", Font.BOLD, 16));
-        continueBtn.setBackground(new Color(50, 150, 50));
-        continueBtn.setForeground(Color.WHITE);
-        continueBtn.setFocusPainted(false);
-        continueBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-        continueBtn.addActionListener(e -> {
-            profileFrame.dispose();
-            frame.dispose();
-            SwingUtilities.invokeLater(() -> Pokedatnis.main(new String[]{}));
-        });
-        
-        mainPanel.add(title);
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-        mainPanel.add(infoPanel);
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 30)));
-        mainPanel.add(continueBtn);
-        
-        profileFrame.add(mainPanel);
-        profileFrame.setVisible(true);
+        Leon.showIzvInfo(name, age, level);
     }
-    
-    // Informācijas etiķetes izveides palīgmetode
-    private JLabel createInfoLabel(String text) {
-        JLabel label = new JLabel(text);
-        label.setFont(new Font("Arial", Font.PLAIN, 16));
-        return label;
-    }
-    
-    // Galvenā metode programmas palaišanai
+
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            try {
-                UIManager.setLookAndFeel(UIManager.getLookAndFeel());     
-            } catch (Exception e) {
-                System.err.println("Nevar iestatīt Look and Feel:  " + e.getMessage());
-            }
-            new MainMenu();
-        });
+        SwingUtilities.invokeLater(() -> new MainMenu());
     }
 }

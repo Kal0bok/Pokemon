@@ -70,7 +70,7 @@ public class Pokedatnis {
                     
                 case 6: 
                     new Arena();
-                    break;
+                    return;
                     
                 case 7: 
                     JOptionPane.showMessageDialog(null, 

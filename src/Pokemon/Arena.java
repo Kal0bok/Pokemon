@@ -111,14 +111,14 @@ public class Arena extends JFrame {
     
     private void conductBattle() {
         StringBuilder battleLog = new StringBuilder();
-        battleLog.append("=== POKÉMON CĪŪŅA SĀKAS ===\n\n");
+        battleLog.append("=== POKEMON CĪŅA SĀKAS ===\n\n");
         
         Pokemons attacker = pokemon1;
         Pokemons defender = pokemon2;
         
         int round = 1;
         while (pokemon1.getDziv() > 0 && pokemon2.getDziv() > 0 && round <= 10) {
-            battleLog.append("*** RUNDE " + round + " ***\n");
+            battleLog.append("*** RAUNDS " + round + " ***\n");
             
             double damage = attacker.dotBoja() - defender.aizsarg();
             if (damage < 1) damage = 1;
@@ -150,8 +150,10 @@ public class Arena extends JFrame {
         JScrollPane scrollPane = new JScrollPane(battleArea);
         
         JOptionPane.showMessageDialog(this, scrollPane, "Cīņas Rezultāti", 
-            JOptionPane.INFORMATION_MESSAGE);
-        
-        dispose();
-    }
+        	    JOptionPane.INFORMATION_MESSAGE);
+
+        dispose();           
+        Pokedatnis.main(null);
 }
+}
+    

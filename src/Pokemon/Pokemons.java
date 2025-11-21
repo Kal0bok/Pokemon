@@ -99,7 +99,7 @@ public abstract class Pokemons implements Comparable<Pokemons> {
     }
 
     public void showProfile() {
-        JDialog profile = new JDialog((JFrame)null, "Pokémon Profile - " + vards, true);
+        JDialog profile = new JDialog((JFrame)null, "Pokemon Profile - " + vards, true);
         profile.setSize(400, 500);
         profile.setLocationRelativeTo(null);
         profile.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
